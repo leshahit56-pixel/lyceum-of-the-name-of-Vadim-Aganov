@@ -24,5 +24,15 @@ def election_course():
     return render_template('election_course.html')
 
 
+@app.route('/settings')
+def settings():
+    return "<h1>settings</h1>"
+
+
+@app.route('/profile')
+def profile():
+    return "<h1>profile</h1>"
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1', debug=True)
