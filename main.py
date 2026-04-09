@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 
 app = Flask(__name__)
+app.secret_key = 'your-secret-key-here'
 
 
 @app.route('/')
@@ -10,21 +11,18 @@ def hello_window():
 
 @app.route('/register')
 def register():
-    return "<h1>Страница регистрации </h1>"
+    return "<h1>регистрация</h1>"
 
 
 @app.route('/login')
 def login():
-    return "<h1>Страница входа </h1>"
+    return "<h1>авторизация</h1>"
 
 
-@app.route('/menu')
-def hello_window():
-    return render_template('menu.html')
-
-def main():
-    app.run(port='8080', host='127.0.0.1', debug=True)
+@app.route('/election_course')
+def election_course():
+    return render_template('election_course.html')
 
 
 if __name__ == '__main__':
-    main()
+    app.run(port=8080, host='127.0.0.1', debug=True)
