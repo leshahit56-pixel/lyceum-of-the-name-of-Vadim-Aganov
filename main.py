@@ -1,7 +1,7 @@
 from flask import Flask, render_template, session
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-here'
+app.secret_key = 'f8874661e03139f344aa90692fd4d642b1e7a89b9b817bba'
 
 
 @app.route('/')
