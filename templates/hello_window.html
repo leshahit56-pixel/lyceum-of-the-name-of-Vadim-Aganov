@@ -1,17 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Вход в систему ЛиВА</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
-<body>
-        <h2>Привет, дорогой путник, ищущий знаний в цифровой сфере! Ты  попал в Лицей имени Вадима Аганова. Тут ты сможешь получить 
-            важнейшие знания по программированию, или дальше блуждать по бесконечным просторам цифровой степи.
-        </h2>
-        <div style="text-align: center;">
-            <button>Регистрация</button>
-            <button>Вход</button>
+{% extends "base.html" %}
+
+{% block title %}Лицей имени Вадима Аганова{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-9 col-12">
+
+        <!-- Карточка -->
+        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
+            <div class="card-body p-4 p-md-5 text-center">
+
+                <!-- Приветствие -->
+                <h2 class="h4 mb-3 text-dark">Привет, дорогой путник, ищущий знаний в цифровой сфере!</h2>
+
+                <!-- Описание -->
+                <p class="text-muted mb-4">
+                    Ты попал в <strong>Лицей имени Вадима Аганова</strong>. Здесь ты сможешь получить
+                    важнейшие знания по программированию, или дальше блуждать по бесконечным просторам цифровой
+                    степи.
+                </p>
+
+                <!-- Преимущества -->
+                <div class="row g-3 mb-5 text-center">
+                    <div class="col-md-4">
+                        <div class="display-5 mb-2">🎓</div>
+                        <div class="fw-bold text-dark">Практика с нуля</div>
+                        <div class="small text-secondary">учись на реальных примерах и задачах</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="display-5 mb-2">🤖</div>
+                        <div class="fw-bold text-dark">Автопроверка кода</div>
+                        <div class="small text-secondary">мгновенная обратная связь по решениям</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="display-5 mb-2">🏆</div>
+                        <div class="fw-bold text-dark">Достижения и баллы</div>
+                        <div class="small text-secondary">зарабатывай бейджи и повышай уровень</div>
+                    </div>
+                </div>
+
+                <!-- Дополнительный блок -->
+                <div class="bg-light rounded-4 p-4 mb-5 text-start">
+                    <h5 class="fw-bold text-dark mb-3 text-center">
+                        <i class="text-primary me-2"></i>Что вас ждёт в лицее?
+                    </h5>
+                    <div class="small text-secondary">
+                        <div class="mb-2">— Интерактивный учебник и возможность задать вопрос китайскому другу</div>
+                        <div class="mb-2">— Встроенный редактор кода для решения задач прямо на сайте</div>
+                        <div class="mb-2">— Мгновенная проверка решений с разбором ошибок</div>
+                        <div class="mb-2">— Подсказки и помощь при ошибках</div>
+                        <div class="mb-2">— Личный кабинет с отслеживанием прогресса</div>
+                    </div>
+                </div>
+
+                <!-- Кнопки -->
+                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mb-4">
+                    <a href="/register" class="btn btn-primary btn-lg px-5 rounded-pill">
+                        <i class="bi bi-person-plus"></i> Регистрация
+                    </a>
+                    <a href="/login" class="btn btn-outline-primary btn-lg px-5 rounded-pill">
+                        <i class="bi bi-box-arrow-in-right"></i> Вход
+                    </a>
+                </div>
+
+                <!-- Завершающая фраза -->
+                <hr class="my-4">
+                <p class="text-muted small mb-0">
+                    <i class="bi bi-code-slash"></i> Погрузись в мир кода вместе с нами
+                </p>
+
+            </div>
         </div>
-</body>
-</html>
+
+    </div>
+</div>
+{% endblock %}
