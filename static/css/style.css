@@ -1,0 +1,11 @@
+/* Фон страницы */
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Адаптация логотипа на мобильных */
+@media (max-width: 576px) {
+    .logo {
+        height: 45px !important;
+    }
+}

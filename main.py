@@ -18,6 +18,10 @@ def login():
     return "<h1>Страница входа </h1>"
 
 
+@app.route('/menu')
+def hello_window():
+    return render_template('menu.html')
+
 def main():
     app.run(port='8080', host='127.0.0.1', debug=True)
 
