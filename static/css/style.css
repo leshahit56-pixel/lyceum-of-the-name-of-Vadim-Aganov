@@ -9,3 +9,9 @@ body {
         height: 45px !important;
     }
 }
+
+.container-left {
+        margin-left: 0 !important;
+        margin-right: auto !important;
+        padding-left: 300px;
+    }
