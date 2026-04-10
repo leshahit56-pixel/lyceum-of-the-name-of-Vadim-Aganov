@@ -1,4 +1,8 @@
-from flask import Flask, render_template, session
+from flask import Flask, render_template, session, request, session
+import smtplib
+from email.message import EmailMessage
+import secrets
+import time
 
 app = Flask(__name__)
 app.secret_key = 'f8874661e03139f344aa90692fd4d642b1e7a89b9b817bba'
@@ -9,10 +13,52 @@ def hello_window():
     return render_template('hello_window.html')
 
 
-@app.route('/register')
+@app.route('/register', methods = ['GET', 'POST'])
 def register():
-    return "<h1>регистрация</h1>"
+    if request.method == 'GET':
+        session.pop('email_true', None)
+        return render_template('registration.html', info=None)
+    elif request.method == 'POST':
+        email = request.form.get('email', '').strip()
+        if not session.get('email_true'):
+            if email:
+                code = ''.join(str(secrets.randbelow(10)) for _ in range(6))
+                session['last_mail'] = time.time()
+                msg = EmailMessage()
+                msg.set_content(f"Код подтверждения: {code} ")
+                msg["Subject"] = f"Код {code}"
+                msg["From"] = "leshahit56@gmail.com"
+                msg["To"] = email
 
+                with smtplib.SMTP("smtp.gmail.com", 587) as server:
+                    server.starttls()
+                    server.login("leshahit56@gmail.com", "extwxvadtwvdvgji") 
+                    server.send_message(msg)
+
+                session['email_true'] = True
+                return render_template('registration.html', info=1)
+            else:
+                return render_template('registration.html', info=0)
+        else:
+            if email:
+                last_mail = session.get('last_mail', 0)
+                if time.time() - last_mail > 10:
+                    code = ''.join(str(secrets.randbelow(10)) for _ in range(6))
+                    msg = EmailMessage()
+                    msg.set_content(f"Код подтверждения: {code}")
+                    msg["Subject"] = f"Код {code}"
+                    msg["From"] = "leshahit56@gmail.com"
+                    msg["To"] = email
+
+                    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+                        server.starttls()
+                        server.login("leshahit56@gmail.com", "extwxvadtwvdvgji")  
+                        server.send_message(msg)
+                        session['last_mail'] = time.time()
+                
+                return render_template('registration.html', info=1)
+            else:
+                return render_template('registration.html', info=1)
 
 @app.route('/login')
 def login():
