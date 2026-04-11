@@ -3,6 +3,43 @@
 {% block title %}Выбор курса - ЛиВА{% endblock %}
 
 {% block content %}
-     <h1>Выберете курс</h1>
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-9 col-12">
 
+        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
+            <div class="card-body p-4 p-md-5">
+
+                <!-- Заголовок -->
+                <div class="text-center mb-4">
+                    <div class="display-6 mb-2">📚</div>
+                    <h2 class="fw-bold" style="background: linear-gradient(135deg, #0d6efd, #6f42c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        Курсы
+                    </h2>
+                    <div class="small text-muted">Выбери направление и начни обучение</div>
+                </div>
+
+                <div class="d-flex flex-column gap-3">
+
+                    <!-- Курс Python -->
+                    <a href="/course/python" class="text-decoration-none">
+                        <div class="d-flex align-items-center gap-3 p-3 rounded-4 border shadow-sm hover-effect"
+                             style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                            <div class="display-4">🐍</div>
+                            <div>
+                                <h4 class="mb-1 text-dark">Основы программирования на Python</h4>
+                                <p class="text-muted small mb-0">Изучите самый популярный язык с нуля</p>
+                            </div>
+                            <div class="ms-auto">
+                                <i class="bi bi-arrow-right-circle fs-3 text-primary"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
 {% endblock %}
