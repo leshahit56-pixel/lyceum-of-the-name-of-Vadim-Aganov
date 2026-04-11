@@ -90,3 +90,20 @@ body.dark .hover-effect .text-muted {
 body.dark .hover-effect:hover {
     background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%) !important;
 }
+
+
+/*  блока результатов в тёмной теме */
+body.dark #resultBlock .border {
+    background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%) !important;
+    border-color: #2d2d44 !important;
+}
+
+body.dark #resultBlock h3,
+body.dark #resultBlock h5,
+body.dark #resultBlock p:not(.text-muted) {
+    color: #eee !important;
+}
+
+body.dark #resultBlock .text-muted {
+    color: #aaa !important;
+}
