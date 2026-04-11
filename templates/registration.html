@@ -3,28 +3,44 @@
     <div class="container-left">
         <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
                 <div class="card-body p-4 p-md-5 text-center">
-                    <div style="background: yellow; padding: 10px; margin: 10px;">
-    DEBUG: info = {{ info }}
-</div>
                     <form method="post" class="login-form">
                     <div class="mb-4">
-                        <h3>Введите почту</h3>
+                        <h1>Введите почту</h1>
                     </div>
                     <div class="mb-4">
                         <input type="email" name="email">
-                        <button type="submit" class="bth bth-primary">Отправить код</button>
+                        <button type="submit" class="btn btn-primary">Отправить код</button>
                         </div>
+                    </form>
                         {% if info  == 0 %}
 
                             <p style="color: red;">Введите email</p>
 
                         {% elif info == 1 %}
-                            <input type="text" class="form-control form-control-lg text-center" 
+                        <form class="login-form" method="post">
+                            <h2 class="mb-4">Введите ФИО</h2>
+                            <div class="mb-3">
+                                <input type="text" name="surname" class="form-control form-control-lg" placeholder="Фамилия" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" name="name" class="form-control form-control-lg" placeholder="Имя" required>
+                            </div>
+                            <div class="mb-4">
+                                <input type="text" name="patronymic" class="form-control form-control-lg" placeholder="Отчество" required>
+                            </div>
+                            <div class="code_form mb-4">
+                            <input name="verification_code" type="text" class="form-control form-control-lg text-center code-input" 
                                     maxlength="6" 
                                     pattern="\d*" 
                                     inputmode="numeric" 
                                     placeholder="000000">
-
+                                {% if code_cheker == 0 %}
+                                    <p style="color: red;">Неверный код</p>
+                                {% endif %}
+                            </div>
+                            
+                            <button name="action" value="verify" class="btn btn-success">Подтвердить</button>
+                        </form>
                         {% endif %}
 
 

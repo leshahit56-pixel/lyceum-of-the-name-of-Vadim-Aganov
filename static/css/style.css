@@ -16,7 +16,10 @@ body {
         margin-right: auto !important;
         padding-left: 300px;
     }
-
+.code-input {
+    max-width: 200px;   /* или любая другая фиксированная ширина */
+    margin: 0 auto;
+}
 /* Темная тема */
 body.dark {
     background: #1a1a2e !important;

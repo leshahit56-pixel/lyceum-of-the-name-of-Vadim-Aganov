@@ -3,6 +3,8 @@ import smtplib
 from email.message import EmailMessage
 import secrets
 import time
+from data.user import User
+from data import db_session
 
 app = Flask(__name__)
 app.secret_key = 'f8874661e03139f344aa90692fd4d642b1e7a89b9b817bba'
@@ -17,12 +19,39 @@ def hello_window():
 def register():
     if request.method == 'GET':
         session.pop('email_true', None)
-        return render_template('registration.html', info=None)
+        return render_template('registration.html', info=None, code_cheker=1)
     elif request.method == 'POST':
+        action = request.form.get('action')
+        if action == 'verify':
+            input_code = request.form.get('verification_code')
+            code_real = session.get('code', '')
+            if input_code:
+                if input_code == code_real:
+                    db_session.global_init('db/blogs.db')
+                    email = session.get('email', '')
+                    name = request.form.get('name')
+                    surname = request.form.get('surname')
+                    patronymic = request.form.get('patronymic')
+                    new_user = User()
+                    new_user.email = email
+                    new_user.name = name
+                    new_user.surname = surname
+                    new_user.patronymic = patronymic
+                    ses = db_session.create_session()
+                    ses.add(new_user)
+                    ses.commit()
+                    return render_template('election_course.html')
+                else:
+                    return render_template('registration.html', info=1, code_cheker=0)
+            else:
+                return render_template('registration.html', info=1, code_cheker=0)
         email = request.form.get('email', '').strip()
+        session['email'] = email
         if not session.get('email_true'):
             if email:
                 code = ''.join(str(secrets.randbelow(10)) for _ in range(6))
+                session['code'] = code
+                session['last_mess'] = time.time()
                 session['last_mail'] = time.time()
                 msg = EmailMessage()
                 msg.set_content(f"Код подтверждения: {code} ")
@@ -36,14 +65,15 @@ def register():
                     server.send_message(msg)
 
                 session['email_true'] = True
-                return render_template('registration.html', info=1)
+                return render_template('registration.html', info=1, code_cheker=1)
             else:
-                return render_template('registration.html', info=0)
+                return render_template('registration.html', info=0, code_cheker=1)
         else:
             if email:
                 last_mail = session.get('last_mail', 0)
                 if time.time() - last_mail > 10:
                     code = ''.join(str(secrets.randbelow(10)) for _ in range(6))
+                    session['code'] = code
                     msg = EmailMessage()
                     msg.set_content(f"Код подтверждения: {code}")
                     msg["Subject"] = f"Код {code}"
@@ -56,9 +86,9 @@ def register():
                         server.send_message(msg)
                         session['last_mail'] = time.time()
                 
-                return render_template('registration.html', info=1)
+                return render_template('registration.html', info=1, code_cheker=1)
             else:
-                return render_template('registration.html', info=1)
+                return render_template('registration.html', info=1, code_cheker=1)
 
 @app.route('/login')
 def login():
