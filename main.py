@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, request, session
+from flask import Flask, render_template, request, session, redirect
 import smtplib
 from email.message import EmailMessage
 import secrets
@@ -13,7 +13,7 @@ def hello_window():
     return render_template('hello_window.html')
 
 
-@app.route('/register', methods = ['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
         session.pop('email_true', None)
@@ -32,7 +32,7 @@ def register():
 
                 with smtplib.SMTP("smtp.gmail.com", 587) as server:
                     server.starttls()
-                    server.login("leshahit56@gmail.com", "extwxvadtwvdvgji") 
+                    server.login("leshahit56@gmail.com", "extwxvadtwvdvgji")
                     server.send_message(msg)
 
                 session['email_true'] = True
@@ -52,13 +52,14 @@ def register():
 
                     with smtplib.SMTP("smtp.gmail.com", 587) as server:
                         server.starttls()
-                        server.login("leshahit56@gmail.com", "extwxvadtwvdvgji")  
+                        server.login("leshahit56@gmail.com", "extwxvadtwvdvgji")
                         server.send_message(msg)
                         session['last_mail'] = time.time()
-                
+
                 return render_template('registration.html', info=1)
             else:
                 return render_template('registration.html', info=1)
+
 
 @app.route('/login')
 def login():
@@ -79,6 +80,18 @@ def settings():
 def profile():
     return "<h1>profile</h1>"
 
+
+@app.route('/course')
+def course():
+    return redirect('/election_course')
+
+@app.route('/course/python')
+def coursepython():
+    return "<h1>/course/python</h1>"
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1', debug=True)
