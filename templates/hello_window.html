@@ -74,4 +74,62 @@
 
     </div>
 </div>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // Находим кнопку профиля
+        const profileBtn = document.querySelector('button[onclick*="/profile"]');
+
+        // Находим кнопку настроек
+        const settingsBtn = document.querySelector('button[onclick*="/settings"]');
+
+        // Функция, которая показывает всплывающее окно
+        function showPopup(event) {
+            // Отменяем стандартное действие
+            event.preventDefault();
+            // Останавливаем всплытие события
+            event.stopPropagation();
+
+            const popup = document.createElement('div');
+            popup.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99999;display:flex;align-items:center;justify-content:center';
+
+            // СОЗДАЕМ  ОКНО С КНОПКАМИ
+            popup.innerHTML = `
+
+                <div style="background:white;border-radius:15px;padding:25px;width:350px;text-align:center;box-shadow:0 5px 20px rgba(0,0,0,0.3)">
+                    <!-- Крестик закрытия в правом верхнем углу -->
+                    <div style="text-align:right">
+                        <button class="close-popup" style="background:none;border:none;font-size:24px;cursor:pointer">&times;</button>
+                    </div>
+                    <!-- Заголовок -->
+                    <h3 style="margin-bottom:15px">🔐 Требуется авторизация</h3>
+                    <!-- Описание -->
+                    <p style="color:#666;margin-bottom:25px">Зарегистрируйтесь или войдите, чтобы продолжить</p>
+                    <!-- Кнопки: Регистрация и Вход -->
+                    <div style="display:flex;gap:15px;justify-content:center">
+                        <a href="/register" style="background:#0d6efd;color:white;padding:10px 25px;border-radius:30px;text-decoration:none">Регистрация</a>
+                        <a href="/login" style="background:transparent;color:#0d6efd;padding:10px 25px;border-radius:30px;text-decoration:none;border:1px solid #0d6efd">Вход</a>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(popup);
+
+            // ПРИ КЛИКЕ НА КРЕСТИК - УДАЛЯЕМ ОКНО
+            popup.querySelector('.close-popup').onclick = function() {
+                popup.remove();  // Удаляем затемнение и окно со страницы
+            };
+        }
+
+        // ПРИВЯЗЫВАЕМ ФУНКЦИЮ ПОКАЗА ОКНА
+        if (profileBtn) profileBtn.onclick = showPopup;
+
+        // ПРИВЯЗЫВАЕМ ФУНКЦИЮ ПОКАЗА ОКНА
+        if (settingsBtn) settingsBtn.onclick = showPopup;
+    });
+</script>
+{% endblock %}
+
 {% endblock %}
