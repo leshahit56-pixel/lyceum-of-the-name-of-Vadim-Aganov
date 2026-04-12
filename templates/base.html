@@ -22,14 +22,17 @@
     </div>
 
     <!-- Панель с кнопками -->
-    <div class="d-flex align-items-center gap-3 bg-dark bg-opacity-25 rounded-4 px-4 py-3" style="backdrop-filter: blur(5px);">
+    <div class="d-flex align-items-center gap-3 bg-dark bg-opacity-25 rounded-4 px-4 py-3"
+         style="backdrop-filter: blur(5px);">
 
         <!-- Кнопка темы -->
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-light" onclick="setTheme('light')" style="border-top-left-radius: 25px; border-bottom-left-radius: 25px; padding: 8px 15px;">
+            <button type="button" class="btn btn-light" onclick="setTheme('light')"
+                    style="border-top-left-radius: 25px; border-bottom-left-radius: 25px; padding: 8px 15px;">
                 ☀️
             </button>
-            <button type="button" class="btn btn-light" onclick="setTheme('dark')" style="border-top-right-radius: 25px; border-bottom-right-radius: 25px; padding: 8px 15px;">
+            <button type="button" class="btn btn-light" onclick="setTheme('dark')"
+                    style="border-top-right-radius: 25px; border-bottom-right-radius: 25px; padding: 8px 15px;">
                 🌙
             </button>
         </div>
@@ -65,24 +68,24 @@
 
 <!-- Скрипт для сохранения темы -->
 <script>
-// Функция установки темы
-function setTheme(theme) {
-    if (theme === 'dark') {
+    // Функция установки темы
+    function setTheme(theme) {
+        if (theme === 'dark') {
+            document.body.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    // При загрузке страницы - применяем сохраненную тему
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
         document.body.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
     } else {
         document.body.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
     }
-}
-
-// При загрузке страницы - применяем сохраненную тему
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-    document.body.classList.add('dark');
-} else {
-    document.body.classList.remove('dark');
-}
 </script>
 
 {% block extra_js %}{% endblock %}

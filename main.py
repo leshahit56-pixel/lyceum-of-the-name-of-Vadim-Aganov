@@ -85,7 +85,7 @@ def register():
                         server.login("leshahit56@gmail.com", "extwxvadtwvdvgji")
                         server.send_message(msg)
                         session['last_mail'] = time.time()
-                
+
                 return render_template('registration.html', info=1, code_cheker=1)
 
             else:
@@ -116,17 +116,46 @@ def profile():
 def course():
     return redirect('/election_course')
 
+
 @app.route('/course/python')
 def coursepython():
     return "<h1>/course/python</h1>"
+
 
 @app.route('/test')
 def test_selection():
     return render_template('test_selection.html')
 
+
 @app.route('/test/1')
 def test_1():
     return render_template('test_1.html')
+
+
+@app.route('/test/2')
+def test_2():
+    return render_template('test_2.html')
+
+
+@app.route('/test/3')
+def test_3():
+    return render_template('test_3.html')
+
+
+@app.route('/test/4')
+def test_4():
+    return render_template('test_4.html')
+
+
+@app.route('/test/5')
+def test_5():
+    return render_template('test_5.html')
+
+
+@app.route('/test/6')
+def test_6():
+    return render_template('test_6.html')
+
 
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1', debug=True)

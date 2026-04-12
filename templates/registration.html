@@ -29,16 +29,16 @@
                                 <input type="text" name="patronymic" class="form-control form-control-lg" placeholder="Отчество" required>
                             </div>
                             <div class="code_form mb-4">
-                            <input name="verification_code" type="text" class="form-control form-control-lg text-center code-input" 
-                                    maxlength="6" 
-                                    pattern="\d*" 
-                                    inputmode="numeric" 
+                            <input name="verification_code" type="text" class="form-control form-control-lg text-center code-input"
+                                    maxlength="6"
+                                    pattern="\d*"
+                                    inputmode="numeric"
                                     placeholder="000000">
                                 {% if code_cheker == 0 %}
                                     <p style="color: red;">Неверный код</p>
                                 {% endif %}
                             </div>
-                            
+
                             <button name="action" value="verify" class="btn btn-success">Подтвердить</button>
                         </form>
                         {% endif %}
@@ -48,7 +48,7 @@
                     </form>
                 </div>
 
-    
+
         </div>
     </div>
     {% endblock %}

@@ -1,0 +1,385 @@
+{% extends "base2.html" %}
+
+{% block title %}Тест №3 - Уверенный пользователь - ЛиВА{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-9 col-12">
+
+        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
+            <div class="card-body p-4 p-md-5">
+
+                <!-- Заголовок -->
+                <div class="text-center mb-4">
+                    <div class="display-6 mb-2">🍀</div>
+                    <h2 class="fw-bold mb-2"
+                        style="background: linear-gradient(135deg, #0d6efd, #6f42c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        Тест №3: «Уверенный пользователь»
+                    </h2>
+                    <p class="text-muted">Средний уровень • 4-8 месяцев • 15 вопросов</p>
+                    <div class="mt-2">
+                        <span class="badge bg-success px-3 py-2 me-2">3 оч. лёгких</span>
+                        <span class="badge bg-info px-3 py-2 me-2">4 лёгких</span>
+                        <span class="badge bg-warning px-3 py-2 me-2">4 средних</span>
+                        <span class="badge bg-danger px-3 py-2 me-2">3 сложных</span>
+                        <span class="badge bg-dark px-3 py-2">1 оч. сложный</span>
+                    </div>
+                </div>
+
+                <form id="testForm" onsubmit="checkAnswers(event)">
+
+                    <!-- Очень лёгкие вопросы (1-3) -->
+                    <div class="mb-3 mt-4"><span class="badge bg-success">🌱 Очень лёгкие вопросы</span></div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">1. Какой блок выполняется всегда, даже если произошла ошибка?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1"
+                                                            value="a"><label>try</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1"
+                                                            value="b"><label>except</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1"
+                                                            value="c"><label>finally</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1"
+                                                            value="d"><label>else</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">2. Какой метод вызывается при создании объекта класса?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2"
+                                                            value="a"><label>__str__</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2"
+                                                            value="b"><label>__init__</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2"
+                                                            value="c"><label>__call__</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2"
+                                                            value="d"><label>__del__</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">3. Какая команда Git показывает статус репозитория?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3"
+                                                            value="a"><label>git commit</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3"
+                                                            value="b"><label>git status</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3"
+                                                            value="c"><label>git push</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3"
+                                                            value="d"><label>git log</label></div>
+                    </div>
+
+                    <!-- Лёгкие вопросы (4-7) -->
+                    <div class="mb-3 mt-4"><span class="badge bg-info text-white">🍀 Лёгкие вопросы</span></div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">4. Что выведет код?</h5>
+                        <pre class="bg-light p-3 rounded"><code>try:
+    x = int("abc")
+except ValueError:
+    print("Ошибка преобразования")</code></pre>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4"
+                                                            value="a"><label>Ошибка преобразования</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4"
+                                                            value="b"><label>Ошибка программы</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4"
+                                                            value="c"><label>Ничего</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4"
+                                                            value="d"><label>abc</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">5. Что такое класс в Python?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5"
+                                                            value="a"><label>Функция</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5"
+                                                            value="b"><label>Переменная</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5"
+                                                            value="c"><label>Шаблон для создания объектов</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5"
+                                                            value="d"><label>Библиотека</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">6. Какая команда Git создаёт новый репозиторий?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6"
+                                                            value="a"><label>git init</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6"
+                                                            value="b"><label>git start</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6"
+                                                            value="c"><label>git new</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6"
+                                                            value="d"><label>git create</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">7. Какой метод отправляет GET-запрос в библиотеке requests?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7"
+                                                            value="a"><label>requests.send()</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7"
+                                                            value="b"><label>requests.get()</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7"
+                                                            value="c"><label>requests.post()</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7"
+                                                            value="d"><label>requests.request()</label></div>
+                    </div>
+
+                    <!-- Средние вопросы (8-11) -->
+                    <div class="mb-3 mt-4"><span class="badge bg-warning text-dark">⚡ Средние вопросы</span></div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">8. Что выведет код?</h5>
+                        <pre class="bg-light p-3 rounded"><code>class Dog:
+    def __init__(self, name):
+        self.name = name
+    def speak(self):
+        return f"{self.name} says Гав!"
+
+d = Dog("Шарик")
+print(d.speak())</code></pre>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8"
+                                                            value="a"><label>Dog says Гав!</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8"
+                                                            value="b"><label>Шарик says Гав!</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8"
+                                                            value="c"><label>Ошибка</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8"
+                                                            value="d"><label>None</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">9. Что выведет код?</h5>
+                        <pre class="bg-light p-3 rounded"><code>try:
+    print(10 / 0)
+except ZeroDivisionError:
+    print("На ноль делить нельзя")
+except Exception:
+    print("Другая ошибка")</code></pre>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q9"
+                                                            value="a"><label>На ноль делить нельзя</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q9"
+                                                            value="b"><label>Другая ошибка</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q9"
+                                                            value="c"><label>Ошибка программы</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q9"
+                                                            value="d"><label>None</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">10. Какой статус HTTP означает «Успешно» (OK)?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q10"
+                                                            value="a"><label>200</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q10"
+                                                            value="b"><label>404</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q10"
+                                                            value="c"><label>500</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q10"
+                                                            value="d"><label>301</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">11. Какая команда в командной строке выводит список файлов
+                            (Linux/Mac)?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q11"
+                                                            value="a"><label>dir</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q11"
+                                                            value="b"><label>ls</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q11"
+                                                            value="c"><label>list</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q11"
+                                                            value="d"><label>show</label></div>
+                    </div>
+
+                    <!-- Сложные вопросы (12-14) -->
+                    <div class="mb-3 mt-4"><span class="badge bg-danger">🔥 Сложные вопросы</span></div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">12. Что выведет код?</h5>
+                        <pre class="bg-light p-3 rounded"><code>class A:
+    def __init__(self):
+        self.x = 1
+
+class B(A):
+    def __init__(self):
+        super().__init__()
+        self.x += 1
+
+b = B()
+print(b.x)</code></pre>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q12"
+                                                            value="a"><label>1</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q12"
+                                                            value="b"><label>2</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q12"
+                                                            value="c"><label>Ошибка</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q12"
+                                                            value="d"><label>None</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">13. Какой результат?</h5>
+                        <pre class="bg-light p-3 rounded"><code>try:
+    raise ValueError("Ошибка")
+except ValueError as e:
+    print(f"Поймали: {e}")
+finally:
+    print("Finally")</code></pre>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q13"
+                                                            value="a"><label>Поймали: Ошибка и Finally</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q13"
+                                                            value="b"><label>Только Finally</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q13"
+                                                            value="c"><label>Только Поймали: Ошибка</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q13"
+                                                            value="d"><label>Ошибка</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">14. Что выведет код?</h5>
+                        <pre class="bg-light p-3 rounded"><code>class Parent:
+    def __init__(self):
+        self.value = 10
+
+class Child(Parent):
+    def __init__(self):
+        super().__init__()
+        self.value += 5
+    def get_value(self):
+        return self.value
+
+obj = Child()
+print(obj.get_value())</code></pre>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q14"
+                                                            value="a"><label>10</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q14"
+                                                            value="b"><label>15</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q14"
+                                                            value="c"><label>Ошибка</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q14"
+                                                            value="d"><label>None</label></div>
+                    </div>
+
+                    <!-- Очень сложный вопрос (15) -->
+                    <div class="mb-3 mt-4"><span class="badge bg-dark">💀 Очень сложный вопрос</span></div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">15. Что произойдёт при выполнении этого кода?</h5>
+                        <pre class="bg-light p-3 rounded"><code>class A:
+    def __init__(self):
+        self.value = 1
+
+class B(A):
+    def __init__(self):
+        self.value = 2
+        super().__init__()
+
+b = B()
+print(b.value)</code></pre>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q15"
+                                                            value="a"><label>1</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q15"
+                                                            value="b"><label>2</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q15"
+                                                            value="c"><label>Ошибка</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q15"
+                                                            value="d"><label>None</label></div>
+                    </div>
+
+                    <!-- Кнопка -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill">
+                            <i class="bi bi-check-lg"></i> Проверить ответы
+                        </button>
+                    </div>
+
+                </form>
+
+                <div id="resultBlock" style="display: none;" class="mt-4 p-4 rounded-4 text-center"></div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function checkAnswers(event) {
+        event.preventDefault();
+
+        const correct = {
+            q1: 'c', q2: 'b', q3: 'b', q4: 'a', q5: 'c',
+            q6: 'a', q7: 'b', q8: 'b', q9: 'a', q10: 'a',
+            q11: 'b', q12: 'b', q13: 'a', q14: 'b', q15: 'a'
+        };
+
+        let veryEasy = 0, easy = 0, medium = 0, hard = 0, expert = 0;
+
+        for (let i = 1; i <= 3; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && selected.value === correct[`q${i}`]) veryEasy++;
+        }
+
+        for (let i = 4; i <= 7; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && selected.value === correct[`q${i}`]) easy++;
+        }
+
+        for (let i = 8; i <= 11; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && selected.value === correct[`q${i}`]) medium++;
+        }
+
+        for (let i = 12; i <= 14; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && selected.value === correct[`q${i}`]) hard++;
+        }
+
+        const selected = document.querySelector(`input[name="q15"]:checked`);
+        if (selected && selected.value === correct['q15']) expert++;
+
+        const total = veryEasy + easy + medium + hard + expert;
+        const percent = Math.round((total / 15) * 100);
+
+        let grade = '', emoji = '';
+
+        if (total >= 13) { grade = 'Отлично! Ты уверенный пользователь Python!'; emoji = '🎉🏆👑'; }
+        else if (total >= 10) { grade = 'Хорошо! Ещё немного и будет уровень Junior'; emoji = '👍🍀✨'; }
+        else if (total >= 7) { grade = 'Средне! Повтори ООП и исключения'; emoji = '📚💪🌿'; }
+        else { grade = 'Вернись к тестам №1-2 и повтори основы'; emoji = '🐣📖🔄'; }
+
+        const resultBlock = document.getElementById('resultBlock');
+        resultBlock.innerHTML = `
+            <div class="border rounded-4 p-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                <div class="display-3 mb-2">${emoji}</div>
+                <h3 class="fw-bold" style="color: #0d6efd;">${total}/15 правильных ответов</h3>
+
+                <div class="row mt-4 justify-content-center">
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-success mb-1">🌱 Оч. лёгкие</span><h5>${veryEasy}/3</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-info text-white mb-1">🍀 Лёгкие</span><h5>${easy}/4</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-warning text-dark mb-1">⚡ Средние</span><h5>${medium}/4</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-danger mb-1">🔥 Сложные</span><h5>${hard}/3</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-dark mb-1">💀 Оч. сложные</span><h5>${expert}/1</h5></div></div>
+                </div>
+
+                <p class="mt-3 fs-5">${grade}</p>
+                <p class="text-muted">Процент правильных ответов: ${percent}%</p>
+                <div class="mt-3">
+                    <button onclick="resetTest()" class="btn btn-outline-primary rounded-pill px-4 me-2">
+                        <i class="bi bi-arrow-repeat"></i> Пройти заново
+                    </button>
+                    <a href="/test" class="btn btn-primary rounded-pill px-4">
+                        <i class="bi bi-arrow-left"></i> К выбору теста
+                    </a>
+                </div>
+            </div>
+        `;
+        resultBlock.style.display = 'block';
+        resultBlock.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetTest() {
+        document.getElementById('testForm').reset();
+        document.getElementById('resultBlock').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+{% endblock %}

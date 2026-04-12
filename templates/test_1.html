@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 
 {% block title %}Тест №1 - Первые шаги - ЛиВА{% endblock %}
 
@@ -12,7 +12,8 @@
                 <!-- Заголовок -->
                 <div class="text-center mb-4">
                     <div class="display-6 mb-2">🌱</div>
-                    <h2 class="fw-bold mb-2" style="background: linear-gradient(135deg, #0d6efd, #6f42c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    <h2 class="fw-bold mb-2"
+                        style="background: linear-gradient(135deg, #0d6efd, #6f42c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                         Тест №1: «Первые шаги»
                     </h2>
                     <p class="text-muted">Абсолютный новичок • 8 вопросов</p>
@@ -30,46 +31,67 @@
                     <!-- Вопрос 1 -->
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">1. Какой оператор используется для проверки условия «если»?</h5>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="a"><label>for</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="b"><label>if</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="c"><label>while</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="d"><label>break</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1"
+                                                            value="a"><label>for</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1"
+                                                            value="b"><label>if</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1"
+                                                            value="c"><label>while</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1"
+                                                            value="d"><label>break</label></div>
                     </div>
 
                     <!-- Вопрос 2 -->
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">2. Сколько раз выполнится цикл for i in range(4):?</h5>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2" value="a"><label>3</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2" value="b"><label>4</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2" value="c"><label>5</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2" value="d"><label>Бесконечно</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2"
+                                                            value="a"><label>3</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2"
+                                                            value="b"><label>4</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2"
+                                                            value="c"><label>5</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2"
+                                                            value="d"><label>Бесконечно</label></div>
                     </div>
 
                     <!-- Вопрос 3 -->
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">3. Какое значение у выражения True and False?</h5>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3" value="a"><label>True</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3" value="b"><label>False</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3" value="c"><label>0</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3" value="d"><label>1</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3"
+                                                            value="a"><label>True</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3"
+                                                            value="b"><label>False</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3"
+                                                            value="c"><label>0</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3"
+                                                            value="d"><label>1</label></div>
                     </div>
 
                     <!-- Вопрос 4 -->
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">4. Для чего нужен оператор break?</h5>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4" value="a"><label>Для пропуска итерации</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4" value="b"><label>Для досрочного выхода из цикла</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4" value="c"><label>Для запуска цикла заново</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4" value="d"><label>Для завершения программы</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4"
+                                                            value="a"><label>Для пропуска итерации</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4"
+                                                            value="b"><label>Для досрочного выхода из цикла</label>
+                        </div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4"
+                                                            value="c"><label>Для запуска цикла заново</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4"
+                                                            value="d"><label>Для завершения программы</label></div>
                     </div>
 
                     <!-- Вопрос 5 -->
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">5. Какой цикл выполняется, пока условие истинно?</h5>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5" value="a"><label>for</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5" value="b"><label>while</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5" value="c"><label>if</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5" value="d"><label>else</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5"
+                                                            value="a"><label>for</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5"
+                                                            value="b"><label>while</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5"
+                                                            value="c"><label>if</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5"
+                                                            value="d"><label>else</label></div>
                     </div>
 
                     <!-- Лёгкие вопросы (6-8) -->
@@ -85,19 +107,28 @@ elif x == 10:
     print("B")
 else:
     print("C")</code></pre>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="a"><label>Выведется A</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="b"><label>Выведется B</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="c"><label>Выведется C</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="d"><label>Ничего не выведется</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6"
+                                                            value="a"><label>Выведется A</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6"
+                                                            value="b"><label>Выведется B</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6"
+                                                            value="c"><label>Выведется C</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6"
+                                                            value="d"><label>Ничего не выведется</label></div>
                     </div>
 
                     <!-- Вопрос 7 -->
                     <div class="mb-4 p-3 rounded-4 border">
-                        <h5 class="fw-bold mb-3">7. Какое условие нужно написать, чтобы проверить, что a больше 5 и b меньше 10?</h5>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7" value="a"><label>a > 5 or b < 10</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7" value="b"><label>a > 5 and b < 10</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7" value="c"><label>a > 5 b < 10</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7" value="d"><label>a > 5 && b < 10</label></div>
+                        <h5 class="fw-bold mb-3">7. Какое условие нужно написать, чтобы проверить, что a больше 5 и b
+                            меньше 10?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7"
+                                                            value="a"><label>a > 5 or b < 10</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7"
+                                                            value="b"><label>a > 5 and b < 10</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7"
+                                                            value="c"><label>a > 5 b < 10</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7"
+                                                            value="d"><label>a > 5 && b < 10</label></div>
                     </div>
 
                     <!-- Вопрос 8 -->
@@ -107,10 +138,14 @@ else:
     if i == 2:
         break
     print(i)</code></pre>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="a"><label>0 1</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="b"><label>0 1 2</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="c"><label>1 2</label></div>
-                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="d"><label>0 1 2 3 4</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8"
+                                                            value="a"><label>0 1</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8"
+                                                            value="b"><label>0 1 2</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8"
+                                                            value="c"><label>1 2</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8"
+                                                            value="d"><label>0 1 2 3 4</label></div>
                     </div>
 
                     <!-- Кнопка -->
@@ -131,70 +166,70 @@ else:
 </div>
 
 <script>
-function checkAnswers(event) {
-    event.preventDefault();
+    function checkAnswers(event) {
+        event.preventDefault();
 
-    const correct = {
-        q1: 'b', q2: 'b', q3: 'b', q4: 'b', q5: 'b',
-        q6: 'b', q7: 'b', q8: 'a'
-    };
+        const correct = {
+            q1: 'b', q2: 'b', q3: 'b', q4: 'b', q5: 'b',
+            q6: 'b', q7: 'b', q8: 'a'
+        };
 
-    let veryEasy = 0, easy = 0;
+        let veryEasy = 0, easy = 0;
 
-    // Очень лёгкие (1-5)
-    for (let i = 1; i <= 5; i++) {
-        const selected = document.querySelector(`input[name="q${i}"]:checked`);
-        if (selected && selected.value === correct[`q${i}`]) veryEasy++;
+        // Очень лёгкие (1-5)
+        for (let i = 1; i <= 5; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && selected.value === correct[`q${i}`]) veryEasy++;
+        }
+
+        // Лёгкие (6-8)
+        for (let i = 6; i <= 8; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && selected.value === correct[`q${i}`]) easy++;
+        }
+
+        const total = veryEasy + easy;
+        const percent = Math.round((total / 8) * 100);
+
+        let grade = '', emoji = '';
+
+        if (total === 8) { grade = 'Отлично! Ты освоил основы!'; emoji = '🎉🌟🏆'; }
+        else if (total >= 6) { grade = 'Хорошо! Ещё немного практики'; emoji = '👍🌱✨'; }
+        else if (total >= 4) { grade = 'Неплохо! Повтори темы и попробуй снова'; emoji = '📚💪🌿'; }
+        else { grade = 'Не расстраивайся! Изучи основы и возвращайся'; emoji = '🐣📖🌟'; }
+
+        const resultBlock = document.getElementById('resultBlock');
+        resultBlock.innerHTML = `
+            <div class="border rounded-4 p-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                <div class="display-3 mb-2">${emoji}</div>
+                <h3 class="fw-bold" style="color: #0d6efd;">${total}/8 правильных ответов</h3>
+
+                <div class="row mt-4 justify-content-center">
+                    <div class="col-6 col-md-4 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-success mb-1">🌱 Очень лёгкие</span><h5>${veryEasy}/5</h5></div></div>
+                    <div class="col-6 col-md-4 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-info text-white mb-1">🍀 Лёгкие</span><h5>${easy}/3</h5></div></div>
+                </div>
+
+                <p class="mt-3 fs-5">${grade}</p>
+                <p class="text-muted">Процент правильных ответов: ${percent}%</p>
+                <div class="mt-3">
+                    <button onclick="resetTest()" class="btn btn-outline-primary rounded-pill px-4 me-2">
+                        <i class="bi bi-arrow-repeat"></i> Пройти заново
+                    </button>
+                    <a href="/test" class="btn btn-primary rounded-pill px-4">
+                        <i class="bi bi-arrow-left"></i> К выбору теста
+                    </a>
+                </div>
+            </div>
+        `;
+        resultBlock.style.display = 'block';
+        resultBlock.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Лёгкие (6-8)
-    for (let i = 6; i <= 8; i++) {
-        const selected = document.querySelector(`input[name="q${i}"]:checked`);
-        if (selected && selected.value === correct[`q${i}`]) easy++;
+    function resetTest() {
+        document.getElementById('testForm').reset();
+        document.getElementById('resultBlock').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    const total = veryEasy + easy;
-    const percent = Math.round((total / 8) * 100);
-
-    let grade = '', emoji = '';
-
-    if (total === 8) { grade = 'Отлично! Ты освоил основы!'; emoji = '🎉🌟🏆'; }
-    else if (total >= 6) { grade = 'Хорошо! Ещё немного практики'; emoji = '👍🌱✨'; }
-    else if (total >= 4) { grade = 'Неплохо! Повтори темы и попробуй снова'; emoji = '📚💪🌿'; }
-    else { grade = 'Не расстраивайся! Изучи основы и возвращайся'; emoji = '🐣📖🌟'; }
-
-    const resultBlock = document.getElementById('resultBlock');
-    resultBlock.innerHTML = `
-        <div class="border rounded-4 p-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-            <div class="display-3 mb-2">${emoji}</div>
-            <h3 class="fw-bold" style="color: #0d6efd;">${total}/8 правильных ответов</h3>
-
-            <div class="row mt-4 justify-content-center">
-                <div class="col-6 col-md-4 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-success mb-1">🌱 Очень лёгкие</span><h5>${veryEasy}/5</h5></div></div>
-                <div class="col-6 col-md-4 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-info text-white mb-1">🍀 Лёгкие</span><h5>${easy}/3</h5></div></div>
-            </div>
-
-            <p class="mt-3 fs-5">${grade}</p>
-            <p class="text-muted">Процент правильных ответов: ${percent}%</p>
-            <div class="mt-3">
-                <button onclick="resetTest()" class="btn btn-outline-primary rounded-pill px-4 me-2">
-                    <i class="bi bi-arrow-repeat"></i> Пройти заново
-                </button>
-                <a href="/test" class="btn btn-primary rounded-pill px-4">
-                    <i class="bi bi-arrow-left"></i> К выбору теста
-                </a>
-            </div>
-        </div>
-    `;
-    resultBlock.style.display = 'block';
-    resultBlock.scrollIntoView({ behavior: 'smooth' });
-}
-
-function resetTest() {
-    document.getElementById('testForm').reset();
-    document.getElementById('resultBlock').style.display = 'none';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
 </script>
 
 {% endblock %}
