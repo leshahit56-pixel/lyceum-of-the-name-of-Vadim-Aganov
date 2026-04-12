@@ -120,13 +120,13 @@ def course():
 def coursepython():
     return "<h1>/course/python</h1>"
 
-@app.route('/test_selection')
+@app.route('/test')
 def test_selection():
     return render_template('test_selection.html')
 
-@app.route('/test/<int:level>')
-def take_test(level):
-    return f"<h1>Тест уровня {level}</h1><p>Здесь будет тест №{level}</p>"
+@app.route('/test/1')
+def test_1():
+    return render_template('test_1.html')
 
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1', debug=True)
