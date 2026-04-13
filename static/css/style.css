@@ -87,6 +87,7 @@ body.dark .hover-effect .text-muted {
 body.dark .hover-effect:hover {
     background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%) !important;
 }
+<<<<<<< HEAD
 .registration-wrapper {
     display: flex;
     justify-content: center;
@@ -291,4 +292,77 @@ h1 {
 
 .text-muted {
     color: #718096 !important;
+=======
+
+
+/*  блока результатов в тёмной теме */
+body.dark #resultBlock .border {
+    background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%) !important;
+    border-color: #2d2d44 !important;
+}
+
+body.dark #resultBlock h3,
+body.dark #resultBlock h5,
+body.dark #resultBlock p:not(.text-muted) {
+    color: #eee !important;
+}
+
+body.dark #resultBlock .text-muted {
+    color: #aaa !important;
+}
+
+
+/* Тёмная тема для модального окна */
+body.dark .modal-content {
+    background: #16213e !important;
+    color: #eee !important;
+    border-color: #2d2d44 !important;
+}
+
+body.dark .modal-header {
+    border-bottom-color: #2d2d44 !important;
+}
+
+body.dark .modal-footer {
+    border-top-color: #2d2d44 !important;
+}
+
+body.dark .btn-close {
+    filter: invert(1);
+}
+
+body.dark .bio-section h5 {
+    color: #66b0ff !important;
+}
+
+body.dark .modal-content .lead {
+    color: #03dac6 !important;
+}
+
+body.dark .modal-content .text-muted {
+    color: #aaa !important;
+}
+
+body.dark .btn-secondary {
+    background-color: #2a2a40 !important;
+    border-color: #3a3a50 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark .btn-secondary:hover {
+    background-color: #3a3a50 !important;
+}
+
+/* Фикс для надписи о разрешении */
+.bio-content .text-end {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 5px !important;
+}
+
+.bio-content hr {
+    margin-top: 20px !important;
+    margin-bottom: 15px !important;
+>>>>>>> 5c29d9483e7149a8ef01303aca306dd863d5c444
 }

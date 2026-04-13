@@ -1,82 +1,99 @@
 {% extends "base2.html" %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/registration.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 {% endblock %}
 
 {% block content %}
-<div class="registration-wrapper">
-    <div class="registration-card shadow-lg animated fadeIn">
+<div class="auth-card-container animate-fade-in-up">
+    <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95" style="max-width: 450px; width: 100%;">
         
-        <div class="card-header-custom text-center">
-            <div class="brand-logo">🐍</div>
-            <h2 class="fw-bold">Присоединяйтесь к ЛиВА</h2>
-            <p class="text-subtitle">Ваш путь в мир Python начинается здесь</p>
-        </div>
+        <div class="card-body p-4 p-md-5 text-center">
+            <div class="brand-logo mb-2" style="font-size: 3rem;">🐍</div>
+            <h2 class="fw-bold mb-1">Регистрация</h2>
+            <p class="text-muted small mb-4">Присоединяйтесь к ЛиВА</p>
 
-        <div class="card-body-custom">
-            <form method="post" class="auth-form {% if info is not none %}d-none{% endif %}" onsubmit="disableButton(this)">
-                <span class="step-indicator">Шаг 1 из 2</span>
-                <div class="input-group-custom">
-                    <label class="form-label fw-bold">Электронная почта</label>
+            {# ШАГ 1: Ввод почты #}
+            {% if info is none %}
+            <form method="post" class="auth-form" onsubmit="disableButton(this)">
+                <div class="text-start mb-4">
+                    <span class="badge bg-primary mb-2">Шаг 1 из 2</span>
+                    <label class="form-label d-block fw-semibold small text-muted ms-1">ЭЛЕКТРОННАЯ ПОЧТА</label>
                     <div class="position-relative">
                         <input type="email" name="email" 
                             value="{{ session.get('email', '') }}" 
-                            class="form-control-custom {% if email_exists %}is-invalid{% endif %}" 
+                            class="form-control {% if email_exists or info == 0 %}is-invalid{% endif %}" 
                             placeholder="example@gmail.com" required>
-                        <i class="bi bi-envelope input-icon"></i>
                     </div>
 
                     {% if email_exists %}
-                    <div class="invalid-feedback" style="display: block; color: #dc3545; font-size: 0.875em; margin-top: 0.25rem;">
-                        Эта почта уже зарегистрирована!
-                    </div>
+                        <div class="invalid-feedback" style="display: block;">
+                            Эта почта уже зарегистрирована!
+                        </div>
                     {% endif %}
+                    
                     {% if info == 0 %}
-                        <span class="error-text animated shake">Введите корректный email</span>
+                        <div class="invalid-feedback animated shake" style="display: block;">
+                            Введите корректный email
+                        </div>
                     {% endif %}
                 </div>
-                <button type="submit" id="submitBtn" class="btn-action mt-3">
+
+                <button type="submit" id="submitBtn" class="btn-action">
                     <span>Отправить код</span>
                     <i class="bi bi-arrow-right"></i>
                 </button>
             </form>
-            <script>
-                function disableButton(form) {
-                    const btn = form.querySelector('#submitBtn');
-                    btn.disabled = true; // Выключаем кнопку
-                    btn.innerHTML = '<span>Отправка...</span>'; // Меняем текст
-                }
-            </script>
+            {% endif %}
 
+            {# ШАГ 2: Ввод ФИО и кода #}
             {% if info == 1 %}
-            <form class="auth-form animated fadeIn" method="post">
-                <span class="step-indicator">Шаг 2 из 2</span>
-                <div class="row g-2 mb-3">
-                    <div class="col-12">
-                        <input type="text" name="surname" class="form-control-custom" placeholder="Фамилия" required>
+            <form class="auth-form animate-fade-in-up" method="post">
+                <div class="text-start mb-4">
+                    <span class="badge bg-success mb-3">Шаг 2 из 2</span>
+                    
+                    <div class="row g-2 mb-3">
+                        <div class="col-12">
+                            <input type="text" name="surname" class="form-control" placeholder="Фамилия" required>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" name="name" class="form-control" placeholder="Имя" required>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" name="patronymic" class="form-control" placeholder="Отчество" required>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <input type="text" name="name" class="form-control-custom" placeholder="Имя" required>
-                    </div>
-                    <div class="col-6">
-                        <input type="text" name="patronymic" class="form-control-custom" placeholder="Отчество" required>
+
+                    <div class="verification-section text-center p-3 bg-light rounded-3">
+                        <label class="form-label fw-bold d-block mb-2">Код из письма</label>
+                        <input name="verification_code" type="text" 
+                               class="form-control text-center code-input-styled mx-auto {% if code_cheker == 0 %}is-invalid{% endif %}" 
+                               maxlength="6" placeholder="000000" required>
+                        
+                        {% if code_cheker == 0 %}
+                            <div class="invalid-feedback" style="display: block;">Неверный код</div>
+                        {% endif %}
                     </div>
                 </div>
-                <div class="verification-section text-center">
-                    <label class="form-label fw-bold">Код из письма</label>
-                    <input name="verification_code" type="text" class="form-control-custom text-center code-input-styled mx-auto" maxlength="6" placeholder="000000">
-                    {% if code_cheker == 0 %}
-                        <p class="error-text mt-2">Неверный код</p>
-                    {% endif %}
-                </div>
-                <button name="action" value="verify" type="submit" class="btn-action success mt-3">
-                    <span>Завершить</span>
+
+                <button name="action" value="verify" type="submit" class="btn-action success">
+                    <span>Завершить регистрацию</span>
                     <i class="bi bi-check-circle"></i>
                 </button>
             </form>
             {% endif %}
+
         </div>
     </div>
 </div>
+
+<script>
+    function disableButton(form) {
+        const btn = form.querySelector('#submitBtn');
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<span>Отправка...</span>';
+        }
+    }
+</script>
 {% endblock %}

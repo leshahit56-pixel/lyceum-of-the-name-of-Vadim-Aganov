@@ -1,0 +1,230 @@
+{% extends "base2.html" %}
+
+{% block title %}Выбор теста - ЛиВА{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12">
+
+        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
+            <div class="card-body p-4 p-md-5">
+
+                <!-- Заголовок -->
+                <div class="text-center mb-5">
+                    <div class="display-4 mb-3">📝</div>
+                    <h2 class="fw-bold mb-2"
+                        style="background: linear-gradient(135deg, #0d6efd, #6f42c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        Тесты по Python
+                    </h2>
+                    <p class="text-muted">Выбери свой уровень и проверь знания</p>
+                </div>
+
+                <!-- Карточки тестов -->
+                <div class="row g-4">
+
+                    <!-- ТЕСТ №1 - Новичок -->
+                    <div class="col-md-6 col-lg-4">
+                        <a href="/test/1" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm hover-effect" style="border-radius: 20px;">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="display-6 me-3">🌱</div>
+                                        <div>
+                                            <span class="badge bg-success mb-2 px-3 py-2">Новичок</span>
+                                            <h4 class="fw-bold mb-0 text-dark">Тест №1</h4>
+                                        </div>
+                                    </div>
+                                    <h5 class="mb-3 text-dark">«Первые шаги»</h5>
+                                    <p class="text-muted small mb-3">Для тех, кто только начал (0-2 месяца)</p>
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="small text-secondary">📊 8 вопросов</div>
+                                            <div class="small text-secondary mt-1">
+                                                <span class="badge bg-success me-1">5</span> оч. лёгких
+                                                <span class="badge bg-info me-1">3</span> лёгких
+                                            </div>
+                                        </div>
+                                        <i class="bi bi-arrow-right-circle fs-3 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- ТЕСТ №2 - Базовый -->
+                    <div class="col-md-6 col-lg-4">
+                        <a href="/test/2" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm hover-effect" style="border-radius: 20px;">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="display-6 me-3">🌿</div>
+                                        <div>
+                                            <span class="badge bg-info mb-2 px-3 py-2 text-white">Базовый</span>
+                                            <h4 class="fw-bold mb-0 text-dark">Тест №2</h4>
+                                        </div>
+                                    </div>
+                                    <h5 class="mb-3 text-dark">«Hello, world!»</h5>
+                                    <p class="text-muted small mb-3">2-4 месяца изучения, основы Python</p>
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="small text-secondary">📊 10 вопросов</div>
+                                            <div class="small text-secondary mt-1">
+                                                <span class="badge bg-success me-1">4</span> оч. лёгких
+                                                <span class="badge bg-info me-1">4</span> лёгких
+                                                <span class="badge bg-warning">2</span> средних
+                                            </div>
+                                        </div>
+                                        <i class="bi bi-arrow-right-circle fs-3 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- ТЕСТ №3 - Продвинутый -->
+                    <div class="col-md-6 col-lg-4">
+                        <a href="/test/3" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm hover-effect" style="border-radius: 20px;">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="display-6 me-3">🍀</div>
+                                        <div>
+                                            <span class="badge bg-primary mb-2 px-3 py-2">Продвинутый</span>
+                                            <h4 class="fw-bold mb-0 text-dark">Тест №3</h4>
+                                        </div>
+                                    </div>
+                                    <h5 class="mb-3 text-dark">«Уверенный пользователь»</h5>
+                                    <p class="text-muted small mb-3">4-8 месяцев, исключения, коллекции, ООП, api</p>
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="small text-secondary">📊 15 вопросов</div>
+                                            <div class="small text-secondary mt-1">
+                                                <span class="badge bg-success me-1">3</span> оч. лёгких
+                                                <span class="badge bg-info me-1">4</span> лёгких
+                                                <span class="badge bg-warning me-1">4</span> средних
+                                                <span class="badge bg-danger me-1">3</span> сложных
+                                                <span class="badge bg-dark">1</span> оч. сложных
+                                            </div>
+                                        </div>
+                                        <i class="bi bi-arrow-right-circle fs-3 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- ТЕСТ №4 - Junior -->
+                    <div class="col-md-6 col-lg-4">
+                        <a href="/test/4" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm hover-effect" style="border-radius: 20px;">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="display-6 me-3">🚀</div>
+                                        <div>
+                                            <span class="badge bg-warning mb-2 px-3 py-2 text-dark">Junior</span>
+                                            <h4 class="fw-bold mb-0 text-dark">Тест №4</h4>
+                                        </div>
+                                    </div>
+                                    <h5 class="mb-3 text-dark">«Джуниор»</h5>
+                                    <p class="text-muted small mb-3">0-1.5 года опыта, собеседование</p>
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="small text-secondary">📊 20 вопросов</div>
+                                            <div class="small text-secondary mt-1">
+                                                <span class="badge bg-success me-1">5</span> оч. лёгких
+                                                <span class="badge bg-info me-1">5</span> лёгких
+                                                <span class="badge bg-warning me-1">5</span> средних
+                                                <span class="badge bg-danger">5</span> сложных
+                                            </div>
+                                        </div>
+                                        <i class="bi bi-arrow-right-circle fs-3 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- ТЕСТ №5 - Middle -->
+                    <div class="col-md-6 col-lg-4">
+                        <a href="/test/5" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm hover-effect" style="border-radius: 20px;">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="display-6 me-3">🔥</div>
+                                        <div>
+                                            <span class="badge bg-danger mb-2 px-3 py-2">Middle</span>
+                                            <h4 class="fw-bold mb-0 text-dark">Тест №5</h4>
+                                        </div>
+                                    </div>
+                                    <h5 class="mb-3 text-dark">«Мидл»</h5>
+                                    <p class="text-muted small mb-3">2-5 лет опыта, архитектура, паттерны</p>
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="small text-secondary">📊 25 вопросов</div>
+                                            <div class="small text-secondary mt-1">
+                                                <span class="badge bg-success me-1">5</span> оч. лёгких
+                                                <span class="badge bg-info me-1">5</span> лёгких
+                                                <span class="badge bg-warning me-1">5</span> средних
+                                                <span class="badge bg-danger me-1">5</span> сложных
+                                                <span class="badge bg-dark">5</span> оч. сложных
+                                            </div>
+                                        </div>
+                                        <i class="bi bi-arrow-right-circle fs-3 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- ТЕСТ №6 - Senior -->
+                    <div class="col-md-6 col-lg-4">
+                        <a href="/test/6" class="text-decoration-none">
+                            <div class="card h-100 border-0 shadow-sm hover-effect" style="border-radius: 20px;">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="display-6 me-3">👑</div>
+                                        <div>
+                                            <span class="badge bg-dark mb-2 px-3 py-2">Senior</span>
+                                            <h4 class="fw-bold mb-0 text-dark">Тест №6</h4>
+                                        </div>
+                                    </div>
+                                    <h5 class="mb-3 text-dark">«Сеньер»</h5>
+                                    <p class="text-muted small mb-3">5+ лет опыта, только хардкор</p>
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="small text-secondary">📊 20 вопросов</div>
+                                            <div class="small text-secondary mt-1">
+                                                <span class="badge bg-warning me-1">5</span> средних
+                                                <span class="badge bg-danger me-1">5</span> сложных
+                                                <span class="badge bg-dark">10</span> оч. сложных
+                                            </div>
+                                        </div>
+                                        <i class="bi bi-arrow-right-circle fs-3 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Информация -->
+                <div class="text-center mt-5">
+                    <div class="alert alert-info rounded-4">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        Выбери тест, соответствующий твоему уровню. Удачи! 🍀
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

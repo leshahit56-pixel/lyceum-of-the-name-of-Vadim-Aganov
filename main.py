@@ -95,7 +95,7 @@ def login():
             code = request.form.get('verification_code')
             real_code = session.get('code_real', 0)
             code_date = session.get('code_date', 0)
-            if code == real_code and time.time() - code_date < 25:
+            if code == real_code and time.time() - code_date < 601:
                 return redirect(url_for('election_course')) 
             else:
                 return render_template('autorization.html', email_checker=True, email_exists=False, code_exists=True)

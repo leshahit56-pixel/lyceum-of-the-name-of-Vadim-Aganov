@@ -1,0 +1,323 @@
+{% extends "base2.html" %}
+
+{% block title %}Тест №6 - Senior - ЛиВА{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-9 col-12">
+
+        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
+            <div class="card-body p-4 p-md-5">
+
+                <!-- Заголовок -->
+                <div class="text-center mb-4">
+                    <div class="display-6 mb-2">👑</div>
+                    <h2 class="fw-bold mb-2" style="background: linear-gradient(135deg, #0d6efd, #6f42c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        Тест №6: «Senior»
+                    </h2>
+                    <p class="text-muted">Senior • 5+ лет опыта • Яндекс, Тинькофф, FAANG • 20 вопросов</p>
+                    <div class="mt-2">
+                        <span class="badge bg-info px-3 py-2 me-2">5 лёгких</span>
+                        <span class="badge bg-warning px-3 py-2 me-2">5 средних</span>
+                        <span class="badge bg-danger px-3 py-2 me-2">5 сложных</span>
+                        <span class="badge bg-dark px-3 py-2">5 оч. сложных</span>
+                    </div>
+                </div>
+
+                <form id="testForm" onsubmit="checkAnswers(event)">
+
+                    <!-- Лёгкие вопросы (1-5) -->
+                    <div class="mb-3 mt-4"><span class="badge bg-info text-white">🍀 Лёгкие вопросы</span></div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">1. Как Python управляет памятью? Выберите наиболее полное описание.</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="a"><label>Только счётчик ссылок — каждый объект хранит количество ссылок на него, при достижении нуля память освобождается</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="b"><label>Только сборщик мусора, который периодически сканирует все объекты и удаляет недостижимые</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="c"><label>Счётчик ссылок + поколенческий сборщик мусора для обнаружения циклических ссылок</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="d"><label>Ручное управление памятью через malloc и free, как в C</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">2. Что такое GIL и как он влияет на многопоточность?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2" value="a"><label>Это блокировка, которая позволяет только одному потоку выполнять Python-байткод в один момент времени, поэтому CPU-bound задачи не получают выигрыша от threading</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2" value="b"><label>Это библиотека для работы с потоками, которая ускоряет выполнение кода на многоядерных процессорах</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2" value="c"><label>Это механизм, который автоматически распределяет потоки по ядрам процессора</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q2" value="d"><label>Это ошибка в CPython, которую исправили в версии 3.11</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">3. В чём разница между @staticmethod и @classmethod?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3" value="a"><label>@staticmethod не принимает специальных аргументов, @classmethod принимает класс как первый аргумент (cls)</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3" value="b"><label>@staticmethod работает только с атрибутами экземпляра, @classmethod — только с атрибутами класса</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3" value="c"><label>Это разные названия одного и того же декоратора</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q3" value="d"><label>@staticmethod можно вызывать только у экземпляра, @classmethod — только у класса</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">4. Что будет результатом выполнения кода?</h5>
+                        <pre class="bg-light p-3 rounded"><code>def add_item(item, some_list=[]):
+    some_list.append(item)
+    return some_list
+
+print(add_item(1))
+print(add_item(2))</code></pre>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4" value="a"><label>[1] и [2]</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4" value="b"><label>[1] и [1, 2]</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4" value="c"><label>Ошибка из-за изменяемого значения по умолчанию</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q4" value="d"><label>[1] и []</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">5. Какая команда Git переписывает историю, перенося коммиты текущей ветки поверх другой?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5" value="a"><label>git merge</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5" value="b"><label>git rebase</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5" value="c"><label>git cherry-pick</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q5" value="d"><label>git reset --hard</label></div>
+                    </div>
+
+                    <!-- Средние вопросы (6-10) -->
+                    <div class="mb-3 mt-4"><span class="badge bg-warning text-dark">⚡ Средние вопросы</span></div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">6. Что такое дескрипторы (descriptors) в Python?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="a"><label>Классы, реализующие методы __get__, __set__ или __delete__, которые управляют доступом к атрибутам</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="b"><label>Специальные комментарии, описывающие поведение функций</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="c"><label>Инструменты для отладки кода в рантайме</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="d"><label>Декораторы, которые изменяют поведение методов</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">7. Какой паттерн проектирования гарантирует, что у класса есть только один экземпляр?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7" value="a"><label>Factory</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7" value="b"><label>Observer</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7" value="c"><label>Singleton</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q7" value="d"><label>Adapter</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">8. Что выведет код?</h5>
+                        <pre class="bg-light p-3 rounded"><code>class A:
+    def __init__(self):
+        self.x = 1
+
+class B(A):
+    def __init__(self):
+        self.x = 2
+        super().__init__()
+
+b = B()
+print(b.x)</code></pre>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="a"><label>1</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="b"><label>2</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="c"><label>Ошибка</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="d"><label>None</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">9. Как обработать файл размером 100 ГБ, не загружая его в память целиком?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q9" value="a"><label>Использовать pandas.read_csv() — он оптимизирован для больших файлов</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q9" value="b"><label>Читать файл построчно через генератор или чанками с помощью yield</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q9" value="c"><label>Увеличить виртуальную память операционной системы</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q9" value="d"><label>Разбить файл на части вручную перед обработкой</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">10. Что такое MRO и как Python его вычисляет?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q10" value="a"><label>Порядок, в котором Python ищет методы в иерархии наследования, используя C3-линеаризацию</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q10" value="b"><label>Список всех методов в классе, отсортированный по алфавиту</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q10" value="c"><label>Механизм оптимизации вызовов методов</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q10" value="d"><label>Порядок, в котором вызываются декораторы</label></div>
+                    </div>
+
+                    <!-- Сложные вопросы (11-15) -->
+                    <div class="mb-3 mt-4"><span class="badge bg-danger">🔥 Сложные вопросы</span></div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">11. Что такое метаклассы и приведите пример их использования.</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q11" value="a"><label>Это «классы классов», которые определяют поведение классов. Используются в ORM (Django) для автоматического создания полей базы данных</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q11" value="b"><label>Это классы, которые нельзя наследовать</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q11" value="c"><label>Это специальные декораторы для методов</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q11" value="d"><label>Это устаревшая функция Python, заменённая на абстрактные базовые классы</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">12. Как обойти GIL для CPU-bound задач в Python?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q12" value="a"><label>Использовать threading с большим количеством потоков</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q12" value="b"><label>Использовать multiprocessing — каждый процесс имеет свой интерпретатор и свою копию GIL</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q12" value="c"><label>Использовать asyncio с максимальным количеством корутин</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q12" value="d"><label>GIL нельзя обойти, нужно переписывать код на C</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">13. В чём разница между async/await и threading для I/O-bound задач?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q13" value="a"><label>async/await использует кооперативную многозадачность в одном потоке с event loop, threading использует системные потоки</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q13" value="b"><label>threading работает быстрее для всех типов задач</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q13" value="c"><label>async/await работает только на Windows</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q13" value="d"><label>Разницы нет, это синтаксический сахар</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">14. Что такое тестовая пирамида и какие уровни тестирования она включает?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q14" value="a"><label>Модель распределения тестов: много юнит-тестов в основании, меньше интеграционных, ещё меньше E2E на вершине</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q14" value="b"><label>Методика написания тестов от сложного к простому</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q14" value="c"><label>Инструмент для визуализации покрытия кода тестами</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q14" value="d"><label>Стратегия, где все тесты пишутся на одном уровне абстракции</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">15. Как спроектировать систему для обработки 100 000 запросов в секунду на Python?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q15" value="a"><label>Использовать один мощный сервер с большим количеством потоков</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q15" value="b"><label>Горизонтальное масштабирование, асинхронные воркеры, очереди (Kafka/RabbitMQ), кэширование (Redis), балансировщики нагрузки</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q15" value="c"><label>Переписать всю систему на Go</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q15" value="d"><label>Использовать threading с максимальным количеством потоков</label></div>
+                    </div>
+
+                    <!-- Очень сложные вопросы (16-20) -->
+                    <div class="mb-3 mt-4"><span class="badge bg-dark">💀 Очень сложные вопросы</span></div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">16. Как работает сборщик мусора CPython для обнаружения циклических ссылок?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q16" value="a"><label>Использует поколенческий алгоритм: объекты делятся на 3 поколения, циклы ищутся в поколении 2 при достижении порога</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q16" value="b"><label>Использует только счётчик ссылок — циклы не обнаруживаются, нужен ручной вызов gc.collect()</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q16" value="c"><label>Периодически останавливает весь интерпретатор и сканирует всю память</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q16" value="d"><label>Использует mark-and-sweep на каждом создании объекта</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">17. Как работает asyncio на уровне C-кода CPython?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q17" value="a"><label>Event loop использует системные вызовы select/epoll/kqueue для неблокирующих сокетов и очередь готовых корутин</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q17" value="b"><label>Создаёт отдельный поток для каждой корутины</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q17" value="c"><label>Использует multiprocessing для параллельного выполнения корутин</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q17" value="d"><label>Каждая корутина выполняется в отдельном процессе</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">18. Как обнаружить утечку памяти в Python-приложении в продакшене?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q18" value="a"><label>tracemalloc для отслеживания выделений, objgraph для поиска циклов, memory_profiler для анализа</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q18" value="b"><label>print в каждом методе для отслеживания объектов</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q18" value="c"><label>Перезагружать сервер каждый час</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q18" value="d"><label>Использовать только gc.set_debug()</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">19. Что произойдёт при выполнении этого кода и почему?</h5>
+                        <pre class="bg-light p-3 rounded"><code>class C:
+    dangerous = 2
+
+c1 = C()
+c2 = C()
+c1.dangerous = 3
+del c1.dangerous
+C.dangerous = 3
+print(c1.dangerous, c2.dangerous)</code></pre>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q19" value="a"><label>3 3 — при удалении атрибута экземпляра Python обращается к атрибуту класса, который был изменён</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q19" value="b"><label>2 3 — при удалении атрибута экземпляра Python обращается к атрибуту класса</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q19" value="c"><label>Ошибка — нельзя удалить атрибут, который был унаследован от класса</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q19" value="d"><label>None 3 — после удаления атрибут экземпляра становится None</label></div>
+                    </div>
+
+                    <div class="mb-4 p-3 rounded-4 border">
+                        <h5 class="fw-bold mb-3">20. Что такое WSGI и ASGI? В чём ключевое различие?</h5>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q20" value="a"><label>WSGI — для синхронных приложений (один запрос — один ответ), ASGI — для асинхронных (WebSocket, долгие соединения)</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q20" value="b"><label>WSGI — стандарт для Django, ASGI — для Flask</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q20" value="c"><label>ASGI — устаревший стандарт, все переходят на WSGI</label></div>
+                        <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q20" value="d"><label>Разницы нет, это одно и то же</label></div>
+                    </div>
+
+                    <!-- Кнопка -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill">
+                            <i class="bi bi-check-lg"></i> Проверить ответы
+                        </button>
+                    </div>
+
+                </form>
+
+                <div id="resultBlock" style="display: none;" class="mt-4 p-4 rounded-4 text-center"></div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function checkAnswers(event) {
+    event.preventDefault();
+
+    const correct = {
+        q1: 'c', q2: 'a', q3: 'a', q4: 'b', q5: 'b',
+        q6: 'a', q7: 'c', q8: 'a', q9: 'b', q10: 'a',
+        q11: 'a', q12: 'b', q13: 'a', q14: 'a', q15: 'b',
+        q16: 'a', q17: 'a', q18: 'a', q19: 'a', q20: 'a'
+    };
+
+    let easy = 0, medium = 0, hard = 0, expert = 0;
+
+    for (let i = 1; i <= 5; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && selected.value === correct[`q${i}`]) easy++;
+    }
+
+    for (let i = 6; i <= 10; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && selected.value === correct[`q${i}`]) medium++;
+    }
+
+    for (let i = 11; i <= 15; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && selected.value === correct[`q${i}`]) hard++;
+    }
+
+    for (let i = 16; i <= 20; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && selected.value === correct[`q${i}`]) expert++;
+    }
+
+    const total = easy + medium + hard + expert;
+    const percent = Math.round((total / 20) * 100);
+
+    let grade = '', emoji = '';
+
+    if (total >= 18) { grade = 'Senior / Tech Lead! Впечатляющий результат!'; emoji = '👑🏆🔥'; }
+    else if (total >= 15) { grade = 'Senior-, но близко! Ещё немного опыта'; emoji = '🚀💪✨'; }
+    else if (total >= 12) { grade = 'Middle+. Пока рановато для Senior'; emoji = '📚👍🌿'; }
+    else { grade = 'Уровень Middle. Рекомендуем пройти тест №5'; emoji = '📖💡🔄'; }
+
+    const resultBlock = document.getElementById('resultBlock');
+    resultBlock.innerHTML = `
+        <div class="border rounded-4 p-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+            <div class="display-3 mb-2">${emoji}</div>
+            <h3 class="fw-bold" style="color: #0d6efd;">${total}/20 правильных ответов</h3>
+
+            <div class="row mt-4 justify-content-center">
+                <div class="col-6 col-md-3 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-info text-white mb-1">🍀 Лёгкие</span><h5>${easy}/5</h5></div></div>
+                <div class="col-6 col-md-3 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-warning text-dark mb-1">⚡ Средние</span><h5>${medium}/5</h5></div></div>
+                <div class="col-6 col-md-3 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-danger mb-1">🔥 Сложные</span><h5>${hard}/5</h5></div></div>
+                <div class="col-6 col-md-3 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-dark mb-1">💀 Оч. сложные</span><h5>${expert}/5</h5></div></div>
+            </div>
+
+            <p class="mt-3 fs-5">${grade}</p>
+            <p class="text-muted">Процент правильных ответов: ${percent}%</p>
+            <div class="mt-3">
+                <button onclick="resetTest()" class="btn btn-outline-primary rounded-pill px-4 me-2">
+                    <i class="bi bi-arrow-repeat"></i> Пройти заново
+                </button>
+                <a href="/test" class="btn btn-primary rounded-pill px-4">
+                    <i class="bi bi-arrow-left"></i> К выбору теста
+                </a>
+            </div>
+        </div>
+    `;
+    resultBlock.style.display = 'block';
+    resultBlock.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetTest() {
+    document.getElementById('testForm').reset();
+    document.getElementById('resultBlock').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+{% endblock %}
