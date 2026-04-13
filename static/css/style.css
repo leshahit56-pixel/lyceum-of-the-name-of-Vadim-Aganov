@@ -1,25 +1,25 @@
-/* Фон страницы */
 body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
 }
 
 @media (max-width: 576px) {
     .logo {
         height: 45px !important;
     }
-}ш
-
+}
 
 .container-left {
-        margin-left: 0 !important;
-        margin-right: auto !important;
-        padding-left: 300px;
-    }
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    padding-left: 300px;
+}
+
 .code-input {
     max-width: 200px;  
     margin: 0 auto;
 }
-/* Темная тема */
+
 body.dark {
     background: #1a1a2e !important;
 }
@@ -87,7 +87,7 @@ body.dark .hover-effect .text-muted {
 body.dark .hover-effect:hover {
     background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%) !important;
 }
-<<<<<<< HEAD
+
 .registration-wrapper {
     display: flex;
     justify-content: center;
@@ -95,7 +95,6 @@ body.dark .hover-effect:hover {
     padding-top: 20px;
 }
 
-/* Карточка */
 .registration-card {
     max-width: 450px;
     width: 100%;
@@ -110,7 +109,6 @@ body.dark .registration-card {
     color: white;
 }
 
-/* Шапка внутри карточки */
 .card-header-custom {
     padding: 30px 20px 10px;
 }
@@ -125,7 +123,6 @@ body.dark .registration-card {
     color: #6c757d;
 }
 
-/* Тело карточки */
 .card-body-custom {
     padding: 20px 40px 40px;
 }
@@ -139,7 +136,6 @@ body.dark .registration-card {
     margin-bottom: 15px;
 }
 
-/* Поля ввода */
 .form-control-custom {
     width: 100%;
     padding: 10px 15px;
@@ -162,7 +158,6 @@ body.dark .form-control-custom {
     color: #adb5bd;
 }
 
-/* Кнопки */
 .btn-action {
     width: 100%;
     padding: 12px;
@@ -175,15 +170,17 @@ body.dark .form-control-custom {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-action:hover:not(:disabled) {
+    filter: brightness(1.05);
+    transform: scale(1.01);
 }
 
 .btn-action.success { background: #198754; }
 
-.code-input-styled {
-    font-size: 1.5rem;
-    letter-spacing: 4px;
-    border: 2px dashed #0d6efd !important;
-}
 @keyframes slideUp {
     from {
         opacity: 0;
@@ -251,37 +248,6 @@ h1 {
     height: auto !important;
 }
 
-.btn-action {
-    background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-    color: white;
-    border: none;
-    padding: 16px 20px;
-    border-radius: 12px;
-    font-weight: 700;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-}
-
-.btn-action:hover:not(:disabled) {
-    filter: brightness(1.05);
-    transform: scale(1.01);
-    box-shadow: 0 10px 15px -3px rgba(66, 153, 225, 0.3);
-}
-
-.btn-action.success {
-    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-}
-
-.btn-action:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
-}
-
 .invalid-feedback {
     font-weight: 600;
     color: #f56565;
@@ -290,12 +256,6 @@ h1 {
     display: block;
 }
 
-.text-muted {
-    color: #718096 !important;
-=======
-
-
-/*  блока результатов в тёмной теме */
 body.dark #resultBlock .border {
     background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%) !important;
     border-color: #2d2d44 !important;
@@ -307,12 +267,6 @@ body.dark #resultBlock p:not(.text-muted) {
     color: #eee !important;
 }
 
-body.dark #resultBlock .text-muted {
-    color: #aaa !important;
-}
-
-
-/* Тёмная тема для модального окна */
 body.dark .modal-content {
     background: #16213e !important;
     color: #eee !important;
@@ -331,29 +285,6 @@ body.dark .btn-close {
     filter: invert(1);
 }
 
-body.dark .bio-section h5 {
-    color: #66b0ff !important;
-}
-
-body.dark .modal-content .lead {
-    color: #03dac6 !important;
-}
-
-body.dark .modal-content .text-muted {
-    color: #aaa !important;
-}
-
-body.dark .btn-secondary {
-    background-color: #2a2a40 !important;
-    border-color: #3a3a50 !important;
-    color: #e0e0e0 !important;
-}
-
-body.dark .btn-secondary:hover {
-    background-color: #3a3a50 !important;
-}
-
-/* Фикс для надписи о разрешении */
 .bio-content .text-end {
     display: flex !important;
     align-items: center !important;
@@ -364,5 +295,4 @@ body.dark .btn-secondary:hover {
 .bio-content hr {
     margin-top: 20px !important;
     margin-bottom: 15px !important;
->>>>>>> 5c29d9483e7149a8ef01303aca306dd863d5c444
 }
