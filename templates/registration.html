@@ -1,54 +1,82 @@
-    {% extends "base2.html" %}
-    {% block content %}
-    <div class="container-left">
-        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
-                <div class="card-body p-4 p-md-5 text-center">
-                    <form method="post" class="login-form">
-                    <div class="mb-4">
-                        <h1>Введите почту</h1>
+{% extends "base2.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/registration.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="registration-wrapper">
+    <div class="registration-card shadow-lg animated fadeIn">
+        
+        <div class="card-header-custom text-center">
+            <div class="brand-logo">🐍</div>
+            <h2 class="fw-bold">Присоединяйтесь к ЛиВА</h2>
+            <p class="text-subtitle">Ваш путь в мир Python начинается здесь</p>
+        </div>
+
+        <div class="card-body-custom">
+            <form method="post" class="auth-form {% if info is not none %}d-none{% endif %}" onsubmit="disableButton(this)">
+                <span class="step-indicator">Шаг 1 из 2</span>
+                <div class="input-group-custom">
+                    <label class="form-label fw-bold">Электронная почта</label>
+                    <div class="position-relative">
+                        <input type="email" name="email" 
+                            value="{{ session.get('email', '') }}" 
+                            class="form-control-custom {% if email_exists %}is-invalid{% endif %}" 
+                            placeholder="example@gmail.com" required>
+                        <i class="bi bi-envelope input-icon"></i>
                     </div>
-                    <div class="mb-4">
-                        <input type="email" name="email">
-                        <button type="submit" class="btn btn-primary">Отправить код</button>
-                        </div>
-                    </form>
-                        {% if info  == 0 %}
 
-                            <p style="color: red;">Введите email</p>
-
-                        {% elif info == 1 %}
-                        <form class="login-form" method="post">
-                            <h2 class="mb-4">Введите ФИО</h2>
-                            <div class="mb-3">
-                                <input type="text" name="surname" class="form-control form-control-lg" placeholder="Фамилия" required>
-                            </div>
-                            <div class="mb-3">
-                                <input type="text" name="name" class="form-control form-control-lg" placeholder="Имя" required>
-                            </div>
-                            <div class="mb-4">
-                                <input type="text" name="patronymic" class="form-control form-control-lg" placeholder="Отчество" required>
-                            </div>
-                            <div class="code_form mb-4">
-                            <input name="verification_code" type="text" class="form-control form-control-lg text-center code-input" 
-                                    maxlength="6" 
-                                    pattern="\d*" 
-                                    inputmode="numeric" 
-                                    placeholder="000000">
-                                {% if code_cheker == 0 %}
-                                    <p style="color: red;">Неверный код</p>
-                                {% endif %}
-                            </div>
-                            
-                            <button name="action" value="verify" class="btn btn-success">Подтвердить</button>
-                        </form>
-                        {% endif %}
-
-
-
-                    </form>
+                    {% if email_exists %}
+                    <div class="invalid-feedback" style="display: block; color: #dc3545; font-size: 0.875em; margin-top: 0.25rem;">
+                        Эта почта уже зарегистрирована!
+                    </div>
+                    {% endif %}
+                    {% if info == 0 %}
+                        <span class="error-text animated shake">Введите корректный email</span>
+                    {% endif %}
                 </div>
+                <button type="submit" id="submitBtn" class="btn-action mt-3">
+                    <span>Отправить код</span>
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+            </form>
+            <script>
+                function disableButton(form) {
+                    const btn = form.querySelector('#submitBtn');
+                    btn.disabled = true; // Выключаем кнопку
+                    btn.innerHTML = '<span>Отправка...</span>'; // Меняем текст
+                }
+            </script>
 
-    
+            {% if info == 1 %}
+            <form class="auth-form animated fadeIn" method="post">
+                <span class="step-indicator">Шаг 2 из 2</span>
+                <div class="row g-2 mb-3">
+                    <div class="col-12">
+                        <input type="text" name="surname" class="form-control-custom" placeholder="Фамилия" required>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="name" class="form-control-custom" placeholder="Имя" required>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="patronymic" class="form-control-custom" placeholder="Отчество" required>
+                    </div>
+                </div>
+                <div class="verification-section text-center">
+                    <label class="form-label fw-bold">Код из письма</label>
+                    <input name="verification_code" type="text" class="form-control-custom text-center code-input-styled mx-auto" maxlength="6" placeholder="000000">
+                    {% if code_cheker == 0 %}
+                        <p class="error-text mt-2">Неверный код</p>
+                    {% endif %}
+                </div>
+                <button name="action" value="verify" type="submit" class="btn-action success mt-3">
+                    <span>Завершить</span>
+                    <i class="bi bi-check-circle"></i>
+                </button>
+            </form>
+            {% endif %}
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}

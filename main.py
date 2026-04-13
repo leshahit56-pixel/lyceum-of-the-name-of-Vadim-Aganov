@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, url_for
 import smtplib
 from email.message import EmailMessage
 import secrets
@@ -19,14 +19,15 @@ def hello_window():
 def register():
     if request.method == 'GET':
         session.pop('email_true', None)
-        return render_template('registration.html', info=None, code_cheker=1)
+        return render_template('registration.html', info=None, code_cheker=1, email_exists=False)
     elif request.method == 'POST':
         action = request.form.get('action')
         if action == 'verify':
             input_code = request.form.get('verification_code')
             code_real = session.get('code', '')
             if input_code:
-                if input_code == code_real:
+                time_code = session.get('code_date', 0)
+                if input_code == code_real and time.time() - time_code < 601 :
                     db_session.global_init('db/blogs.db')
                     email = session.get('email', '')
                     name = request.form.get('name')
@@ -40,19 +41,88 @@ def register():
                     ses = db_session.create_session()
                     ses.add(new_user)
                     ses.commit()
-                    return render_template('election_course.html')
+                    return redirect(url_for('election_course'))
                 else:
-                    return render_template('registration.html', info=1, code_cheker=0)
+                    return render_template('registration.html', info=1, code_cheker=0, email_exists=False)
             else:
-                return render_template('registration.html', info=1, code_cheker=0)
-        email = request.form.get('email', '').strip()
-        session['email'] = email
-        if not session.get('email_true'):
+                return render_template('registration.html', info=1, code_cheker=0, email_exists=False)
+        else:
+            email = request.form.get('email', '').strip()
+            session['email'] = email
+            
+            
+            last_mail = session.get('last_mail', 0)
+            if time.time() - last_mail < 10:
+                    return render_template('registration.html', info=1, code_cheker=1, email_exists=False)
             if email:
+                    db_session.global_init('db/blogs.db')
+                    ses = db_session.create_session()
+                    user_check = ses.query(User).filter(User.email == email).first()
+                    if user_check:
+                        return render_template('registration.html', info=None, code_cheker=0, email_exists=True)
+                    session['last_mail'] = time.time()
+                    code = ''.join(str(secrets.randbelow(10)) for _ in range(6))
+                    session['code_date'] = time.time()
+                    session['code'] = code
+                    msg = EmailMessage()
+                    msg.set_content(f"Код подтверждения: {code} ")
+                    msg["Subject"] = f"Код {code}"
+                    msg["From"] = "leshahit56@gmail.com"
+                    msg["To"] = email
+
+                    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+                        server.starttls()
+                        server.login("leshahit56@gmail.com", "extwxvadtwvdvgji")
+                        server.send_message(msg)
+
+                    session['email_true'] = True
+                    return render_template('registration.html', info=1, code_cheker=1, email_exists=False)
+                
+            return render_template('registration.html', info=0, code_cheker=1, email_exists=False)
+            
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        session.pop('email_first', None)
+        return render_template('autorization.html', email_checker=False, email_exists=False)
+    
+    if request.method == 'POST':
+        action = request.form.get('action')
+
+        if action == 'verify':
+            code = request.form.get('verification_code')
+            real_code = session.get('code_real', 0)
+            code_date = session.get('code_date', 0)
+            if code == real_code and time.time() - code_date < 25:
+                return redirect(url_for('election_course')) 
+            else:
+                return render_template('autorization.html', email_checker=True, email_exists=False, code_exists=True)
+
+        else:
+
+            email = request.form.get('email', '').strip()
+            session['email'] = email
+
+            db_session.global_init('db/blogs.db')
+            ses = db_session.create_session()
+            chek_email = ses.query(User).filter(User.email == email).first()
+
+            last_mess = session.get('last_mess', 0)
+
+            if time.time() - last_mess < 10:
+                return render_template('autorization.html', email_checker=True, email_exists=False)
+
+                
+
+            if chek_email:
                 code = ''.join(str(secrets.randbelow(10)) for _ in range(6))
-                session['code'] = code
+                session['code_date'] = time.time()
+                session['code_real'] = code
+
                 session['last_mess'] = time.time()
-                session['last_mail'] = time.time()
+
                 msg = EmailMessage()
                 msg.set_content(f"Код подтверждения: {code} ")
                 msg["Subject"] = f"Код {code}"
@@ -63,38 +133,15 @@ def register():
                     server.starttls()
                     server.login("leshahit56@gmail.com", "extwxvadtwvdvgji")
                     server.send_message(msg)
-
-                session['email_true'] = True
-                return render_template('registration.html', info=1, code_cheker=1)
+                return render_template('autorization.html', email=email, email_checker=True, email_exists=False)
+            
             else:
-                return render_template('registration.html', info=0, code_cheker=1)
-        else:
-            if email:
-                last_mail = session.get('last_mail', 0)
-                if time.time() - last_mail > 10:
-                    code = ''.join(str(secrets.randbelow(10)) for _ in range(6))
-                    session['code'] = code
-                    msg = EmailMessage()
-                    msg.set_content(f"Код подтверждения: {code}")
-                    msg["Subject"] = f"Код {code}"
-                    msg["From"] = "leshahit56@gmail.com"
-                    msg["To"] = email
-
-                    with smtplib.SMTP("smtp.gmail.com", 587) as server:
-                        server.starttls()
-                        server.login("leshahit56@gmail.com", "extwxvadtwvdvgji")
-                        server.send_message(msg)
-                        session['last_mail'] = time.time()
-                
-                return render_template('registration.html', info=1, code_cheker=1)
-
-            else:
-                return render_template('registration.html', info=1, code_cheker=1)
+                return render_template('autorization.html', email=email, email_checker=False, email_exists=True)
+            
 
 
-@app.route('/login')
-def login():
-    return "<h1>авторизация</h1>"
+
+
 
 
 @app.route('/election_course')

@@ -3,12 +3,11 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-/* Адаптация логотипа на мобильных */
 @media (max-width: 576px) {
     .logo {
         height: 45px !important;
     }
-}
+}ш
 
 
 .container-left {
@@ -17,7 +16,7 @@ body {
         padding-left: 300px;
     }
 .code-input {
-    max-width: 200px;   /* или любая другая фиксированная ширина */
+    max-width: 200px;  
     margin: 0 auto;
 }
 /* Темная тема */
@@ -62,7 +61,6 @@ body.dark hr {
     border-color: #2d2d44;
 }
 
-/* Эффект при наведении на карточку курса */
 .hover-effect {
     transition: all 0.3s ease;
 }
@@ -73,7 +71,6 @@ body.dark hr {
     background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%) !important;
 }
 
-/* Темная тема для карточек курсов */
 body.dark .hover-effect {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
     border-color: #2d2d44 !important;
@@ -89,4 +86,209 @@ body.dark .hover-effect .text-muted {
 
 body.dark .hover-effect:hover {
     background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%) !important;
+}
+.registration-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    padding-top: 20px;
+}
+
+/* Карточка */
+.registration-card {
+    max-width: 450px;
+    width: 100%;
+    border: none;
+    border-radius: 24px;
+    background: white;
+    overflow: hidden;
+}
+
+body.dark .registration-card {
+    background: #16213e;
+    color: white;
+}
+
+/* Шапка внутри карточки */
+.card-header-custom {
+    padding: 30px 20px 10px;
+}
+
+.brand-logo {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.text-subtitle {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Тело карточки */
+.card-body-custom {
+    padding: 20px 40px 40px;
+}
+
+.step-indicator {
+    display: block;
+    text-align: center;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #adb5bd;
+    margin-bottom: 15px;
+}
+
+/* Поля ввода */
+.form-control-custom {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+    background: #f8f9fa;
+}
+
+body.dark .form-control-custom {
+    background: #0f172a;
+    border-color: #2d2d44;
+    color: white;
+}
+
+.input-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #adb5bd;
+}
+
+/* Кнопки */
+.btn-action {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: #0d6efd;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-action.success { background: #198754; }
+
+.code-input-styled {
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+    border: 2px dashed #0d6efd !important;
+}
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.auth-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.card.bg-opacity-95 {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-radius: 20px !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card.bg-opacity-95:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.12) !important;
+}
+
+h1 {
+    color: #1a202c;
+    font-weight: 800 !important;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+}
+
+.form-control, .form-control-lg {
+    border-radius: 12px !important;
+    padding: 14px 18px !important;
+    border: 2px solid #e2e8f0 !important;
+    background-color: #f7fafc !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.form-control:focus {
+    border-color: #4299e1 !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.15) !important;
+    outline: none;
+}
+
+.code-input-styled {
+    font-size: 2rem !important;
+    letter-spacing: 0.8rem !important;
+    font-weight: 900 !important;
+    color: #2d3748 !important;
+    border: 2px dashed #cbd5e0 !important;
+    text-indent: 0.8rem;
+    height: auto !important;
+}
+
+.btn-action {
+    background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+    color: white;
+    border: none;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.btn-action:hover:not(:disabled) {
+    filter: brightness(1.05);
+    transform: scale(1.01);
+    box-shadow: 0 10px 15px -3px rgba(66, 153, 225, 0.3);
+}
+
+.btn-action.success {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+}
+
+.btn-action:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.invalid-feedback {
+    font-weight: 600;
+    color: #f56565;
+    font-size: 0.875rem;
+    margin-top: 10px;
+    display: block;
+}
+
+.text-muted {
+    color: #718096 !important;
 }

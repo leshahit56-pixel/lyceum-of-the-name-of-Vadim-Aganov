@@ -1,0 +1,75 @@
+{% extends "base2.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-card-container animate-fade-in-up">
+    <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95" style="max-width: 400px; width: 100%;">
+        <div class="card-body p-4 p-md-5 text-center">
+            
+            <h1 class="mb-4">Авторизация</h1>
+            
+            <form method="post" class="auth-form" onsubmit="disableButton(this)">
+                
+                {# ШАГ 1: Ввод электронной почты #}
+                {% if not email_checker %}
+                <div class="mb-4 text-start">
+                    <label class="form-label d-block text-start fw-semibold small text-muted ms-1">ЭЛЕКТРОННАЯ ПОЧТА</label>
+                    <input type="email" name="email" placeholder="example@gmail.com" 
+                           class="form-control {% if email_exists %}is-invalid{% endif %}" 
+                           value="{{ email if email else '' }}" required>
+                    
+                    {% if email_exists %}
+                        <div class="invalid-feedback" style="display: block;">
+                            Эта почта не зарегистрирована!
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" id="submitBtn" class="btn-action">
+                    <span>Отправить код</span>
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+                {% endif %}
+
+                {# ШАГ 2: Ввод кода подтверждения #}
+                {% if email_checker %}
+                <div class="verification-section">
+                    <p class="text-muted small mb-3">Код подтверждения отправлен на вашу почту</p>
+                    
+                    <div class="mb-4">
+                        <input name="verification_code" type="text" 
+                               class="form-control-custom text-center code-input-styled mx-auto {% if code_exists %}is-invalid{% endif %}" 
+                               maxlength="6" placeholder="000000" required autofocus>
+                        
+                        {% if code_exists %}
+                            <div class="invalid-feedback" style="display: block;">
+                                Неверный код
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <button name="action" value="verify" type="submit" class="btn-action success mt-3">
+                        <span>Завершить вход</span>
+                        <i class="bi bi-check-circle"></i>
+                    </button>
+                </div>
+                {% endif %}
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function disableButton(form) {
+        const btn = form.querySelector('#submitBtn');
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<span>Отправка...</span>';
+        }
+    }
+</script>
+{% endblock %}
