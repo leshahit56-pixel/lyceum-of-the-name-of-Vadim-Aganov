@@ -5,13 +5,19 @@ import secrets
 import time
 from data.user import User
 from data import db_session
+import os
+from datetime import timedelta
+
 
 app = Flask(__name__)
-app.secret_key = 'f8874661e03139f344aa90692fd4d642b1e7a89b9b817bba'
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
 
+app.permanent_session_lifetime = timedelta(days=30)
 
 @app.route('/')
 def hello_window():
+    if 'email' in session:
+        return redirect(url_for('election_course', email=session.get('email')))
     return render_template('hello_window.html')
 
 
@@ -41,7 +47,9 @@ def register():
                     ses = db_session.create_session()
                     ses.add(new_user)
                     ses.commit()
-                    return redirect(url_for('election_course'))
+                    session.permanent = True
+                    session['email'] = email
+                    return redirect(url_for('election_course', email=email))
                 else:
                     return render_template('registration.html', info=1, code_cheker=0, email_exists=False)
             else:
@@ -72,7 +80,7 @@ def register():
 
                     with smtplib.SMTP("smtp.gmail.com", 587) as server:
                         server.starttls()
-                        server.login("leshahit56@gmail.com", "extwxvadtwvdvgji")
+                        server.login(os.getenv('GMAIL_USER'), os.getenv('GMAIL_PASSWORD'))
                         server.send_message(msg)
 
                     session['email_true'] = True
@@ -96,7 +104,7 @@ def login():
             real_code = session.get('code_real', 0)
             code_date = session.get('code_date', 0)
             if code == real_code and time.time() - code_date < 601:
-                return redirect(url_for('election_course')) 
+                return redirect(url_for('election_course', email=session.get('email'))) 
             else:
                 return render_template('autorization.html', email_checker=True, email_exists=False, code_exists=True)
 
@@ -131,7 +139,7 @@ def login():
 
                 with smtplib.SMTP("smtp.gmail.com", 587) as server:
                     server.starttls()
-                    server.login("leshahit56@gmail.com", "extwxvadtwvdvgji")
+                    server.login(os.getenv('GMAIL_USER'), os.getenv('GMAIL_PASSWORD'))
                     server.send_message(msg)
                 return render_template('autorization.html', email=email, email_checker=True, email_exists=False)
             
@@ -144,10 +152,14 @@ def login():
 
 
 
-@app.route('/election_course')
-def election_course():
-    return render_template('election_course.html')
-
+@app.route('/election_course/<email>')
+def election_course(email):
+    db_session.global_init('db/blogs.db')
+    ses = db_session.create_session()
+    user = ses.query(User).filter(User.email == email).first()
+    name = user.name
+    surname = user.surname
+    return render_template('election_course.html', Name=name, Surname=surname)
 
 @app.route('/settings')
 def settings():
