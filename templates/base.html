@@ -210,6 +210,15 @@
                  style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; object-fit: cover;">
             <span class="text-white fw-semibold" style="font-size: 1rem;">
                 {{Name}} {{Surname}}
+<<<<<<< HEAD
+=======
+            </span>
+        {% if current_user %}
+            {{ current_user.name }} {{ current_user.surname }}
+        {% else %}
+            Имя Фамилия
+        {% endif %}
+>>>>>>> fb26b136949687dcb52c08d954819ed8d6aa20ff
     </span>
         </button>
 
