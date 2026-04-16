@@ -9,7 +9,6 @@ from data import db_session
 import os
 from datetime import timedelta
 
-
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'f8874661e03139f344aa90692fd4d642b1e7a89b9b817bba')
 app.permanent_session_lifetime = timedelta(days=30)
@@ -21,6 +20,7 @@ def login_required(f):
         if 'email' not in session:
             return redirect(url_for('login'))
         return f(*args, **kwargs)
+
     return decorated_function
 
 
@@ -198,13 +198,15 @@ def election_course():
 @app.route('/settings')
 @login_required
 def settings():
-    return "<h1>settings</h1>"
+    user = get_current_user()
+    return render_template('settings.html', Name=user.name, Surname=user.surname)
 
 
 @app.route('/profile')
 @login_required
 def profile():
-    return "<h1>profile</h1>"
+    user = get_current_user()
+    return render_template('profile.html', Name=user.name, Surname=user.surname)
 
 
 @app.route('/logout')
@@ -226,43 +228,36 @@ def coursepython():
 
 
 @app.route('/test')
-@login_required
 def test_selection():
     return render_template('test_selection.html')
 
 
 @app.route('/test/1')
-@login_required
 def test_1():
     return render_template('test_1.html')
 
 
 @app.route('/test/2')
-@login_required
 def test_2():
     return render_template('test_2.html')
 
 
 @app.route('/test/3')
-@login_required
 def test_3():
     return render_template('test_3.html')
 
 
 @app.route('/test/4')
-@login_required
 def test_4():
     return render_template('test_4.html')
 
 
 @app.route('/test/5')
-@login_required
 def test_5():
     return render_template('test_5.html')
 
 
 @app.route('/test/6')
-@login_required
 def test_6():
     return render_template('test_6.html')
 
