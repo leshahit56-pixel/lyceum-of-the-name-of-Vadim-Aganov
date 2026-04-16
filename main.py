@@ -23,8 +23,6 @@ def hello_window():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if 'email' in session:
-        return redirect(url_for('election_course', email=session.get('email')))
     if request.method == 'GET':
         session.pop('email_true', None)
         return render_template('registration.html', info=None, code_cheker=1, email_exists=False)
@@ -94,8 +92,6 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if 'email' in session:
-        return redirect(url_for('election_course', email=session.get('email')))
     if request.method == 'GET':
         session.pop('email_first', None)
         return render_template('autorization.html', email_checker=False, email_exists=False)
@@ -108,8 +104,6 @@ def login():
             real_code = session.get('code_real', 0)
             code_date = session.get('code_date', 0)
             if code == real_code and time.time() - code_date < 601:
-                session.permanent = True
-                session['email'] = email
                 return redirect(url_for('election_course', email=session.get('email'))) 
             else:
                 return render_template('autorization.html', email_checker=True, email_exists=False, code_exists=True)
@@ -147,7 +141,6 @@ def login():
                     server.starttls()
                     server.login(os.getenv('GMAIL_USER'), os.getenv('GMAIL_PASSWORD'))
                     server.send_message(msg)
-                
                 return render_template('autorization.html', email=email, email_checker=True, email_exists=False)
             
             else:
@@ -161,14 +154,12 @@ def login():
 
 @app.route('/election_course/<email>')
 def election_course(email):
-    if  session.permanent:
-        db_session.global_init('db/blogs.db')
-        ses = db_session.create_session()
-        user = ses.query(User).filter(User.email == email).first()
-        name = user.name
-        surname = user.surname
-        return render_template('election_course.html', Name=name, Surname=surname)
-    return redirect(url_for('hello_window'))
+    db_session.global_init('db/blogs.db')
+    ses = db_session.create_session()
+    user = ses.query(User).filter(User.email == email).first()
+    name = user.name
+    surname = user.surname
+    return render_template('election_course.html', Name=name, Surname=surname)
 
 @app.route('/settings')
 def settings():
