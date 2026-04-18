@@ -296,6 +296,141 @@ body.dark .btn-close {
     margin-top: 20px !important;
     margin-bottom: 15px !important;
 }
+
+/* ========== СТИЛИ ДЛЯ СТРАНИЦЫ ЗАДАЧ ========== */
+
+/* Название урока */
+.lesson-title {
+    background: linear-gradient(135deg, #0d6efd, #6f42c1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Блок прогресса */
+.progress-block {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+body.dark .progress-block {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+}
+
+.progress-label {
+    color: #6c757d;
+}
+
+body.dark .progress-label {
+    color: #aaa !important;
+}
+
+.progress-value {
+    color: #212529;
+}
+
+body.dark .progress-value {
+    color: #eee !important;
+}
+
+.progress {
+    height: 8px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.1) !important;
+}
+
+body.dark .progress {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.progress-bar {
+    border-radius: 10px;
+}
+
+/* Бейджи сложности */
+.difficulty-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.difficulty-badge.easy {
+    background: rgba(25, 135, 84, 0.15);
+    color: #198754;
+    border: 1px solid rgba(25, 135, 84, 0.3);
+}
+
+.difficulty-badge.medium {
+    background: rgba(255, 193, 7, 0.15);
+    color: #b8860b;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.difficulty-badge.hard {
+    background: rgba(220, 53, 69, 0.15);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+body.dark .difficulty-badge.easy {
+    background: rgba(25, 135, 84, 0.2);
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.3);
+}
+
+body.dark .difficulty-badge.medium {
+    background: rgba(255, 193, 7, 0.2);
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.3);
+}
+
+body.dark .difficulty-badge.hard {
+    background: rgba(220, 53, 69, 0.2);
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.3);
+}
+
+.badge-icon {
+    font-size: 1.2rem;
+}
+
+/* Карточки задач */
+.task-item {
+    background: #f8f9fa;
+    transition: all 0.2s ease;
+}
+
+body.dark .task-item {
+    background: #16213e;
+    border-color: #2d2d44 !important;
+}
+
+.task-item:hover {
+    transform: translateX(5px);
+    background: #e9ecef;
+}
+
+body.dark .task-item:hover {
+    background: #1e2a4a;
+}
+
+.task-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.task-name {
+    color: #212529;
+}
+
+body.dark .task-name {
+    color: #eee;
+}
+
+/* Старые стили для task-button (оставляю) */
 .task-button {
     display: flex;
     align-items: center;
@@ -303,28 +438,20 @@ body.dark .btn-close {
     width: 100%;
     max-width: 600px;
     padding: 12px 25px;
-    
-    /* Увеличил непрозрачность фона с 0.05 до 0.12 для лучшей видимости */
-    background: rgba(255, 255, 255, 0.12); 
+    background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    
-    /* Сделал границу ярче и заметнее */
-    border: 1px solid rgba(255, 255, 255, 0.3); 
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 100px;
-    
     color: #ffffff;
-    text-decoration: none !important; 
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     margin-bottom: 12px;
-    
-    /* Добавил легкую постоянную тень для объема */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .task-button:hover {
-    /* При наведении кнопка становится еще заметнее */
     background: rgba(255, 255, 255, 0.18);
     border-color: rgba(255, 255, 255, 0.5);
     transform: translateX(8px);
@@ -332,7 +459,7 @@ body.dark .btn-close {
 }
 
 .task-icon-container {
-    width: 48px; 
+    width: 48px;
     height: 48px;
     border-radius: 50%;
     overflow: hidden;
@@ -341,29 +468,26 @@ body.dark .btn-close {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    /* Добавил легкую подложку под саму иконку, чтобы она выделялась */
     background: rgba(0, 0, 0, 0.2);
 }
 
 .task-icon-container img {
     width: 100%;
     height: 100%;
-    object-fit: contain; 
+    object-fit: contain;
 }
 
 .task-text {
     font-size: 1.1rem;
     font-weight: 500;
     line-height: 1;
-    white-space: nowrap; 
+    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
     flex-grow: 1;
-    /* Тень на тексте, чтобы он лучше читался на светлых участках фона */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Состояния теперь имеют цветное свечение, чтобы их было видно издалека */
 .task-button.success {
     border-color: rgba(76, 175, 80, 0.6);
     box-shadow: 0 4px 12px rgba(76, 175, 80, 0.1);
@@ -377,3 +501,7 @@ body.dark .btn-close {
 .task-button.pending {
     border-color: rgba(255, 255, 255, 0.4);
 }
+
+.task-link[data-status="unsolved"] .task-icon { filter: none; }
+.task-link[data-status="solved"] .task-icon { filter: sepia(1) saturate(5) hue-rotate(70deg); }
+.task-link[data-status="failed"] .task-icon { filter: sepia(1) saturate(5) hue-rotate(-20deg); }

@@ -3,94 +3,189 @@
 {% block title %}Знакомство со средой{% endblock %}
 
 {% block content %}
-    <button type="button" class="btn btn-info mb-4" onclick="window.location.href='/course/python'"> К урокам</button>
-    <div style="text-align: right;">
-        <a class="btn btn-info" href="/book_for_first_lessonn" style="border-radius: 15px;">Учебничек</a>
-    </div>
-    <div class="easy">
-        <h1 style="color: green;">Легкие задачи</h1>
-        <a href="#" class="task-button">
-            <div class="task-icon-container">
-                <img src="{{ url_for('static', filename='static/img/not_solution.png') }}" alt="Task Icon">
-            </div>
-            <div class="task-text">
-                Ваша первая программа
-            </div>
-        </a>
-        <a class="task-button" href="#">
-            <div class="task-icon-container">
-                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="67">
-            </div>
-            <div class="task-text">
-                Я пока хз че писать
-            </div>
-        </a>
-        <a href="#" class="task-button">
-            <div class="task-icon-container">
-                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="67">
-            </div>
-            <div class="task-text">
-                67k
-            </div>
-        </a>
-    </div>
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-md-11 col-12">
 
-    <div class="middle">
-        <h1 style="color: rgb(211, 211, 20);">Задачи среднего уровня</h1>
-        <a class="task-button" href="#">
-            <div class="task-icon-container">
-                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
+        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
+            <div class="card-body p-4 p-md-5">
+
+                <!-- Кнопки навигации -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <a href="/course/python" class="btn btn-outline-primary rounded-pill px-4">
+                        <i class="bi bi-arrow-left"></i> К урокам
+                    </a>
+                    <a href="/book_for_first_lessonn" class="btn btn-info rounded-pill px-4">
+                        <i class="bi bi-book"></i> Учебничек
+                    </a>
+                </div>
+
+                <!-- Название темы -->
+                <h2 class="fw-bold text-center mb-3 lesson-title">
+                    Знакомство со средой
+                </h2>
+
+                <!-- Прогресс урока -->
+                <div class="progress-block mb-4 p-3 rounded-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span class="progress-label">Прогресс урока</span>
+                                <span class="progress-value"><strong>0</strong> из 9 задач решено</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 mt-3 mt-md-0">
+                            <div class="d-flex justify-content-md-end gap-4">
+                                <div class="text-center">
+                                    <div class="small progress-label">Решено задач</div>
+                                    <div class="fw-bold fs-5 progress-value">0/9</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="small progress-label">Заработано баллов</div>
+                                    <div class="fw-bold fs-5 text-success progress-value">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Лёгкие задачи -->
+                <div class="task-section mb-4">
+                    <div class="difficulty-badge easy mb-3">
+                        <span class="badge-icon">🌱</span>
+                        <span class="badge-text">Лёгкие задачи</span>
+                    </div>
+                    <div class="d-flex flex-column gap-2">
+
+                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Ваша первая программа</span>
+                            </div>
+                        </a>
+
+                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Я пока хз че писать</span>
+                            </div>
+                        </a>
+
+                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">67k</span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+
+                <!-- Средние задачи -->
+                <div class="task-section mb-4">
+                    <div class="difficulty-badge medium mb-3">
+                        <span class="badge-icon">⚡</span>
+                        <span class="badge-text">Средние задачи</span>
+                    </div>
+                    <div class="d-flex flex-column gap-2">
+
+                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Черепок Черепок</span>
+                            </div>
+                        </a>
+
+                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Мне вспароли пузо</span>
+                            </div>
+                        </a>
+
+                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Картель</span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+
+                <!-- Тяжёлые задачи -->
+                <div class="task-section mb-3">
+                    <div class="difficulty-badge hard mb-3">
+                        <span class="badge-icon">🔥</span>
+                        <span class="badge-text">Тяжёлые задачи</span>
+                    </div>
+                    <div class="d-flex flex-column gap-2">
+
+                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">print(67)</span>
+                            </div>
+                        </a>
+
+                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Я устал...</span>
+                            </div>
+                        </a>
+
+                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Поляна лох</span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+
             </div>
-            <div class="task-text">
-                Черепок Черепок
-            </div>
-        </a>
-        <a class="task-button" href="#">
-            <div class="task-icon-container">
-                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
-            </div>
-            <div class="task-text">
-                Мне вспароли пузо
-            </div>
-        </a>
-        <a class="task-button" href="#">
-            <div class="task-icon-container">
-                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
-            </div>
-            <div class="task-text">
-                Картель
-            </div>
-        </a>
+        </div>
+
     </div>
-    <div class="hard">
-        <h1 style="color: red;">Тяжелые задачи💀</h1>
-        <a class="task-button" href="#">
-            <div class="task-icon-container">
-                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
-            </div>
-            <div class="task-text">
-                print(67)
-            </div>
-        </a>
-        <a class="task-button" href="#">
-            <div class="task-icon-container">
-                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
-            </div>
-            <div class="task-text">
-                Я устал...
-            </div>
-        </a>
-        <a class="task-button" href="#">
-            <div class="task-icon-container">
-                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
-            </div>
-            <div class="task-text">
-                Поляна лох
-            </div>
-        </a>
-    </div>
-
-    
-
-
+</div>
 {% endblock %}
