@@ -299,14 +299,12 @@ body.dark .btn-close {
 
 /* ========== СТИЛИ ДЛЯ СТРАНИЦЫ ЗАДАЧ ========== */
 
-/* Название урока */
 .lesson-title {
     background: linear-gradient(135deg, #0d6efd, #6f42c1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* Блок прогресса */
 .progress-block {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
@@ -345,7 +343,6 @@ body.dark .progress {
     border-radius: 10px;
 }
 
-/* Бейджи сложности */
 .difficulty-badge {
     display: inline-flex;
     align-items: center;
@@ -396,7 +393,6 @@ body.dark .difficulty-badge.hard {
     font-size: 1.2rem;
 }
 
-/* Карточки задач */
 .task-item {
     background: #f8f9fa;
     transition: all 0.2s ease;
@@ -430,7 +426,6 @@ body.dark .task-name {
     color: #eee;
 }
 
-/* Старые стили для task-button (оставляю) */
 .task-button {
     display: flex;
     align-items: center;
