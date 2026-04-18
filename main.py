@@ -18,7 +18,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'email' not in session:
-            return redirect(url_for('login'))
+            return redirect(url_for('if_not_auth'))
         return f(*args, **kwargs)
 
     return decorated_function
@@ -189,11 +189,19 @@ def login():
 @login_required
 def election_course():
     user = get_current_user()
-    if not user:
-        session.clear()
-        return redirect(url_for('login'))
     return render_template('election_course.html', Name=user.name, Surname=user.surname)
 
+@app.route('/if_not_auth', methods=['GET', 'POST'])
+def if_not_auth():
+    if request.method == 'POST':
+        action = request.form.get('action')
+
+        if action == 'reg':
+            return redirect(url_for('register'))
+        elif action == 'aut':
+            return redirect(url_for('login'))
+
+    return render_template('if_not_autorization.html')
 
 @app.route('/settings')
 @login_required
@@ -260,6 +268,14 @@ def test_5():
 @app.route('/test/6')
 def test_6():
     return render_template('test_6.html')
+
+@app.route('/course/python/hello_world')
+def hello_world():
+    return render_template('first_lesson.html')
+
+@app.route('/book_for_first_lessonn')
+def book_for_first():
+    return render_template('book_for_first_lessonn.html')
 
 
 if __name__ == '__main__':

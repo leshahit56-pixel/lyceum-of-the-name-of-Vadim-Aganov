@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Знакомство со средой{% endblock %}
+
+{% block content %}
+    <button type="button" class="btn btn-info mb-4" onclick="window.location.href='/course/python'"> К урокам</button>
+    <div style="text-align: right;">
+        <a class="btn btn-info" href="/book_for_first_lessonn" style="border-radius: 15px;">Учебничек</a>
+    </div>
+    <div class="easy">
+        <h1 style="color: green;">Легкие задачи</h1>
+        <a href="#" class="task-button">
+            <div class="task-icon-container">
+                <img src="{{ url_for('static', filename='static/img/not_solution.png') }}" alt="Task Icon">
+            </div>
+            <div class="task-text">
+                Ваша первая программа
+            </div>
+        </a>
+        <a class="task-button" href="#">
+            <div class="task-icon-container">
+                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="67">
+            </div>
+            <div class="task-text">
+                Я пока хз че писать
+            </div>
+        </a>
+        <a href="#" class="task-button">
+            <div class="task-icon-container">
+                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="67">
+            </div>
+            <div class="task-text">
+                67k
+            </div>
+        </a>
+    </div>
+
+    <div class="middle">
+        <h1 style="color: rgb(211, 211, 20);">Задачи среднего уровня</h1>
+        <a class="task-button" href="#">
+            <div class="task-icon-container">
+                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
+            </div>
+            <div class="task-text">
+                Черепок Черепок
+            </div>
+        </a>
+        <a class="task-button" href="#">
+            <div class="task-icon-container">
+                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
+            </div>
+            <div class="task-text">
+                Мне вспароли пузо
+            </div>
+        </a>
+        <a class="task-button" href="#">
+            <div class="task-icon-container">
+                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
+            </div>
+            <div class="task-text">
+                Картель
+            </div>
+        </a>
+    </div>
+    <div class="hard">
+        <h1 style="color: red;">Тяжелые задачи💀</h1>
+        <a class="task-button" href="#">
+            <div class="task-icon-container">
+                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
+            </div>
+            <div class="task-text">
+                print(67)
+            </div>
+        </a>
+        <a class="task-button" href="#">
+            <div class="task-icon-container">
+                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
+            </div>
+            <div class="task-text">
+                Я устал...
+            </div>
+        </a>
+        <a class="task-button" href="#">
+            <div class="task-icon-container">
+                <img src="{{url_for('static', filename='static/img/not_solution.png')}}" alt="Боров">
+            </div>
+            <div class="task-text">
+                Поляна лох
+            </div>
+        </a>
+    </div>
+
+    
+
+
+{% endblock %}
