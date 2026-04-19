@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Знакомство со средой{% endblock %}
+{% block title %}{{ lesson_title|default('Знакомство со средой') }}{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
@@ -11,17 +11,17 @@
 
                 <!-- Кнопки навигации -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <a href="/course/python" class="btn btn-outline-primary rounded-pill px-4">
+                    <a href="{{ url_for('coursepython') }}" class="btn btn-outline-primary rounded-pill px-4">
                         <i class="bi bi-arrow-left"></i> К урокам
                     </a>
-                    <a href="/book_for_first_lessonn" class="btn btn-info rounded-pill px-4">
+                    <a href="{{ url_for('book_for_first') }}" class="btn btn-info rounded-pill px-4">
                         <i class="bi bi-book"></i> Учебничек
                     </a>
                 </div>
 
                 <!-- Название темы -->
                 <h2 class="fw-bold text-center mb-3 lesson-title">
-                    Знакомство со средой
+                    {{ lesson_title|default('Знакомство со средой') }}
                 </h2>
 
                 <!-- Прогресс урока -->
@@ -30,21 +30,21 @@
                         <div class="col-md-7">
                             <div class="d-flex justify-content-between small mb-1">
                                 <span class="progress-label">Прогресс урока</span>
-                                <span class="progress-value"><strong>0</strong> из 9 задач решено</span>
+                                <span class="progress-value"><strong>{{ solved_count|default(0) }}</strong> из 9 задач решено</span>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%;"></div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ progress_percent|default(0) }}%;"></div>
                             </div>
                         </div>
                         <div class="col-md-5 mt-3 mt-md-0">
                             <div class="d-flex justify-content-md-end gap-4">
                                 <div class="text-center">
                                     <div class="small progress-label">Решено задач</div>
-                                    <div class="fw-bold fs-5 progress-value">0/9</div>
+                                    <div class="fw-bold fs-5 progress-value">{{ solved_count|default(0) }}/9</div>
                                 </div>
                                 <div class="text-center">
                                     <div class="small progress-label">Заработано баллов</div>
-                                    <div class="fw-bold fs-5 text-success progress-value">0</div>
+                                    <div class="fw-bold fs-5 text-success progress-value">{{ total_points|default(0) }}</div>
                                 </div>
                             </div>
                         </div>
@@ -59,36 +59,27 @@
                     </div>
                     <div class="d-flex flex-column gap-2">
 
-                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                        <a href="{{ url_for('task', lesson_id=lesson_id|default(1), task_order=1) }}" class="task-link text-decoration-none" data-status="{{ tasks_status[0]|default('unsolved') }}">
                             <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
-                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     alt="Task" class="task-icon"
-                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
-                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
-                                <span class="task-name">Ваша первая программа</span>
+                                <img src="{{ url_for('static', filename='img/' + ('solved.png' if tasks_status[0] == 'solved' else ('failed.png' if tasks_status[0] == 'failed' else 'not_solution.png'))) }}"
+                                     alt="Task" class="task-icon">
+                                <span class="task-name">Привет, мир!</span>
                             </div>
                         </a>
 
-                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                        <a href="{{ url_for('task', lesson_id=lesson_id|default(1), task_order=2) }}" class="task-link text-decoration-none" data-status="{{ tasks_status[1]|default('unsolved') }}">
                             <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
-                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     alt="Task" class="task-icon"
-                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
-                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
-                                <span class="task-name">Я пока хз че писать</span>
+                                <img src="{{ url_for('static', filename='img/' + ('solved.png' if tasks_status[1] == 'solved' else ('failed.png' if tasks_status[1] == 'failed' else 'not_solution.png'))) }}"
+                                     alt="Task" class="task-icon">
+                                <span class="task-name">Я изучаю Python</span>
                             </div>
                         </a>
 
-                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                        <a href="{{ url_for('task', lesson_id=lesson_id|default(1), task_order=3) }}" class="task-link text-decoration-none" data-status="{{ tasks_status[2]|default('unsolved') }}">
                             <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
-                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     alt="Task" class="task-icon"
-                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
-                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
-                                <span class="task-name">67k</span>
+                                <img src="{{ url_for('static', filename='img/' + ('solved.png' if tasks_status[2] == 'solved' else ('failed.png' if tasks_status[2] == 'failed' else 'not_solution.png'))) }}"
+                                     alt="Task" class="task-icon">
+                                <span class="task-name">Многострочный вывод</span>
                             </div>
                         </a>
 
@@ -98,41 +89,32 @@
                 <!-- Средние задачи -->
                 <div class="task-section mb-4">
                     <div class="difficulty-badge medium mb-3">
-                        <span class="badge-icon">⚡</span>
+                        <span class="badge-icon">🍀</span>
                         <span class="badge-text">Средние задачи</span>
                     </div>
                     <div class="d-flex flex-column gap-2">
 
-                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                        <a href="{{ url_for('task', lesson_id=lesson_id|default(1), task_order=4) }}" class="task-link text-decoration-none" data-status="{{ tasks_status[3]|default('unsolved') }}">
                             <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
-                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     alt="Task" class="task-icon"
-                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
-                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
-                                <span class="task-name">Черепок Черепок</span>
+                                <img src="{{ url_for('static', filename='img/' + ('solved.png' if tasks_status[3] == 'solved' else ('failed.png' if tasks_status[3] == 'failed' else 'not_solution.png'))) }}"
+                                     alt="Task" class="task-icon">
+                                <span class="task-name">Математика в Python</span>
                             </div>
                         </a>
 
-                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                        <a href="{{ url_for('task', lesson_id=lesson_id|default(1), task_order=5) }}" class="task-link text-decoration-none" data-status="{{ tasks_status[4]|default('unsolved') }}">
                             <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
-                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     alt="Task" class="task-icon"
-                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
-                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
-                                <span class="task-name">Мне вспароли пузо</span>
+                                <img src="{{ url_for('static', filename='img/' + ('solved.png' if tasks_status[4] == 'solved' else ('failed.png' if tasks_status[4] == 'failed' else 'not_solution.png'))) }}"
+                                     alt="Task" class="task-icon">
+                                <span class="task-name">Комментарии</span>
                             </div>
                         </a>
 
-                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                        <a href="{{ url_for('task', lesson_id=lesson_id|default(1), task_order=6) }}" class="task-link text-decoration-none" data-status="{{ tasks_status[5]|default('unsolved') }}">
                             <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
-                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     alt="Task" class="task-icon"
-                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
-                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
-                                <span class="task-name">Картель</span>
+                                <img src="{{ url_for('static', filename='img/' + ('solved.png' if tasks_status[5] == 'solved' else ('failed.png' if tasks_status[5] == 'failed' else 'not_solution.png'))) }}"
+                                     alt="Task" class="task-icon">
+                                <span class="task-name">Сложение чисел</span>
                             </div>
                         </a>
 
@@ -147,36 +129,27 @@
                     </div>
                     <div class="d-flex flex-column gap-2">
 
-                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                        <a href="{{ url_for('task', lesson_id=lesson_id|default(1), task_order=7) }}" class="task-link text-decoration-none" data-status="{{ tasks_status[6]|default('unsolved') }}">
                             <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
-                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     alt="Task" class="task-icon"
-                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
-                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
-                                <span class="task-name">print(67)</span>
+                                <img src="{{ url_for('static', filename='img/' + ('solved.png' if tasks_status[6] == 'solved' else ('failed.png' if tasks_status[6] == 'failed' else 'not_solution.png'))) }}"
+                                     alt="Task" class="task-icon">
+                                <span class="task-name">Переменные</span>
                             </div>
                         </a>
 
-                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                        <a href="{{ url_for('task', lesson_id=lesson_id|default(1), task_order=8) }}" class="task-link text-decoration-none" data-status="{{ tasks_status[7]|default('unsolved') }}">
                             <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
-                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     alt="Task" class="task-icon"
-                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
-                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
-                                <span class="task-name">Я устал...</span>
+                                <img src="{{ url_for('static', filename='img/' + ('solved.png' if tasks_status[7] == 'solved' else ('failed.png' if tasks_status[7] == 'failed' else 'not_solution.png'))) }}"
+                                     alt="Task" class="task-icon">
+                                <span class="task-name">Ввод данных</span>
                             </div>
                         </a>
 
-                        <a href="#" class="task-link text-decoration-none" data-status="unsolved">
+                        <a href="{{ url_for('task', lesson_id=lesson_id|default(1), task_order=9) }}" class="task-link text-decoration-none" data-status="{{ tasks_status[8]|default('unsolved') }}">
                             <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
-                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     alt="Task" class="task-icon"
-                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
-                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
-                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
-                                <span class="task-name">Поляна лох</span>
+                                <img src="{{ url_for('static', filename='img/' + ('solved.png' if tasks_status[8] == 'solved' else ('failed.png' if tasks_status[8] == 'failed' else 'not_solution.png'))) }}"
+                                     alt="Task" class="task-icon">
+                                <span class="task-name">Финальная задача</span>
                             </div>
                         </a>
 
