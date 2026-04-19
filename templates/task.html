@@ -21,7 +21,55 @@
         <!-- Левая панель с индикаторами -->
         <div class="indicators-panel">
             <div class="indicators-container">
-                <!-- Здесь будут 9 индикаторов -->
+
+                <!-- Группа лёгких задач (1-3) -->
+                <div class="indicator-group">
+                    <span class="indicator-group-label easy">🌱</span>
+                    <div class="indicator-dots">
+                        <a href="{{ url_for('task', lesson_id=1, task_order=1) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 1" class="indicator-icon" data-task="1">
+                        </a>
+                        <a href="{{ url_for('task', lesson_id=1, task_order=2) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 2" class="indicator-icon" data-task="2">
+                        </a>
+                        <a href="{{ url_for('task', lesson_id=1, task_order=3) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 3" class="indicator-icon" data-task="3">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Группа средних задач (4-6) -->
+                <div class="indicator-group">
+                    <span class="indicator-group-label medium">🍀</span>
+                    <div class="indicator-dots">
+                        <a href="{{ url_for('task', lesson_id=1, task_order=4) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 4" class="indicator-icon" data-task="4">
+                        </a>
+                        <a href="{{ url_for('task', lesson_id=1, task_order=5) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 5" class="indicator-icon" data-task="5">
+                        </a>
+                        <a href="{{ url_for('task', lesson_id=1, task_order=6) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 6" class="indicator-icon" data-task="6">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Группа сложных задач (7-9) -->
+                <div class="indicator-group">
+                    <span class="indicator-group-label hard">🔥</span>
+                    <div class="indicator-dots">
+                        <a href="{{ url_for('task', lesson_id=1, task_order=7) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 7" class="indicator-icon" data-task="7">
+                        </a>
+                        <a href="{{ url_for('task', lesson_id=1, task_order=8) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 8" class="indicator-icon" data-task="8">
+                        </a>
+                        <a href="{{ url_for('task', lesson_id=1, task_order=9) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 9" class="indicator-icon" data-task="9">
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
 
