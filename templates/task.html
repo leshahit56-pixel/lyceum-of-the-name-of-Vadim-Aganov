@@ -3,12 +3,98 @@
 {% block title %}{{ task.title }} - ЛиВА{% endblock %}
 
 {% block extra_css %}
+<!-- Сюда позже добавим CodeMirror -->
 {% endblock %}
 
 {% block content %}
 <div class="task-page-wrapper">
+    <!-- Кнопка возврата к уроку -->
+    <div class="back-to-lesson-wrapper">
+        <a href="{{ url_for('hello_world') }}" class="back-to-lesson-btn">
+            <i class="bi bi-arrow-left"></i> Вернуться к уроку
+        </a>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="task-layout">
+
+        <!-- Левая панель с индикаторами -->
+        <div class="indicators-panel">
+            <div class="indicators-container">
+                <!-- Здесь будут 9 индикаторов -->
+            </div>
+        </div>
+
+        <!-- Правая основная область -->
+        <div class="task-main">
+
+            <!-- Заголовок и баллы -->
+            <div class="task-header">
+                <h2 class="task-title">{{ task.title }}</h2>
+                <div class="task-points">
+                    <i class="bi bi-star-fill"></i>
+                    <span>{{ task.points }} баллов</span>
+                </div>
+            </div>
+
+            <!-- Кнопка условия -->
+            <div class="condition-btn-wrapper">
+                <button class="condition-toggle-btn active" id="conditionToggleBtn">
+                    <i class="bi bi-card-text"></i>
+                    <span>Условие задачи</span>
+                    <i class="bi bi-chevron-down" id="conditionArrow"></i>
+                </button>
+            </div>
+
+            <!-- Редактор и чат -->
+            <div class="editor-chat-row">
+
+                <!-- Редактор -->
+                <div class="editor-section">
+                    <div class="editor-header">
+                        <span><i class="bi bi-code-slash"></i> Редактор кода (Python)</span>
+                    </div>
+                    <textarea id="codeEditor"># Напишите ваше решение здесь</textarea>
+                </div>
+
+                <!-- Чат -->
+                <div class="chat-section">
+                    <div class="chat-tabs">
+                        <button class="chat-tab active">Компиляция</button>
+                        <button class="chat-tab">Нейросеть</button>
+                    </div>
+                    <div class="chat-content">
+                        <p>Здесь будет результат проверки</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Кнопка отправки -->
+            <button class="submit-solution-btn">
+                <i class="bi bi-send"></i> Отправить решение
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Модальное окно условия (всплывающее справа) -->
+    <div class="condition-modal show" id="conditionModal">
+        <div class="condition-modal-header">
+            <h3><i class="bi bi-journal-text"></i> Условие задачи</h3>
+            <button class="condition-modal-close" id="closeConditionBtn">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="condition-modal-body">
+            {{ task.description | safe }}
+        </div>
+    </div>
+
 </div>
 {% endblock %}
 
 {% block extra_js %}
+<!-- Сюда позже добавим JavaScript -->
 {% endblock %}

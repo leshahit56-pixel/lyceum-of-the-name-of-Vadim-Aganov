@@ -285,7 +285,13 @@ def book_for_first():
 @app.route('/course/python/lesson/<int:lesson_id>/task/<int:task_order>')
 @login_required
 def task(lesson_id, task_order):
-    return f"<h1>Задание {task_order} урока {lesson_id}</h1>"
+    task = {
+        'title': 'Ваша первая программа',
+        'points': 10,
+        'description': '<p>Напишите программу, которая выводит "Привет, мир!"</p>',
+    }
+
+    return render_template('task.html', task=task)
 
 
 if __name__ == '__main__':
