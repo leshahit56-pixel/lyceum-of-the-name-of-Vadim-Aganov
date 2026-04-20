@@ -286,9 +286,14 @@ def book_for_first():
 @login_required
 def task(lesson_id, task_order):
     task = {
-        'title': 'Ваша первая программа',
+        'id': 1,
+        'lesson_id': 1,
+        'title': 'Привет, мир!',
         'points': 10,
+        'difficulty': 'easy',
         'description': '<p>Напишите программу, которая выводит "Привет, мир!"</p>',
+        'starter_code': '# Напишите ваше решение здесь',
+        'status': None
     }
 
     return render_template('task.html', task=task)
