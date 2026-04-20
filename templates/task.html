@@ -115,11 +115,17 @@
                             <button class="chat-submit-btn">
                                 <i class="bi bi-send"></i> Отправить
                             </button>
-                            <button class="chat-tab active">Компиляция</button>
-                            <button class="chat-tab">Нейросеть</button>
+                            <button class="chat-tab active" data-tab="compilation">Компиляция</button>
+                            <button class="chat-tab" data-tab="ai">Нейросеть</button>
                         </div>
-                        <div class="chat-body">
-                            <p class="chat-placeholder">Здесь будет результат проверки</p>
+                        <div class="chat-body" id="chatBody">
+                            <!-- Контент чата -->
+                        </div>
+                        <div class="chat-input-wrapper">
+                            <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение...">
+                            <button class="chat-send-btn" id="chatSendBtn">
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -137,55 +143,145 @@
             </div>
 
         </div>
-        {% endblock %}
+    </div>
+</div>
+{% endblock %}
 
-        {% block extra_js %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
-        <script>
-            const editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
-                lineNumbers: true,
-                mode: 'python',
-                theme: document.body.classList.contains('dark') ? 'dracula' : 'default',
-                indentUnit: 4
-            });
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+<script>
+    // CodeMirror
+    const editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
+        lineNumbers: true,
+        mode: 'python',
+        theme: document.body.classList.contains('dark') ? 'dracula' : 'default',
+        indentUnit: 4
+    });
 
-            const modal = document.getElementById('conditionModal');
-            const toggleBtn = document.getElementById('conditionToggleBtn');
-            const closeBtn = document.getElementById('closeConditionBtn');
-            const arrow = document.getElementById('conditionArrow');
+    // Модальное окно условия
+    const modal = document.getElementById('conditionModal');
+    const toggleBtn = document.getElementById('conditionToggleBtn');
+    const closeBtn = document.getElementById('closeConditionBtn');
+    const arrow = document.getElementById('conditionArrow');
 
-            toggleBtn.onclick = function() {
-                modal.classList.toggle('show');
-                arrow.classList.toggle('bi-chevron-down');
-                arrow.classList.toggle('bi-chevron-up');
-            };
+    toggleBtn.onclick = function() {
+        modal.classList.toggle('show');
+        arrow.classList.toggle('bi-chevron-down');
+        arrow.classList.toggle('bi-chevron-up');
+    };
 
-            closeBtn.onclick = function() {
-                modal.classList.remove('show');
-                arrow.classList.add('bi-chevron-down');
-                arrow.classList.remove('bi-chevron-up');
-            };
+    closeBtn.onclick = function() {
+        modal.classList.remove('show');
+        arrow.classList.add('bi-chevron-down');
+        arrow.classList.remove('bi-chevron-up');
+    };
 
-            document.addEventListener('click', function(event) {
-                if (!modal.contains(event.target) && !toggleBtn.contains(event.target)) {
-                    modal.classList.remove('show');
-                    arrow.classList.add('bi-chevron-down');
-                    arrow.classList.remove('bi-chevron-up');
+    document.addEventListener('click', function(event) {
+        if (!modal.contains(event.target) && !toggleBtn.contains(event.target)) {
+            modal.classList.remove('show');
+            arrow.classList.add('bi-chevron-down');
+            arrow.classList.remove('bi-chevron-up');
+        }
+    });
+
+    // Тема редактора
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === 'class') {
+                editor.setOption('theme', document.body.classList.contains('dark') ? 'dracula' : 'default');
+            }
+        });
+    });
+    observer.observe(document.body, { attributes: true });
+
+    // Отправка решения (заглушка)
+    document.querySelector('.chat-submit-btn').onclick = function() {
+        alert('Решение отправлено (заглушка)');
+    };
+
+    // ========== ЧАТ ==========
+    const chatBody = document.getElementById('chatBody');
+    const chatTabs = document.querySelectorAll('.chat-tab');
+    const chatInput = document.getElementById('chatInput');
+    const chatSendBtn = document.getElementById('chatSendBtn');
+
+    let currentTab = 'compilation';
+    let compilationMessages = [];
+    let aiMessages = [];
+
+    // Инициализация чата
+    function initChat() {
+        chatBody.innerHTML = '<p class="chat-placeholder">Здесь будет результат проверки</p>';
+    }
+    initChat();
+
+    // Переключение вкладок
+    chatTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            chatTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            currentTab = this.dataset.tab;
+
+            if (currentTab === 'compilation') {
+                if (compilationMessages.length === 0) {
+                    chatBody.innerHTML = '<p class="chat-placeholder">Здесь будет результат проверки</p>';
+                } else {
+                    chatBody.innerHTML = compilationMessages.map(msg =>
+                        `<div class="chat-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
+                    ).join('');
                 }
-            });
+            } else {
+                if (aiMessages.length === 0) {
+                    chatBody.innerHTML = `
+                        <div class="ai-chat-placeholder">
+                            <i class="bi bi-robot" style="font-size: 3rem; color: #6f42c1; margin-bottom: 15px;"></i>
+                            <p class="chat-placeholder">Общение с нейросетью будет доступно позже</p>
+                            <p class="ai-hint">Вы сможете задать вопрос по задаче</p>
+                        </div>
+                    `;
+                } else {
+                    chatBody.innerHTML = aiMessages.map(msg =>
+                        `<div class="chat-message ai-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
+                    ).join('');
+                }
+            }
+        });
+    });
 
-            const observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.attributeName === 'class') {
-                        editor.setOption('theme', document.body.classList.contains('dark') ? 'dracula' : 'default');
-                    }
-                });
-            });
-            observer.observe(document.body, { attributes: true });
+    // Отправка сообщения
+    function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
 
-            document.querySelector('.chat-submit-btn').onclick = function() {
-                alert('Решение отправлено (заглушка)');
-            };
-        </script>
-        {% endblock %}
+        const time = new Date().toLocaleTimeString().slice(0, 5);
+
+        if (currentTab === 'compilation') {
+            if (compilationMessages.length === 0) {
+                chatBody.innerHTML = '';
+            }
+            compilationMessages.push({ text, time });
+            chatBody.innerHTML = compilationMessages.map(msg =>
+                `<div class="chat-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
+            ).join('');
+        } else {
+            if (aiMessages.length === 0) {
+                chatBody.innerHTML = '';
+            }
+            aiMessages.push({ text, time });
+            chatBody.innerHTML = aiMessages.map(msg =>
+                `<div class="chat-message ai-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
+            ).join('');
+        }
+
+        chatInput.value = '';
+    }
+
+    chatSendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>
+{% endblock %}
