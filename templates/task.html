@@ -5,6 +5,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/show-hint.min.css">
 {% endblock %}
 
 {% block content %}
@@ -150,13 +151,34 @@
 {% block extra_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/python-hint.min.js"></script>
+
 <script>
-    // CodeMirror
+    // Расширенный редактор CodeMirror
     const editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
         lineNumbers: true,
         mode: 'python',
         theme: document.body.classList.contains('dark') ? 'dracula' : 'default',
-        indentUnit: 4
+        indentUnit: 4,
+        smartIndent: true,
+        autoCloseBrackets: true,
+        matchBrackets: true,
+        extraKeys: {
+            'Ctrl-Space': 'autocomplete',
+            'Tab': function(cm) {
+                if (cm.somethingSelected()) {
+                    cm.indentSelection('add');
+                } else {
+                    cm.replaceSelection('    ', 'end');
+                }
+            },
+            'Shift-Tab': function(cm) {
+                cm.indentSelection('subtract');
+            }
+        }
     });
 
     // Модальное окно условия
@@ -210,13 +232,11 @@
     let compilationMessages = [];
     let aiMessages = [];
 
-    // Инициализация чата
     function initChat() {
         chatBody.innerHTML = '<p class="chat-placeholder">Здесь будет результат проверки</p>';
     }
     initChat();
 
-    // Переключение вкладок
     chatTabs.forEach(tab => {
         tab.addEventListener('click', function() {
             chatTabs.forEach(t => t.classList.remove('active'));
@@ -249,7 +269,6 @@
         });
     });
 
-    // Отправка сообщения
     function sendMessage() {
         const text = chatInput.value.trim();
         if (!text) return;
