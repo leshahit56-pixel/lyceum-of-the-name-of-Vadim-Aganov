@@ -3,146 +3,189 @@
 {% block title %}{{ task.title }} - ЛиВА{% endblock %}
 
 {% block extra_css %}
-<!-- Сюда позже добавим CodeMirror -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
 {% endblock %}
 
 {% block content %}
-<div class="task-page-wrapper">
-    <!-- Кнопка возврата к уроку -->
-    <div class="back-to-lesson-wrapper">
-        <a href="{{ url_for('hello_world') }}" class="back-to-lesson-btn">
+<div class="container-fluid px-4 py-3">
+
+    <!-- Кнопка возврата -->
+    <div class="mb-4">
+        <a href="{{ url_for('hello_world') }}" class="back-lesson-btn">
             <i class="bi bi-arrow-left"></i> Вернуться к уроку
         </a>
     </div>
 
-    <!-- Основной контент -->
-    <div class="task-layout">
+    <div class="row g-4">
 
         <!-- Левая панель с индикаторами -->
-        <div class="indicators-panel">
-            <div class="indicators-container">
+        <div class="col-auto">
+            <div class="indicators-panel">
 
-                <!-- Группа лёгких задач (1-3) -->
+                <!-- Лёгкие -->
                 <div class="indicator-group">
-                    <span class="indicator-group-label easy">🌱</span>
+                    <div class="indicator-label">🌱</div>
                     <div class="indicator-dots">
-                        <a href="{{ url_for('task', lesson_id=1, task_order=1) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 1" class="indicator-icon" data-task="1">
+                        {% for i in range(1, 4) %}
+                        <a href="{{ url_for('task', lesson_id=1, task_order=i) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}"
+                                 class="indicator-icon">
                         </a>
-                        <a href="{{ url_for('task', lesson_id=1, task_order=2) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 2" class="indicator-icon" data-task="2">
-                        </a>
-                        <a href="{{ url_for('task', lesson_id=1, task_order=3) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 3" class="indicator-icon" data-task="3">
-                        </a>
+                        {% endfor %}
                     </div>
                 </div>
 
-                <!-- Группа средних задач (4-6) -->
+                <!-- Средние -->
                 <div class="indicator-group">
-                    <span class="indicator-group-label medium">🍀</span>
+                    <div class="indicator-label">🍀</div>
                     <div class="indicator-dots">
-                        <a href="{{ url_for('task', lesson_id=1, task_order=4) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 4" class="indicator-icon" data-task="4">
+                        {% for i in range(4, 7) %}
+                        <a href="{{ url_for('task', lesson_id=1, task_order=i) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}"
+                                 class="indicator-icon">
                         </a>
-                        <a href="{{ url_for('task', lesson_id=1, task_order=5) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 5" class="indicator-icon" data-task="5">
-                        </a>
-                        <a href="{{ url_for('task', lesson_id=1, task_order=6) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 6" class="indicator-icon" data-task="6">
-                        </a>
+                        {% endfor %}
                     </div>
                 </div>
 
-                <!-- Группа сложных задач (7-9) -->
+                <!-- Сложные -->
                 <div class="indicator-group">
-                    <span class="indicator-group-label hard">🔥</span>
+                    <div class="indicator-label">🔥</div>
                     <div class="indicator-dots">
-                        <a href="{{ url_for('task', lesson_id=1, task_order=7) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 7" class="indicator-icon" data-task="7">
+                        {% for i in range(7, 10) %}
+                        <a href="{{ url_for('task', lesson_id=1, task_order=i) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}"
+                                 class="indicator-icon">
                         </a>
-                        <a href="{{ url_for('task', lesson_id=1, task_order=8) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 8" class="indicator-icon" data-task="8">
-                        </a>
-                        <a href="{{ url_for('task', lesson_id=1, task_order=9) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Задача 9" class="indicator-icon" data-task="9">
-                        </a>
+                        {% endfor %}
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <!-- Правая основная область -->
-        <div class="task-main">
+        <!-- Правая область -->
+        <div class="col">
 
-            <!-- Заголовок и баллы -->
+            <!-- Заголовок и мета-информация -->
             <div class="task-header">
                 <h2 class="task-title">{{ task.title }}</h2>
-                <div class="task-points">
-                    <i class="bi bi-star-fill"></i>
-                    <span>{{ task.points }} баллов</span>
+                <div class="task-meta">
+                    <span><i class="bi bi-book"></i> Знакомство со средой</span>
+                    <span class="difficulty-{{ task.difficulty }}">
+                        {% if task.difficulty == 'easy' %}🌱 Лёгкая
+                        {% elif task.difficulty == 'medium' %}🍀 Средняя
+                        {% elif task.difficulty == 'hard' %}🔥 Тяжёлая
+                        {% endif %}
+                    </span>
+                    <span><i class="bi bi-trophy"></i> {{ task.points }} баллов</span>
                 </div>
             </div>
 
+            <!-- Статус -->
+            <div class="task-status">
+                {% if task.status == 'solved' %}
+                <span class="status-badge solved"><i class="bi bi-check-circle"></i> Зачтено {{ task.points }}/{{ task.points }}</span>
+                {% elif task.status == 'failed' %}
+                <span class="status-badge failed"><i class="bi bi-x-circle"></i> Не зачтено</span>
+                {% endif %}
+            </div>
+
             <!-- Кнопка условия -->
-            <div class="condition-btn-wrapper">
-                <button class="condition-toggle-btn active" id="conditionToggleBtn">
-                    <i class="bi bi-card-text"></i>
-                    <span>Условие задачи</span>
-                    <i class="bi bi-chevron-down" id="conditionArrow"></i>
+            <div class="condition-wrapper">
+                <button class="condition-btn" id="conditionToggleBtn">
+                    <i class="bi bi-card-text"></i> Условие задачи
+                    <i class="bi bi-chevron-down ms-2" id="conditionArrow"></i>
                 </button>
             </div>
 
             <!-- Редактор и чат -->
-            <div class="editor-chat-row">
-
-                <!-- Редактор -->
-                <div class="editor-section">
-                    <div class="editor-header">
-                        <span><i class="bi bi-code-slash"></i> Редактор кода (Python)</span>
-                    </div>
-                    <textarea id="codeEditor"># Напишите ваше решение здесь</textarea>
-                </div>
-
-                <!-- Чат -->
-                <div class="chat-section">
-                    <div class="chat-tabs">
-                        <button class="chat-tab active">Компиляция</button>
-                        <button class="chat-tab">Нейросеть</button>
-                    </div>
-                    <div class="chat-content">
-                        <p>Здесь будет результат проверки</p>
+            <div class="row g-3">
+                <div class="col-md-7">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <i class="bi bi-code-slash"></i> Редактор кода (Python)
+                        </div>
+                        <textarea id="codeEditor"></textarea>
                     </div>
                 </div>
-
+                <div class="col-md-5">
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <button class="chat-submit-btn">
+                                <i class="bi bi-send"></i> Отправить
+                            </button>
+                            <button class="chat-tab active">Компиляция</button>
+                            <button class="chat-tab">Нейросеть</button>
+                        </div>
+                        <div class="chat-body">
+                            <p class="chat-placeholder">Здесь будет результат проверки</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Кнопка отправки -->
-            <button class="submit-solution-btn">
-                <i class="bi bi-send"></i> Отправить решение
-            </button>
+            <!-- Модальное окно условия -->
+            <div class="condition-modal show" id="conditionModal">
+                <div class="condition-modal-header">
+                    <h5><i class="bi bi-journal-text"></i> Условие задачи</h5>
+                    <button class="condition-modal-close" id="closeConditionBtn">&times;</button>
+                </div>
+                <div class="condition-modal-body">
+                    {{ task.description | safe }}
+                </div>
+            </div>
 
         </div>
+        {% endblock %}
 
-    </div>
+        {% block extra_js %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+        <script>
+            const editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
+                lineNumbers: true,
+                mode: 'python',
+                theme: document.body.classList.contains('dark') ? 'dracula' : 'default',
+                indentUnit: 4
+            });
 
-    <!-- Модальное окно условия (всплывающее справа) -->
-    <div class="condition-modal show" id="conditionModal">
-        <div class="condition-modal-header">
-            <h3><i class="bi bi-journal-text"></i> Условие задачи</h3>
-            <button class="condition-modal-close" id="closeConditionBtn">
-                <i class="bi bi-x-lg"></i>
-            </button>
-        </div>
-        <div class="condition-modal-body">
-            {{ task.description | safe }}
-        </div>
-    </div>
+            const modal = document.getElementById('conditionModal');
+            const toggleBtn = document.getElementById('conditionToggleBtn');
+            const closeBtn = document.getElementById('closeConditionBtn');
+            const arrow = document.getElementById('conditionArrow');
 
-</div>
-{% endblock %}
+            toggleBtn.onclick = function() {
+                modal.classList.toggle('show');
+                arrow.classList.toggle('bi-chevron-down');
+                arrow.classList.toggle('bi-chevron-up');
+            };
 
-{% block extra_js %}
-<!-- Сюда позже добавим JavaScript -->
-{% endblock %}
+            closeBtn.onclick = function() {
+                modal.classList.remove('show');
+                arrow.classList.add('bi-chevron-down');
+                arrow.classList.remove('bi-chevron-up');
+            };
+
+            document.addEventListener('click', function(event) {
+                if (!modal.contains(event.target) && !toggleBtn.contains(event.target)) {
+                    modal.classList.remove('show');
+                    arrow.classList.add('bi-chevron-down');
+                    arrow.classList.remove('bi-chevron-up');
+                }
+            });
+
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.attributeName === 'class') {
+                        editor.setOption('theme', document.body.classList.contains('dark') ? 'dracula' : 'default');
+                    }
+                });
+            });
+            observer.observe(document.body, { attributes: true });
+
+            document.querySelector('.chat-submit-btn').onclick = function() {
+                alert('Решение отправлено (заглушка)');
+            };
+        </script>
+        {% endblock %}
