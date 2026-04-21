@@ -901,3 +901,17 @@ body.dark .auth-card-container .card {
     background: #16213e !important;
     color: #eee !important;
 }
+
+.robot-icon {
+    font-size: 3rem;
+    color: #6f42c1;
+    margin-bottom: 15px;
+}
+
+.modal-border-light {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+body.dark .modal-border-light {
+    border-color: #2d2d44 !important;
+}

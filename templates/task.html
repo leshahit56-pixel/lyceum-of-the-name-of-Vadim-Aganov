@@ -87,7 +87,6 @@
             <div class="condition-wrapper">
                 <button class="condition-btn" id="conditionToggleBtn">
                     <i class="bi bi-card-text"></i> Условие задачи
-                    <i class="bi bi-chevron-down ms-2" id="conditionArrow"></i>
                 </button>
             </div>
 
@@ -121,7 +120,7 @@
             </div>
 
             <div class="condition-modal show" id="conditionModal">
-                <div class="condition-modal-header">
+                <div class="condition-modal-header modal-border-light">
                     <h5><i class="bi bi-journal-text"></i> Условие задачи</h5>
                     <button class="condition-modal-close" id="closeConditionBtn">&times;</button>
                 </div>
@@ -152,43 +151,34 @@
         smartIndent: true,
         autoCloseBrackets: true,
         matchBrackets: true,
-        extraKeys: {
-            'Ctrl-Space': 'autocomplete',
-            'Tab': function(cm) {
-                if (cm.somethingSelected()) {
-                    cm.indentSelection('add');
-                } else {
-                    cm.replaceSelection('    ', 'end');
-                }
-            },
-            'Shift-Tab': function(cm) {
-                cm.indentSelection('subtract');
-            }
+        hintOptions: {
+            completeSingle: false,
+            hint: CodeMirror.hint.python
+        },
+    });
+
+    // Автодополнение при вводе
+    editor.on('inputRead', function(cm, change) {
+        if (change.text[0] && /[a-zA-Z_]/.test(change.text[0])) {
+            CodeMirror.commands.autocomplete(cm);
         }
     });
 
     const modal = document.getElementById('conditionModal');
     const toggleBtn = document.getElementById('conditionToggleBtn');
     const closeBtn = document.getElementById('closeConditionBtn');
-    const arrow = document.getElementById('conditionArrow');
 
     toggleBtn.onclick = function() {
         modal.classList.toggle('show');
-        arrow.classList.toggle('bi-chevron-down');
-        arrow.classList.toggle('bi-chevron-up');
     };
 
     closeBtn.onclick = function() {
         modal.classList.remove('show');
-        arrow.classList.add('bi-chevron-down');
-        arrow.classList.remove('bi-chevron-up');
     };
 
     document.addEventListener('click', function(event) {
         if (!modal.contains(event.target) && !toggleBtn.contains(event.target)) {
             modal.classList.remove('show');
-            arrow.classList.add('bi-chevron-down');
-            arrow.classList.remove('bi-chevron-up');
         }
     });
 
