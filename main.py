@@ -191,6 +191,7 @@ def election_course():
     user = get_current_user()
     return render_template('election_course.html', Name=user.name, Surname=user.surname)
 
+
 @app.route('/if_not_auth', methods=['GET', 'POST'])
 def if_not_auth():
     if request.method == 'POST':
@@ -202,6 +203,7 @@ def if_not_auth():
             return redirect(url_for('login'))
 
     return render_template('if_not_autorization.html')
+
 
 @app.route('/settings')
 @login_required
@@ -269,9 +271,11 @@ def test_5():
 def test_6():
     return render_template('test_6.html')
 
+
 @app.route('/course/python/hello_world')
 def hello_world():
     return render_template('first_lesson.html')
+
 
 @app.route('/book_for_first_lessonn')
 def book_for_first():
@@ -280,6 +284,23 @@ def book_for_first():
 @app.route('/45')
 def mine():
     return render_template('my_honest.html')
+
+@app.route('/course/python/lesson/<int:lesson_id>/task/<int:task_order>')
+@login_required
+def task(lesson_id, task_order):
+    task = {
+        'id': 1,
+        'lesson_id': 1,
+        'title': 'Привет, мир!',
+        'points': 10,
+        'difficulty': 'easy',
+        'description': '<p>Напишите программу, которая выводит "Привет, мир!"</p>',
+        'starter_code': '# Напишите ваше решение здесь',
+        'status': None
+    }
+
+    return render_template('task.html', task=task)
+
 
 if __name__ == '__main__':
     db_session.global_init('db/blogs.db')

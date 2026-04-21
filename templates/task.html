@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% block title %}{{ task.title }} - ЛиВА{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/show-hint.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-3">
+
+    <div class="mb-4">
+        <a href="{{ url_for('hello_world') }}" class="back-lesson-btn">
+            <i class="bi bi-arrow-left"></i> Вернуться к уроку
+        </a>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-auto">
+            <div class="indicators-panel">
+
+                <div class="indicator-group">
+                    <div class="indicator-label">🌱</div>
+                    <div class="indicator-dots">
+                        {% for i in range(1, 4) %}
+                        <a href="{{ url_for('task', lesson_id=1, task_order=i) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}"
+                                 class="indicator-icon">
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="indicator-group">
+                    <div class="indicator-label">🍀</div>
+                    <div class="indicator-dots">
+                        {% for i in range(4, 7) %}
+                        <a href="{{ url_for('task', lesson_id=1, task_order=i) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}"
+                                 class="indicator-icon">
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="indicator-group">
+                    <div class="indicator-label">🔥</div>
+                    <div class="indicator-dots">
+                        {% for i in range(7, 10) %}
+                        <a href="{{ url_for('task', lesson_id=1, task_order=i) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}"
+                                 class="indicator-icon">
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+
+            <div class="task-header">
+                <h2 class="task-title">{{ task.title }}</h2>
+                <div class="task-meta">
+                    <span><i class="bi bi-book"></i> Знакомство со средой</span>
+                    <span class="difficulty-{{ task.difficulty }}">
+                        {% if task.difficulty == 'easy' %}🌱 Лёгкая
+                        {% elif task.difficulty == 'medium' %}🍀 Средняя
+                        {% elif task.difficulty == 'hard' %}🔥 Тяжёлая
+                        {% endif %}
+                    </span>
+                    <span><i class="bi bi-trophy"></i> {{ task.points }} баллов</span>
+                </div>
+            </div>
+
+            <div class="task-status">
+                {% if task.status == 'solved' %}
+                <span class="status-badge solved"><i class="bi bi-check-circle"></i> Зачтено {{ task.points }}/{{ task.points }}</span>
+                {% elif task.status == 'failed' %}
+                <span class="status-badge failed"><i class="bi bi-x-circle"></i> Не зачтено</span>
+                {% endif %}
+            </div>
+
+            <div class="condition-wrapper">
+                <button class="condition-btn" id="conditionToggleBtn">
+                    <i class="bi bi-card-text"></i> Условие задачи
+                </button>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-7">
+                    <div class="editor-container">
+                        <div class="editor-header">
+                            <i class="bi bi-code-slash"></i> Редактор кода
+                        </div>
+                        <textarea id="codeEditor"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <button class="chat-submit-btn">
+                                <i class="bi bi-send"></i> Отправить
+                            </button>
+                            <button class="chat-tab active" data-tab="compilation">Компиляция</button>
+                            <button class="chat-tab" data-tab="ai">Нейросеть</button>
+                        </div>
+                        <div class="chat-body" id="chatBody"></div>
+                        <div class="chat-input-wrapper">
+                            <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение...">
+                            <button class="chat-send-btn" id="chatSendBtn">
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="condition-modal show" id="conditionModal">
+                <div class="condition-modal-header modal-border-light">
+                    <h5><i class="bi bi-journal-text"></i> Условие задачи</h5>
+                    <button class="condition-modal-close" id="closeConditionBtn">&times;</button>
+                </div>
+                <div class="condition-modal-body">
+                    {{ task.description | safe }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/python-hint.min.js"></script>
+
+<script>
+    const editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
+        lineNumbers: true,
+        mode: 'python',
+        theme: document.body.classList.contains('dark') ? 'dracula' : 'default',
+        indentUnit: 4,
+        smartIndent: true,
+        autoCloseBrackets: true,
+        matchBrackets: true,
+        hintOptions: {
+            completeSingle: false,
+            hint: CodeMirror.hint.python
+        },
+    });
+
+    // Автодополнение при вводе
+    editor.on('inputRead', function(cm, change) {
+        if (change.text[0] && /[a-zA-Z_]/.test(change.text[0])) {
+            CodeMirror.commands.autocomplete(cm);
+        }
+    });
+
+    const modal = document.getElementById('conditionModal');
+    const toggleBtn = document.getElementById('conditionToggleBtn');
+    const closeBtn = document.getElementById('closeConditionBtn');
+
+    toggleBtn.onclick = function() {
+        modal.classList.toggle('show');
+    };
+
+    closeBtn.onclick = function() {
+        modal.classList.remove('show');
+    };
+
+    document.addEventListener('click', function(event) {
+        if (!modal.contains(event.target) && !toggleBtn.contains(event.target)) {
+            modal.classList.remove('show');
+        }
+    });
+
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === 'class') {
+                editor.setOption('theme', document.body.classList.contains('dark') ? 'dracula' : 'default');
+            }
+        });
+    });
+    observer.observe(document.body, { attributes: true });
+
+    const chatBody = document.getElementById('chatBody');
+    const chatTabs = document.querySelectorAll('.chat-tab');
+    const chatInput = document.getElementById('chatInput');
+    const chatSendBtn = document.getElementById('chatSendBtn');
+
+    let currentTab = 'compilation';
+    let compilationMessages = [];
+    let aiMessages = [];
+
+    function initChat() {
+        chatBody.innerHTML = '<p class="chat-placeholder">Здесь будет результат проверки</p>';
+    }
+    initChat();
+
+    chatTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            chatTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            currentTab = this.dataset.tab;
+
+            if (currentTab === 'compilation') {
+                if (compilationMessages.length === 0) {
+                    chatBody.innerHTML = '<p class="chat-placeholder">Здесь будет результат проверки</p>';
+                } else {
+                    chatBody.innerHTML = compilationMessages.map(msg =>
+                        `<div class="chat-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
+                    ).join('');
+                }
+            } else {
+                if (aiMessages.length === 0) {
+                    chatBody.innerHTML = `
+                        <div class="ai-chat-placeholder">
+                            <i class="bi bi-robot robot-icon"></i>
+                            <p class="ai-hint">Вы сможете задать вопрос по задаче</p>
+                        </div>
+                    `;
+                } else {
+                    chatBody.innerHTML = aiMessages.map(msg =>
+                        `<div class="chat-message ai-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
+                    ).join('');
+                }
+            }
+        });
+    });
+
+    function addMessageToChat(text, isAi = false) {
+        const time = new Date().toLocaleTimeString().slice(0, 5);
+        if (currentTab === 'compilation' && !isAi) {
+            if (compilationMessages.length === 0) chatBody.innerHTML = '';
+            compilationMessages.push({ text, time });
+            chatBody.innerHTML = compilationMessages.map(msg =>
+                `<div class="chat-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
+            ).join('');
+        } else if (currentTab === 'ai' && isAi) {
+            if (aiMessages.length === 0) chatBody.innerHTML = '';
+            aiMessages.push({ text, time });
+            chatBody.innerHTML = aiMessages.map(msg =>
+                `<div class="chat-message ai-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
+            ).join('');
+        }
+    }
+
+    document.querySelector('.chat-submit-btn').onclick = function() {
+        const code = editor.getValue();
+        addMessageToChat(`📤 Решение отправлено (заглушка). Код: ${code.slice(0, 50)}${code.length > 50 ? '...' : ''}`, false);
+        document.querySelector('[data-tab="compilation"]').click();
+    };
+
+    function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        addMessageToChat(text, currentTab === 'ai');
+        chatInput.value = '';
+    }
+
+    chatSendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') sendMessage();
+    });
+</script>
+{% endblock %}
