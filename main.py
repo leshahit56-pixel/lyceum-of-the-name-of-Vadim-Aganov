@@ -299,6 +299,30 @@ def task(lesson_id, task_order):
     return render_template('task.html', task=task)
 
 
+@app.route('/course/python/operators')
+@login_required
+def lesson_operators():
+    return render_template('lesson_operators.html')
+
+
+@app.route('/course/python/while')
+@login_required
+def lesson_while():
+    return render_template('lesson_while.html')
+
+
+@app.route('/course/python/for')
+@login_required
+def lesson_for():
+    return render_template('lesson_for.html')
+
+
+@app.route('/course/python/strings')
+@login_required
+def lesson_strings():
+    return render_template('lesson_strings.html')
+
+
 if __name__ == '__main__':
     db_session.global_init('db/blogs.db')
     app.run(port=8080, host='127.0.0.1', debug=True)
