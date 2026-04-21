@@ -11,7 +11,6 @@
 {% block content %}
 <div class="container-fluid px-4 py-3">
 
-    <!-- Кнопка возврата -->
     <div class="mb-4">
         <a href="{{ url_for('hello_world') }}" class="back-lesson-btn">
             <i class="bi bi-arrow-left"></i> Вернуться к уроку
@@ -20,11 +19,9 @@
 
     <div class="row g-4">
 
-        <!-- Левая панель с индикаторами -->
         <div class="col-auto">
             <div class="indicators-panel">
 
-                <!-- Лёгкие -->
                 <div class="indicator-group">
                     <div class="indicator-label">🌱</div>
                     <div class="indicator-dots">
@@ -37,7 +34,6 @@
                     </div>
                 </div>
 
-                <!-- Средние -->
                 <div class="indicator-group">
                     <div class="indicator-label">🍀</div>
                     <div class="indicator-dots">
@@ -50,7 +46,6 @@
                     </div>
                 </div>
 
-                <!-- Сложные -->
                 <div class="indicator-group">
                     <div class="indicator-label">🔥</div>
                     <div class="indicator-dots">
@@ -65,10 +60,8 @@
             </div>
         </div>
 
-        <!-- Правая область -->
         <div class="col">
 
-            <!-- Заголовок и мета-информация -->
             <div class="task-header">
                 <h2 class="task-title">{{ task.title }}</h2>
                 <div class="task-meta">
@@ -83,7 +76,6 @@
                 </div>
             </div>
 
-            <!-- Статус -->
             <div class="task-status">
                 {% if task.status == 'solved' %}
                 <span class="status-badge solved"><i class="bi bi-check-circle"></i> Зачтено {{ task.points }}/{{ task.points }}</span>
@@ -92,7 +84,6 @@
                 {% endif %}
             </div>
 
-            <!-- Кнопка условия -->
             <div class="condition-wrapper">
                 <button class="condition-btn" id="conditionToggleBtn">
                     <i class="bi bi-card-text"></i> Условие задачи
@@ -100,7 +91,6 @@
                 </button>
             </div>
 
-            <!-- Редактор и чат -->
             <div class="row g-3">
                 <div class="col-md-7">
                     <div class="editor-container">
@@ -119,9 +109,7 @@
                             <button class="chat-tab active" data-tab="compilation">Компиляция</button>
                             <button class="chat-tab" data-tab="ai">Нейросеть</button>
                         </div>
-                        <div class="chat-body" id="chatBody">
-                            <!-- Контент чата -->
-                        </div>
+                        <div class="chat-body" id="chatBody"></div>
                         <div class="chat-input-wrapper">
                             <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение...">
                             <button class="chat-send-btn" id="chatSendBtn">
@@ -132,7 +120,6 @@
                 </div>
             </div>
 
-            <!-- Модальное окно условия -->
             <div class="condition-modal show" id="conditionModal">
                 <div class="condition-modal-header">
                     <h5><i class="bi bi-journal-text"></i> Условие задачи</h5>
@@ -157,7 +144,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/python-hint.min.js"></script>
 
 <script>
-    // редактор CodeMirror
     const editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
         lineNumbers: true,
         mode: 'python',
@@ -181,7 +167,6 @@
         }
     });
 
-    // Модальное окно условия
     const modal = document.getElementById('conditionModal');
     const toggleBtn = document.getElementById('conditionToggleBtn');
     const closeBtn = document.getElementById('closeConditionBtn');
@@ -207,7 +192,6 @@
         }
     });
 
-    // Тема редактора
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.attributeName === 'class') {
@@ -217,12 +201,6 @@
     });
     observer.observe(document.body, { attributes: true });
 
-    // Отправка решения (заглушка)
-    document.querySelector('.chat-submit-btn').onclick = function() {
-        alert('Решение отправлено (заглушка)');
-    };
-
-    // ========== ЧАТ ==========
     const chatBody = document.getElementById('chatBody');
     const chatTabs = document.querySelectorAll('.chat-tab');
     const chatInput = document.getElementById('chatInput');
@@ -255,7 +233,7 @@
                 if (aiMessages.length === 0) {
                     chatBody.innerHTML = `
                         <div class="ai-chat-placeholder">
-                            <i class="bi bi-robot" style="font-size: 3rem; color: #6f42c1; margin-bottom: 15px;"></i>
+                            <i class="bi bi-robot robot-icon"></i>
                             <p class="ai-hint">Вы сможете задать вопрос по задаче</p>
                         </div>
                     `;
@@ -268,38 +246,39 @@
         });
     });
 
-    function sendMessage() {
-        const text = chatInput.value.trim();
-        if (!text) return;
-
+    function addMessageToChat(text, isAi = false) {
         const time = new Date().toLocaleTimeString().slice(0, 5);
-
-        if (currentTab === 'compilation') {
-            if (compilationMessages.length === 0) {
-                chatBody.innerHTML = '';
-            }
+        if (currentTab === 'compilation' && !isAi) {
+            if (compilationMessages.length === 0) chatBody.innerHTML = '';
             compilationMessages.push({ text, time });
             chatBody.innerHTML = compilationMessages.map(msg =>
                 `<div class="chat-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
             ).join('');
-        } else {
-            if (aiMessages.length === 0) {
-                chatBody.innerHTML = '';
-            }
+        } else if (currentTab === 'ai' && isAi) {
+            if (aiMessages.length === 0) chatBody.innerHTML = '';
             aiMessages.push({ text, time });
             chatBody.innerHTML = aiMessages.map(msg =>
                 `<div class="chat-message ai-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
             ).join('');
         }
+    }
 
+    document.querySelector('.chat-submit-btn').onclick = function() {
+        const code = editor.getValue();
+        addMessageToChat(`📤 Решение отправлено (заглушка). Код: ${code.slice(0, 50)}${code.length > 50 ? '...' : ''}`, false);
+        document.querySelector('[data-tab="compilation"]').click();
+    };
+
+    function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        addMessageToChat(text, currentTab === 'ai');
         chatInput.value = '';
     }
 
     chatSendBtn.addEventListener('click', sendMessage);
     chatInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
+        if (e.key === 'Enter') sendMessage();
     });
 </script>
 {% endblock %}

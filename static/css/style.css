@@ -887,3 +887,17 @@ body.dark .condition-modal-body code {
     background: #0f172a;
     color: #fbbf24;
 }
+.robot-icon {
+    font-size: 3rem;
+    color: #6f42c1;
+    margin-bottom: 15px;
+}
+/* Тёмная тема для авторизации */
+body.dark h1 {
+    color: #eee !important;
+}
+
+body.dark .auth-card-container .card {
+    background: #16213e !important;
+    color: #eee !important;
+}
