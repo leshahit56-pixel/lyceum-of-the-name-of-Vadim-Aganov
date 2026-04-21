@@ -277,6 +277,9 @@ def hello_world():
 def book_for_first():
     return render_template('book_for_first_lessonn.html')
 
+@app.route('/45')
+def mine():
+    return render_template('my_honest.html')
 
 if __name__ == '__main__':
     db_session.global_init('db/blogs.db')
