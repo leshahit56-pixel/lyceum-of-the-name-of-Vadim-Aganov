@@ -281,6 +281,9 @@ def hello_world():
 def book_for_first():
     return render_template('book_for_first_lessonn.html')
 
+@app.route('/45')
+def mine():
+    return render_template('my_honest.html')
 
 @app.route('/course/python/lesson/<int:lesson_id>/task/<int:task_order>')
 @login_required
