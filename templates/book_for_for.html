@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="lesson-wrapper">
+    <div class="lesson-card">
+        <header>
+            <h1>Цикл for</h1>
+            <p class="intro">
+                Сегодня мы изучим ещё один оператор цикла — <code>for</code>. Он выполняет блок кода заданное количество раз. Ты научишься работать с функцией <code>range()</code>, перебирать строки, использовать оператор <code>in</code>, создавать вложенные циклы и управлять повторениями с помощью <code>break</code> и <code>continue</code>.
+            </p>
+        </header>
+
+        <section>
+            <h2>1. Цикл for</h2>
+            <p>Цикл <code>for</code> выполняет блок кода заданное количество раз.</p>
+            <div class="code-example">
+                <pre><code>for переменная in range(количество):
+    тело цикла</code></pre>
+            </div>
+            <p>Как и у <code>while</code>, у цикла <code>for</code> есть заголовок, заканчивающийся двоеточием, и тело цикла с отступом в четыре пробела. Переменная на начальной итерации принимает значение <code>0</code>, на следующей — <code>1</code>, и так далее, до значения, указанного в <code>range()</code>, <strong>не включая</strong> его.</p>
+            <p>Вот программа, которая выводит на экран целые числа от <code>0</code> до <code>n</code> (не включительно):</p>
+            <div class="code-example">
+                <pre><code>n = int(input())
+for i in range(n):
+    print(i)</code></pre>
+            </div>
+            <p><code>range</code> означает «диапазон». <code>for i in range(n)</code> читается как «для всех <code>i</code> в диапазоне от <code>0</code> до <code>n</code> (не включительно)». Цикл выполняется <code>n</code> раз.</p>
+            <p>Перепишем задачу с тремя товарами через <code>for</code>:</p>
+            <div class="code-example">
+                <pre><code>total = 0
+for i in range(3):
+    price = float(input())
+    total += price
+print('Сумма введённых чисел равна', total)</code></pre>
+            </div>
+            <p>Переменная-счётчик изменяется сама в рамках заданных значений. Цикл <code>for</code> присваивает переменной <code>i</code> значения <code>0</code>, <code>1</code>, <code>2</code> автоматически.</p>
+        </section>
+
+        <section>
+            <h2>2. Соглашения об именовании переменных</h2>
+            <p>В абстрактных задачах допустимы короткие имена вроде <code>n</code> или <code>i</code>. Однако лучше избегать этого. Буквой <code>n</code> обычно обозначают количество чего-либо, буквами <code>i</code> и <code>j</code> — итераторы цикла <code>for</code>. Если есть определённость (например, количество автомобилей), называйте переменную понятно: <code>cars</code>.</p>
+        </section>
+
+        <section>
+            <h2>3. Начальное значение и шаг итератора в range</h2>
+            <p>В скобках после <code>range</code> можно записать не одно, а два или три числа.</p>
+            <ul>
+                <li><strong>Одно число</strong> — итератор идёт от <code>0</code> до заданного значения (не включая).</li>
+                <li><strong>Два числа</strong> — начальное и конечное значение итератора.</li>
+                <li><strong>Три числа</strong> — начальное, конечное и шаг итератора.</li>
+            </ul>
+            <div class="code-example">
+                <pre><code># от 1 до 10
+for i in range(1, 11):
+    print(i)
+
+# от 1 до 10 с шагом 2 (1, 3, 5, 7, 9)
+for i in range(1, 11, 2):
+    print(i)
+
+# от 10 до 1 (обратный порядок)
+for i in range(10, 0, -1):
+    print(i)</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>4. Перебор строк в цикле for и оператор in</h2>
+            <p>Цикл <code>for</code> умеет перебирать не только числа из <code>range()</code>, но и символы строки. На каждой итерации переменная цикла принимает значение очередного символа строки.</p>
+            <div class="code-example">
+                <pre><code>word = input('Введите слово: ')
+for char in word:
+    print(char)</code></pre>
+            </div>
+            <p>Если ввести <code>привет</code>, программа выведет каждую букву на отдельной строке.</p>
+            <p>Это удобно для задач, где нужно обработать каждый символ: посчитать гласные, найти определённую букву или просто вывести слово по буквам.</p>
+
+            <h3>Оператор in для проверки вхождения</h3>
+            <p>Часто нужно проверить, содержится ли символ в наборе других символов. Для этого используется оператор <code>in</code>. Он возвращает <code>True</code>, если значение найдено в строке, и <code>False</code> в противном случае.</p>
+            <div class="code-example">
+                <pre><code>print('а' in 'привет')   # False
+print('е' in 'привет')   # True
+print('ри' in 'привет')  # True — можно искать не только один символ!</code></pre>
+            </div>
+            <p>Оператор <code>in</code> удобно использовать в условии <code>if</code>:</p>
+            <div class="code-example">
+                <pre><code>char = 'а'
+if char in 'аеёиоуыэюя':
+    print('Гласная!')</code></pre>
+            </div>
+            <p>Пример: подсчёт гласных букв в слове.</p>
+            <div class="code-example">
+                <pre><code>word = input()
+vowels = 'аеёиоуыэюя'
+count = 0
+for char in word:
+    if char in vowels:
+        count += 1
+print('Количество гласных:', count)</code></pre>
+            </div>
+            <p>Также с помощью <code>in</code> можно проверить, есть ли определённый символ в строке вообще:</p>
+            <div class="code-example">
+                <pre><code>word = input()
+if 'ъ' in word:
+    print('В слове есть твёрдый знак!')
+else:
+    print('Твёрдого знака нет.')</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>5. Вложенные циклы for</h2>
+            <p>Один цикл <code>for</code> можно поместить внутрь другого. Это называется <strong>вложенным циклом</strong>. Внутренний цикл полностью выполняется на каждой итерации внешнего.</p>
+            <div class="code-example">
+                <pre><code>for i in range(3):
+    for j in range(2):
+        print(i, j)
+# 0 0
+# 0 1
+# 1 0
+# 1 1
+# 2 0
+# 2 1</code></pre>
+            </div>
+            <p>Вложенные циклы удобны для вывода таблиц, прямоугольников и других двумерных структур.</p>
+            <p><strong>Таблица умножения:</strong></p>
+            <div class="code-example">
+                <pre><code>for i in range(1, 10):
+    for j in range(1, 10):
+        print(i * j, end='\t')
+    print()  # переход на новую строку</code></pre>
+            </div>
+            <p><strong>Прямоугольник из звёздочек:</strong></p>
+            <div class="code-example">
+                <pre><code>height = 3
+width = 5
+for i in range(height):
+    for j in range(width):
+        print('*', end='')
+    print()</code></pre>
+            </div>
+            <p><strong>Треугольник из звёздочек:</strong></p>
+            <div class="code-example">
+                <pre><code>n = 5
+for i in range(1, n + 1):
+    for j in range(i):
+        print('*', end='')
+    print()</code></pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>6. Операторы break и continue в цикле for</h2>
+            <p>Операторы <code>break</code> и <code>continue</code> работают в цикле <code>for</code> точно так же, как в <code>while</code>.</p>
+            <ul>
+                <li><code>break</code> — немедленно прекращает выполнение цикла.</li>
+                <li><code>continue</code> — пропускает оставшуюся часть тела цикла и переходит к следующей итерации.</li>
+            </ul>
+            <p><strong>Пример с break:</strong></p>
+            <div class="code-example">
+                <pre><code>for i in range(10):
+    if i == 5:
+        break
+    print(i)
+# выведет 0, 1, 2, 3, 4</code></pre>
+            </div>
+            <p><strong>Пример с continue:</strong></p>
+            <div class="code-example">
+                <pre><code>for i in range(5):
+    if i == 2:
+        continue
+    print(i)
+# выведет 0, 1, 3, 4</code></pre>
+            </div>
+            <p><strong>Пример: поиск буквы в слове с досрочным выходом</strong></p>
+            <div class="code-example">
+                <pre><code>word = input()
+for char in word:
+    if char == 'ъ':
+        print('Найден твёрдый знак!')
+        break
+else:
+    print('Твёрдого знака нет.')</code></pre>
+            </div>
+            <p>Обратите внимание на блок <code>else</code> после <code>for</code>. Он выполняется, только если цикл <strong>не был прерван</strong> оператором <code>break</code>.</p>
+        </section>
+
+        <section>
+            <h2>7. Когда какой цикл использовать</h2>
+            <ul>
+                <li><code>while</code> — когда кусок кода должен выполниться несколько раз, но <strong>заранее неизвестно, сколько именно</strong>. Например, до ввода сигнала остановки.</li>
+                <li><code>for</code> — когда кусок кода должен выполниться несколько раз, и <strong>количество итераций известно до начала цикла</strong>. Например, перебрать все символы строки или числа от 1 до N.</li>
+            </ul>
+        </section>
+    </div>
+</div>
+
+{% endblock %}
