@@ -93,7 +93,7 @@
                         <div class="editor-header">
                             <i class="bi bi-code-slash"></i> Редактор кода
                         </div>
-                        <textarea id="codeEditor">{{ task.starter_code }}</textarea>
+                        <textarea id="codeEditor"></textarea>
                     </div>
                 </div>
                 <div class="col-md-5">
@@ -119,7 +119,6 @@
             <div class="condition-modal show" id="conditionModal">
                 <div class="condition-modal-header modal-border-light">
                     <h5><i class="bi bi-journal-text"></i> Условие задачи</h5>
-                    <button class="condition-modal-close" id="closeConditionBtn">&times;</button>
                 </div>
                 <div class="condition-modal-body">
                     {{ task.description | safe }}
@@ -174,14 +173,9 @@
 
     const modal = document.getElementById('conditionModal');
     const toggleBtn = document.getElementById('conditionToggleBtn');
-    const closeBtn = document.getElementById('closeConditionBtn');
 
     toggleBtn.onclick = function() {
         modal.classList.toggle('show');
-    };
-
-    closeBtn.onclick = function() {
-        modal.classList.remove('show');
     };
 
     document.addEventListener('click', function(event) {
