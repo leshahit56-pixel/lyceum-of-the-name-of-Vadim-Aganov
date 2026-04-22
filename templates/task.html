@@ -26,9 +26,8 @@
                     <div class="indicator-label">🌱</div>
                     <div class="indicator-dots">
                         {% for i in range(1, 4) %}
-                        <a href="{{ url_for('task', lesson_id=1, task_order=i) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}"
-                                 class="indicator-icon">
+                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="indicator-icon">
                         </a>
                         {% endfor %}
                     </div>
@@ -38,9 +37,8 @@
                     <div class="indicator-label">🍀</div>
                     <div class="indicator-dots">
                         {% for i in range(4, 7) %}
-                        <a href="{{ url_for('task', lesson_id=1, task_order=i) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}"
-                                 class="indicator-icon">
+                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="indicator-icon">
                         </a>
                         {% endfor %}
                     </div>
@@ -50,9 +48,8 @@
                     <div class="indicator-label">🔥</div>
                     <div class="indicator-dots">
                         {% for i in range(7, 10) %}
-                        <a href="{{ url_for('task', lesson_id=1, task_order=i) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}"
-                                 class="indicator-icon">
+                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="indicator-icon">
                         </a>
                         {% endfor %}
                     </div>
@@ -96,7 +93,7 @@
                         <div class="editor-header">
                             <i class="bi bi-code-slash"></i> Редактор кода
                         </div>
-                        <textarea id="codeEditor"></textarea>
+                        <textarea id="codeEditor">{{ task.starter_code }}</textarea>
                     </div>
                 </div>
                 <div class="col-md-5">
@@ -155,9 +152,20 @@
             completeSingle: false,
             hint: CodeMirror.hint.python
         },
+        extraKeys: {
+            'Tab': function(cm) {
+                if (cm.somethingSelected()) {
+                    cm.indentSelection('add');
+                } else {
+                    cm.replaceSelection('    ', 'end');
+                }
+            },
+            'Shift-Tab': function(cm) {
+                cm.indentSelection('subtract');
+            }
+        }
     });
 
-    // Автодополнение при вводе
     editor.on('inputRead', function(cm, change) {
         if (change.text[0] && /[a-zA-Z_]/.test(change.text[0])) {
             CodeMirror.commands.autocomplete(cm);
