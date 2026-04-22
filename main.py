@@ -281,9 +281,11 @@ def hello_world():
 def book_for_first():
     return render_template('book_for_first_lessonn.html')
 
+
 @app.route('/45')
 def mine():
     return render_template('my_honest.html')
+
 
 @app.route('/course/python/lesson/<int:lesson_id>/task/<int:task_order>')
 @login_required
@@ -324,6 +326,26 @@ def lesson_for():
 @login_required
 def lesson_strings():
     return render_template('lesson_strings.html')
+
+
+@app.route('/book_for_operators')
+def book_for_operators():
+    return render_template('book_for_operators.html')
+
+
+@app.route('/book_for_while')
+def book_for_while():
+    return render_template('book_for_while.html')
+
+
+@app.route('/book_for_for')
+def book_for_for():
+    return render_template('book_for_for.html')
+
+
+@app.route('/book_for_strings')
+def book_for_strings():
+    return render_template('book_for_strings.html')
 
 
 if __name__ == '__main__':
