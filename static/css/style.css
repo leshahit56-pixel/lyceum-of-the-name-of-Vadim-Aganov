@@ -1153,5 +1153,64 @@ body.dark .auth-card-container .card {
 
 body.dark .modal-border-light {
     border-color: #2d2d44 !important;
->>>>>>> 3b230ec3d8815a82f2ca57733c8e7758d3ccb949
+}
+
+.task-hint {
+    background: rgba(74, 222, 128, 0.1);
+    border-left: 4px solid #4ade80;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 0 10px 10px 0;
+    color: #333;
+}
+
+body.dark .task-hint {
+    background: rgba(74, 222, 128, 0.1);
+    color: #eee;
+}
+
+.task-hint i {
+    color: #4ade80;
+    margin-right: 8px;
+}
+
+.condition-modal-body h3 {
+    color: #0d6efd;
+    margin-bottom: 15px;
+}
+
+.condition-modal-body h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+body.dark .condition-modal-body h4 {
+    color: #ddd;
+}
+
+.condition-modal-body pre {
+    background: #1e1e1e;
+    padding: 15px;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 10px 0;
+}
+
+.condition-modal-body pre code {
+    color: #d4d4d4;
+    background: none;
+    padding: 0;
+}
+
+.condition-modal-body code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #d63384;
+}
+
+body.dark .condition-modal-body code {
+    background: #0f172a;
+    color: #fbbf24;
 }
