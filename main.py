@@ -287,20 +287,35 @@ def mine():
     return render_template('my_honest.html')
 
 
+def get_tasks_for_lesson(lesson_id):
+    if lesson_id == 1:
+        return [{'id': 1, 'lesson_id': 1, 'title': 'Привет, мир!', 'points': 10, 'difficulty': 'easy',
+                 'description': '<p>Напишите программу, которая выводит "Привет, мир!"</p>',
+                 'starter_code': '# Напишите ваше решение здесь', 'status': None}]
+    elif lesson_id == 2:
+        return []
+    elif lesson_id == 3:
+        return []
+    elif lesson_id == 4:
+        return []
+    elif lesson_id == 5:
+        return []
+    elif lesson_id == 6:
+        return []
+    elif lesson_id == 7:
+        return []
+    elif lesson_id == 8:
+        return []
+    return []
+
+
 @app.route('/course/python/lesson/<int:lesson_id>/task/<int:task_order>')
 @login_required
 def task(lesson_id, task_order):
-    task = {
-        'id': 1,
-        'lesson_id': 1,
-        'title': 'Привет, мир!',
-        'points': 10,
-        'difficulty': 'easy',
-        'description': '<p>Напишите программу, которая выводит "Привет, мир!"</p>',
-        'starter_code': '# Напишите ваше решение здесь',
-        'status': None
-    }
-
+    tasks = get_tasks_for_lesson(lesson_id)
+    if not tasks:
+        return f"<h2>Урок {lesson_id}</h2><p>Задания ещё не добавлены</p>"
+    task = tasks[task_order - 1]
     return render_template('task.html', task=task)
 
 
