@@ -295,7 +295,207 @@ def get_tasks_for_lesson(lesson_id):
     elif lesson_id == 2:
         return []
     elif lesson_id == 3:
-        return []
+        return [
+            {'id': 1, 'lesson_id': 3, 'title': 'Секретный код', 'points': 10, 'difficulty': 'easy',
+             'description': '''
+                    <p>Агент получил зашифрованное сообщение: три числа. Каждое число — это код символа. Помогите агенту прочитать послание.</p>
+                    <p><strong>Формат ввода:</strong> Три целых числа, каждое с новой строки.</p>
+                    <p><strong>Формат вывода:</strong> Строка из символов.</p>
+                    <p><strong>Пример 1:</strong></p>
+                    <pre><code>Ввод:
+        72
+        105
+        33
+        Вывод:
+        Hi!</code></pre>
+                    <p><strong>Пример 2:</strong></p>
+                    <pre><code>Ввод:
+        80
+        121
+        116
+        Вывод:
+        Pyt</code></pre>
+                    <div class="task-hint">
+                        <i class="bi bi-lightbulb"></i> Используйте функцию <code>chr()</code> для преобразования кода в символ.
+                    </div>
+                 ''', 'starter_code': '', 'status': None},
+
+            {'id': 2, 'lesson_id': 3, 'title': 'Детский праздник', 'points': 10, 'difficulty': 'easy',
+             'description': '''
+                    <p>На день рождения к Пете пришли друзья. Мама купила мешок конфет и сказала разделить их поровну на всех, а остаток отдать имениннику.</p>
+                    <p><strong>Формат ввода:</strong> Два целых числа через пробел: количество конфет и количество детей (включая Петю).</p>
+                    <p><strong>Формат вывода:</strong> Два числа через пробел: сколько конфет получит каждый и сколько останется Пете.</p>
+                    <p><strong>Пример 1:</strong></p>
+                    <pre><code>Ввод: 17 5
+        Вывод: 3 2</code></pre>
+                    <p><strong>Пример 2:</strong></p>
+                    <pre><code>Ввод: 42 10
+        Вывод: 4 2</code></pre>
+                    <div class="task-hint">
+                        <i class="bi bi-lightbulb"></i> Используйте функцию <code>divmod()</code>.
+                    </div>
+                 ''', 'starter_code': '', 'status': None},
+
+            {'id': 3, 'lesson_id': 3, 'title': 'Расстояние от дома', 'points': 10, 'difficulty': 'easy',
+             'description': '''
+                    <p>Турист отмечал на карте свои перемещения: положительные числа — движение на север, отрицательные — на юг. В конце дня он записал одно итоговое число. Узнайте, на каком расстоянии от дома (по модулю) он оказался.</p>
+                    <p><strong>Формат ввода:</strong> Одно число (может быть отрицательным или дробным).</p>
+                    <p><strong>Формат вывода:</strong> Неотрицательное число — расстояние от нуля.</p>
+                    <p><strong>Пример 1:</strong></p>
+                    <pre><code>Ввод: -42
+        Вывод: 42</code></pre>
+                    <p><strong>Пример 2:</strong></p>
+                    <pre><code>Ввод: -3.14
+        Вывод: 3.14</code></pre>
+                    <div class="task-hint">
+                        <i class="bi bi-lightbulb"></i> Используйте функцию <code>abs()</code>.
+                    </div>
+                 ''', 'starter_code': '', 'status': None},
+
+            {'id': 4, 'lesson_id': 3, 'title': 'Инженерный калькулятор', 'points': 11, 'difficulty': 'medium',
+             'description': '''
+                    <p>Инженеру нужна программа, которая выполняет одну арифметическую операцию над двумя числами.</p>
+                    <p><strong>Формат ввода:</strong> Три строки: первое число, знак операции (+, -, *, /, **, //, %), второе число.</p>
+                    <p><strong>Формат вывода:</strong> Результат вычисления.</p>
+                    <p><strong>Пример 1:</strong></p>
+                    <pre><code>Ввод:
+        17
+        %
+        5
+        Вывод: 2</code></pre>
+                    <p><strong>Пример 2:</strong></p>
+                    <pre><code>Ввод:
+        2
+        **
+        10
+        Вывод: 1024</code></pre>
+                    <p><strong>Пример 3:</strong></p>
+                    <pre><code>Ввод:
+        15
+        /
+        4
+        Вывод: 3.75</code></pre>
+                    <div class="task-hint">
+                        <i class="bi bi-lightbulb"></i> Используйте <code>if/elif</code> для проверки знака операции.
+                    </div>
+                 ''', 'starter_code': '', 'status': None},
+
+            {'id': 5, 'lesson_id': 3, 'title': 'Метеостанция', 'points': 11, 'difficulty': 'medium',
+             'description': '''
+                    <p>Метеоролог записал показания термометра за неделю. Определите самую высокую и самую низкую температуру, а также среднюю, округлённую до одного знака.</p>
+                    <p><strong>Формат ввода:</strong> Шесть чисел через пробел.</p>
+                    <p><strong>Формат вывода:</strong></p>
+                    <p>1. Максимальная и минимальная температура через пробел.</p>
+                    <p>2. Средняя температура (округлить до 1 знака).</p>
+                    <p>3. Тип данных средней температуры.</p>
+                    <p><strong>Пример 1:</strong></p>
+                    <pre><code>Ввод: -5.2 -3 0 2.5 -1 -7.3
+        Вывод:
+        2.5 -7.3
+        -2.3
+        &lt;class 'float'&gt;</code></pre>
+                    <p><strong>Пример 2:</strong></p>
+                    <pre><code>Ввод: 12 15 10 14 13 16
+        Вывод:
+        16 10
+        13.3
+        &lt;class 'float'&gt;</code></pre>
+                    <div class="task-hint">
+                        <i class="bi bi-lightbulb"></i> Используйте <code>max()</code>, <code>min()</code>, <code>sum()</code>, <code>len()</code>, <code>round()</code>, <code>type()</code>.
+                    </div>
+                 ''', 'starter_code': '', 'status': None},
+
+            {'id': 6, 'lesson_id': 3, 'title': 'Анализ пароля', 'points': 11, 'difficulty': 'medium',
+             'description': '''
+                    <p>Пользователь придумал пароль. Система проверяет его длину и выводит тип данных этой длины.</p>
+                    <p><strong>Формат ввода:</strong> Строка — пароль.</p>
+                    <p><strong>Формат вывода:</strong> Две строки: длина пароля, тип данных длины.</p>
+                    <p><strong>Пример 1:</strong></p>
+                    <pre><code>Ввод: qwerty123
+        Вывод:
+        9
+        &lt;class 'int'&gt;</code></pre>
+                    <p><strong>Пример 2:</strong></p>
+                    <pre><code>Ввод: abc
+        Вывод:
+        3
+        &lt;class 'int'&gt;</code></pre>
+                    <div class="task-hint">
+                        <i class="bi bi-lightbulb"></i> Используйте <code>len()</code> и <code>type()</code>.
+                    </div>
+                 ''', 'starter_code': '', 'status': None},
+
+            {'id': 7, 'lesson_id': 3, 'title': 'Программист-археолог', 'points': 12, 'difficulty': 'hard',
+             'description': '''
+                    <p>Археолог нашёл древний диск с данными. Чтобы прочитать символ, нужно знать его код в десятичной, двоичной и шестнадцатеричной системах.</p>
+                    <p><strong>Формат ввода:</strong> Один символ.</p>
+                    <p><strong>Формат вывода:</strong> Три строки: код в десятичной, двоичной и шестнадцатеричной системе (заглавными).</p>
+                    <p><strong>Пример 1:</strong></p>
+                    <pre><code>Ввод: Z
+        Вывод:
+        90
+        0b1011010
+        0x5A</code></pre>
+                    <p><strong>Пример 2:</strong></p>
+                    <pre><code>Ввод: @
+        Вывод:
+        64
+        0b1000000
+        0x40</code></pre>
+                    <div class="task-hint">
+                        <i class="bi bi-lightbulb"></i> Используйте <code>ord()</code>, <code>bin()</code>, <code>hex()</code> и <code>.upper()</code>.
+                    </div>
+                 ''', 'starter_code': '', 'status': None},
+
+            {'id': 8, 'lesson_id': 3, 'title': 'Олимпиадный приз', 'points': 12, 'difficulty': 'hard',
+             'description': '''
+                    <p>На олимпиаде три победителя набрали разное количество баллов. Главный приз получает участник с максимальным баллом. Утешительные призы получают двое оставшихся.</p>
+                    <p>Найдите сумму баллов утешительных призов и сколько процентов от максимального балла она составляет (округлить до целого).</p>
+                    <p><strong>Формат ввода:</strong> Три целых числа через пробел.</p>
+                    <p><strong>Формат вывода:</strong> Две строки: сумма двух меньших, процент от максимума (округлить до целого).</p>
+                    <p><strong>Пример 1:</strong></p>
+                    <pre><code>Ввод: 5 12 9
+        Вывод:
+        14
+        117</code></pre>
+                    <p><strong>Пример 2:</strong></p>
+                    <pre><code>Ввод: 100 50 75
+        Вывод:
+        125
+        125</code></pre>
+                    <div class="task-hint">
+                        <i class="bi bi-lightbulb"></i> Найдите максимум, затем сумму двух оставшихся.
+                    </div>
+                 ''', 'starter_code': '', 'status': None},
+
+            {'id': 9, 'lesson_id': 3, 'title': 'Вадим Маликович и ручные проверки', 'points': 12, 'difficulty': 'hard',
+             'description': '''
+                    <p>Вадим Маликович получил от студента три числа: количество задач, количество строк кода и количество отступов.</p>
+                    <p>Он вычисляет <strong>индекс лени</strong>: <code>(задачи * строки) // (отступы * 2)</code>.</p>
+                    <p>Если > 100 — «Я тебе не нейросеть, чтобы за тебя код писать.»</p>
+                    <p>Если 50–100 — «Ладно, проверю. Но отступы поправь.»</p>
+                    <p>Если < 50 — «Идеально. Даже принтер не понадобится.»</p>
+                    <p><strong>Формат ввода:</strong> Три целых числа, каждое с новой строки.</p>
+                    <p><strong>Формат вывода:</strong></p>
+                    <p>1. Индекс лени в восьмеричной системе (с префиксом 0o).</p>
+                    <p>2. Максимальное из трёх чисел.</p>
+                    <p>3. Тип данных индекса лени.</p>
+                    <p>4. Вердикт.</p>
+                    <p><strong>Пример:</strong></p>
+                    <pre><code>Ввод:
+        10
+        200
+        2
+        Вывод:
+        0o372
+        200
+        &lt;class 'int'&gt;
+        Я тебе не нейросеть, чтобы за тебя код писать.</code></pre>
+                    <div class="task-hint">
+                        <i class="bi bi-lightbulb"></i> Используйте <code>oct()</code>, <code>max()</code>, <code>type()</code>.
+                    </div>
+                 ''', 'starter_code': '', 'status': None},
+        ]
     elif lesson_id == 4:
         return []
     elif lesson_id == 5:
@@ -316,7 +516,7 @@ def task(lesson_id, task_order):
     if not tasks:
         return f"<h2>Урок {lesson_id}</h2><p>Задания ещё не добавлены</p>"
     task = tasks[task_order - 1]
-    return render_template('task.html', task=task)
+    return render_template('task.html', task=task, lesson_id=lesson_id)
 
 
 @app.route('/course/python/operators')

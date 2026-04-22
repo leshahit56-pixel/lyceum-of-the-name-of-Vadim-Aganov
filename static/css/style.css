@@ -1214,3 +1214,51 @@ body.dark .condition-modal-body code {
     background: #0f172a;
     color: #fbbf24;
 }
+
+.task-hint {
+    background: rgba(13, 110, 253, 0.08);
+    border-left: 4px solid #0d6efd;
+    padding: 12px 16px;
+    margin-top: 20px;
+    border-radius: 0 10px 10px 0;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+body.dark .task-hint {
+    background: rgba(13, 110, 253, 0.12);
+    color: #eee;
+}
+
+.task-hint i {
+    color: #0d6efd;
+    margin-right: 8px;
+}
+
+.condition-modal-body pre {
+    background: #1e1e1e;
+    padding: 12px 16px;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 10px 0;
+}
+
+.condition-modal-body pre code {
+    color: #d4d4d4;
+    background: none;
+    padding: 0;
+    font-family: 'Courier New', monospace;
+}
+
+.condition-modal-body code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #d63384;
+    font-family: 'Courier New', monospace;
+}
+
+body.dark .condition-modal-body code {
+    background: #0f172a;
+    color: #fbbf24;
+}
