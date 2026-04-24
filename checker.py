@@ -52,7 +52,7 @@ def run_single_test(solution, test_input, expected):
                 result["error"] = f"{type(e).__name__}: {e}"
                 return result
 
-        answer = f.getvalue().strip()
+        answer = f.getvalue().rstrip('\n')
         answer = answer.split('\n')
         result["output"] = answer
 
