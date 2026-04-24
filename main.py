@@ -11,7 +11,6 @@ from datetime import timedelta
 from checker import first_first
 from flask import jsonify
 
-
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'f8874661e03139f344aa90692fd4d642b1e7a89b9b817bba')
 app.permanent_session_lifetime = timedelta(days=30)
