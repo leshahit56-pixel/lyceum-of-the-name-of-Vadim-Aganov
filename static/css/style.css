@@ -16,7 +16,7 @@ body {
 }
 
 .code-input {
-    max-width: 200px;  
+    max-width: 200px;
     margin: 0 auto;
 }
 
@@ -67,7 +67,7 @@ body.dark hr {
 
 .hover-effect:hover {
     transform: translateX(10px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
     background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%) !important;
 }
 
@@ -91,7 +91,7 @@ body.dark .hover-effect:hover {
 .registration-wrapper {
     display: flex;
     justify-content: center;
-    align-items: flex-start; 
+    align-items: flex-start;
     padding-top: 20px;
 }
 
@@ -179,7 +179,9 @@ body.dark .form-control-custom {
     transform: scale(1.01);
 }
 
-.btn-action.success { background: #198754; }
+.btn-action.success {
+    background: #198754;
+}
 
 @keyframes slideUp {
     from {
@@ -223,7 +225,8 @@ h1 {
     margin-bottom: 1.5rem;
 }
 
-.form-control, .form-control-lg {
+.form-control,
+.form-control-lg {
     border-radius: 12px !important;
     padding: 14px 18px !important;
     border: 2px solid #e2e8f0 !important;
@@ -298,7 +301,6 @@ body.dark .btn-close {
 }
 
 /* ========== СТИЛИ ДЛЯ СТРАНИЦЫ УРОКА ========== */
-
 .lesson-title {
     background: linear-gradient(135deg, #0d6efd, #6f42c1);
     -webkit-background-clip: text;
@@ -426,12 +428,7 @@ body.dark .task-name {
     color: #eee;
 }
 
-.task-link[data-status="unsolved"] .task-icon { filter: none; }
-.task-link[data-status="solved"] .task-icon { filter: sepia(1) saturate(5) hue-rotate(70deg); }
-.task-link[data-status="failed"] .task-icon { filter: sepia(1) saturate(5) hue-rotate(-20deg); }
-
 /* ========== СТРАНИЦА ЗАДАНИЯ ========== */
-
 .back-lesson-btn {
     display: inline-flex;
     align-items: center;
@@ -580,7 +577,7 @@ body.dark .task-meta {
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     color: white;
-    font-weight:500;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -594,7 +591,7 @@ body.dark .condition-btn {
     border-color: #2d2d44;
 }
 
-/* Редактор и чат - одинаковая высота */
+/* Редактор и чат */
 .editor-container {
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
@@ -819,245 +816,6 @@ body.dark .ai-hint {
     right: 0;
 }
 
-<<<<<<< HEAD
-.task-link[data-status="unsolved"] .task-icon { filter: none; }
-.task-link[data-status="solved"] .task-icon { filter: sepia(1) saturate(5) hue-rotate(70deg); }
-.task-link[data-status="failed"] .task-icon { filter: sepia(1) saturate(5) hue-rotate(-20deg); }
-
-.lesson-wrapper {
-    display: flex;
-    justify-content: center;
-    padding: 40px 20px;
-}
-
-.lesson-card {
-    background: #ffffff !important;
-    border-radius: 40px;
-    padding: 45px;
-    max-width: 850px;
-    width: 100%;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    color: #2c3e50 !important;
-    line-height: 1.6;
-}
-
-.lesson-card h1 {
-    color: #1a1a2e !important;
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.lesson-card h2 {
-    color: #007bff !important;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    margin-top: 35px;
-}
-
-.lesson-card h3 {
-    color: #34495e !important;
-    margin-top: 25px;
-}
-
-.lesson-card p, .lesson-card li {
-    color: #2c3e50 !important;
-}
-
-.lesson-card a {
-    color: #007bff !important;
-    text-decoration: underline;
-}
-
-.step-box {
-    background: #f8f9fa !important;
-    border: 1px solid #e9ecef;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 25px 0;
-}
-
-.code-example {
-    background: #272822 !important;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-}
-
-.code-example code {
-    color: #f8f8f2 !important;
-    font-family: 'Consolas', monospace;
-}
-
-.alert-box {
-    background: #fff5f5 !important;
-    border-left: 5px solid #ff5252 !important;
-    padding: 20px;
-    border-radius: 4px;
-    margin-top: 25px;
-}
-
-.alert-box strong {
-    color: #ff5252 !important;
-}
-
-.bt-round{
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-
-    background-color: transparent;
-    text-decoration: none;
-    color: #b8860b;
-    overflow: hidden;
-
-    
-}
-
-.bt-round img{
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: fill;
-    border-radius: 50%;
-}
-
-.button-group{
-    background-color: #ffffff;
-    border-radius: 15px;
-    width: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-
-    flex-direction: column;
-}
-
-.easy_for_buttons{
-    padding-top: 15px;
-    color: green;
-    
-}
-
-.group-for-bt-group{
-    display: flex;
-    justify-content: left;
-    padding-left: 0;
-}
-
-.chat-widget {
-    width: 100%;
-    margin: 0 auto;
-    max-width: ;
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    font-family: sans-serif;
-    overflow: hidden;
-    z-index: 10;
-    border: 1px solid #f0f0f0;
-}
-
-/* Шапка чата */
-.chat-header {
-    background-color: #ffffff;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #f5f5f5;
-}
-
-.status-online {
-    width: 10px;
-    height: 10px;
-    background-color: #2ecc71;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.chat-header span {
-    font-weight: bold;
-    flex-grow: 1;
-    color: #333;
-}
-
-.close-chat {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: #ccc;
-}
-
-/* Тело чата */
-.chat-body {
-    height: 350px;
-    padding: 15px;
-    overflow-y: auto;
-    background-color: #fafafa;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.message {
-    max-width: 80%;
-    padding: 8px 12px;
-    border-radius: 12px;
-    font-size: 14px;
-    line-height: 1.4;
-}
-
-.message.bot {
-    background-color: #f0f0f0;
-    color: #333;
-    align-self: flex-start;
-    border-bottom-left-radius: 2px;
-}
-
-.message.user {
-    background-color: #007bff;
-    color: #ffffff;
-    align-self: flex-end;
-    border-bottom-right-radius: 2px;
-}
-
-/* Поле ввода */
-.chat-input {
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    border-top: 1px solid #f5f5f5;
-}
-
-.chat-input input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    padding: 8px;
-    font-size: 14px;
-}
-
-.chat-input button {
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s;
-}
-
-.chat-input button:hover {
-    transform: scale(1.1);
-=======
 .condition-modal-header {
     display: flex;
     justify-content: space-between;
@@ -1126,12 +884,134 @@ body.dark .condition-modal-body code {
     background: #0f172a;
     color: #fbbf24;
 }
+
+/* Стили для уроков (учебников) */
+.lesson-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.lesson-card {
+    background: #ffffff !important;
+    border-radius: 40px;
+    padding: 45px;
+    max-width: 850px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    color: #2c3e50 !important;
+    line-height: 1.6;
+}
+
+.lesson-card h1 {
+    color: #1a1a2e !important;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.lesson-card h2 {
+    color: #007bff !important;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-top: 35px;
+}
+
+.lesson-card h3 {
+    color: #34495e !important;
+    margin-top: 25px;
+}
+
+.lesson-card p,
+.lesson-card li {
+    color: #2c3e50 !important;
+}
+
+.lesson-card a {
+    color: #007bff !important;
+    text-decoration: underline;
+}
+
+.step-box {
+    background: #f8f9fa !important;
+    border: 1px solid #e9ecef;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 25px 0;
+}
+
+.code-example {
+    background: #272822 !important;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.code-example code {
+    color: #f8f8f2 !important;
+    font-family: 'Consolas', monospace;
+}
+
+.alert-box {
+    background: #fff5f5 !important;
+    border-left: 5px solid #ff5252 !important;
+    padding: 20px;
+    border-radius: 4px;
+    margin-top: 25px;
+}
+
+.alert-box strong {
+    color: #ff5252 !important;
+}
+
+/* Кнопки и группы (дополнительно) */
+.bt-round {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: transparent;
+    text-decoration: none;
+    color: #b8860b;
+    overflow: hidden;
+}
+
+.bt-round img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: fill;
+    border-radius: 50%;
+}
+
+.button-group {
+    background-color: #ffffff;
+    border-radius: 15px;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.easy_for_buttons {
+    padding-top: 15px;
+    color: green;
+}
+
+.group-for-bt-group {
+    display: flex;
+    justify-content: left;
+    padding-left: 0;
+}
+
 .robot-icon {
     font-size: 3rem;
     color: #6f42c1;
     margin-bottom: 15px;
 }
-/* Тёмная тема для авторизации */
+
 body.dark h1 {
     color: #eee !important;
 }
@@ -1141,17 +1021,10 @@ body.dark .auth-card-container .card {
     color: #eee !important;
 }
 
-.robot-icon {
-    font-size: 3rem;
-    color: #6f42c1;
-    margin-bottom: 15px;
-}
-
 .modal-border-light {
     border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 body.dark .modal-border-light {
     border-color: #2d2d44 !important;
->>>>>>> 3b230ec3d8815a82f2ca57733c8e7758d3ccb949
 }

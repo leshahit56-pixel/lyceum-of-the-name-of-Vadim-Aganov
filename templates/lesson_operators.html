@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% block title %}Операторы и встроенные функции{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-md-11 col-12">
+
+        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
+            <div class="card-body p-4 p-md-5">
+
+                <!-- Кнопки навигации -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <a href="/course/python" class="btn btn-outline-primary rounded-pill px-4">
+                        <i class="bi bi-arrow-left"></i> К урокам
+                    </a>
+                    <a href="/book_for_operators" class="btn btn-info rounded-pill px-4">
+                        <i class="bi bi-book"></i> Учебничек
+                    </a>
+                </div>
+
+                <!-- Название темы -->
+                <h2 class="fw-bold text-center mb-3 lesson-title">
+                    Операторы и встроенные функции
+                </h2>
+
+                <!-- Прогресс урока -->
+                <div class="progress-block mb-4 p-3 rounded-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-7">
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span class="progress-label">Прогресс урока</span>
+                                <span class="progress-value"><strong>0</strong> из 9 задач решено</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 mt-3 mt-md-0">
+                            <div class="d-flex justify-content-md-end gap-4">
+                                <div class="text-center">
+                                    <div class="small progress-label">Решено задач</div>
+                                    <div class="fw-bold fs-5 progress-value">0/9</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="small progress-label">Заработано баллов</div>
+                                    <div class="fw-bold fs-5 text-success progress-value">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Лёгкие задачи -->
+                <div class="task-section mb-4">
+                    <div class="difficulty-badge easy mb-3">
+                        <span class="badge-icon">🌱</span>
+                        <span class="badge-text">Лёгкие задачи</span>
+                    </div>
+                    <div class="d-flex flex-column gap-2">
+
+                        <a href="{{ url_for('task', lesson_id=3, task_order=1) }}" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Секретный код</span>
+                            </div>
+                        </a>
+
+                        <a href="{{ url_for('task', lesson_id=3, task_order=2) }}" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Детский праздник</span>
+                            </div>
+                        </a>
+
+                        <a href="{{ url_for('task', lesson_id=3, task_order=3) }}" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Расстояние от дома</span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+
+                <!-- Средние задачи -->
+                <div class="task-section mb-4">
+                    <div class="difficulty-badge medium mb-3">
+                        <span class="badge-icon">⚡</span>
+                        <span class="badge-text">Средние задачи</span>
+                    </div>
+                    <div class="d-flex flex-column gap-2">
+
+                        <a href="{{ url_for('task', lesson_id=3, task_order=4) }}" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Инженерный калькулятор</span>
+                            </div>
+                        </a>
+
+                        <a href="{{ url_for('task', lesson_id=3, task_order=5) }}" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Метеостанция</span>
+                            </div>
+                        </a>
+
+                        <a href="{{ url_for('task', lesson_id=3, task_order=6) }}" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Анализ пароля</span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+
+                <!-- Тяжёлые задачи -->
+                <div class="task-section mb-3">
+                    <div class="difficulty-badge hard mb-3">
+                        <span class="badge-icon">🔥</span>
+                        <span class="badge-text">Тяжёлые задачи</span>
+                    </div>
+                    <div class="d-flex flex-column gap-2">
+
+                        <a href="{{ url_for('task', lesson_id=3, task_order=7) }}" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Программист-археолог</span>
+                            </div>
+                        </a>
+
+                        <a href="{{ url_for('task', lesson_id=3, task_order=8) }}" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Олимпиадный приз</span>
+                            </div>
+                        </a>
+
+                        <a href="{{ url_for('task', lesson_id=3, task_order=9) }}" class="task-link text-decoration-none" data-status="unsolved">
+                            <div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border">
+                                <img src="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     alt="Task" class="task-icon"
+                                     data-default="{{ url_for('static', filename='img/not_solution.png') }}"
+                                     data-solved="{{ url_for('static', filename='img/solved.png') }}"
+                                     data-failed="{{ url_for('static', filename='img/failed.png') }}">
+                                <span class="task-name">Вадим Маликович и ручные проверки</span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
