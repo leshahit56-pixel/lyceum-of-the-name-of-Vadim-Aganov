@@ -218,7 +218,7 @@
                     chatBody.innerHTML = '<p class="chat-placeholder">Здесь будет результат проверки</p>';
                 } else {
                     chatBody.innerHTML = compilationMessages.map(msg =>
-                        `<div class="chat-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
+                        `<div class="chat-message"><span class="chat-time">${msg.time}</span> <pre style="margin:0; font-family:inherit; white-space:pre-wrap;">${msg.text}</pre></div>`
                     ).join('');
                 }
             } else {
@@ -244,7 +244,7 @@
             if (compilationMessages.length === 0) chatBody.innerHTML = '';
             compilationMessages.push({ text, time });
             chatBody.innerHTML = compilationMessages.map(msg =>
-                `<div class="chat-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
+                `<div class="chat-message"><span class="chat-time">${msg.time}</span> <pre style="margin:0; font-family:inherit; white-space:pre-wrap;">${msg.text}</pre></div>`
             ).join('');
         } else if (currentTab === 'ai' && isAi) {
             if (aiMessages.length === 0) chatBody.innerHTML = '';
@@ -255,9 +255,66 @@
         }
     }
 
-    document.querySelector('.chat-submit-btn').onclick = function() {
+    document.querySelector('.chat-submit-btn').onclick = async function() {
         const code = editor.getValue();
-        addMessageToChat(`📤 Решение отправлено (заглушка). Код: ${code.slice(0, 50)}${code.length > 50 ? '...' : ''}`, false);
+        const pathParts = window.location.pathname.split('/');
+        const lessonId = parseInt(pathParts[4]);
+        const taskOrder = parseInt(pathParts[6]);
+
+        addMessageToChat('📤 Решение отправляется...', false);
+
+        try {
+            const response = await fetch('/api/check_solution', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    code: code,
+                    lesson_id: lessonId,
+                    task_order: taskOrder
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.verdict === 'ok') {
+                addMessageToChat('✅ Вердикт: OK', false);
+            } else if (result.verdict === 'неверный ответ') {
+                var msg = '❌ Вердикт: неверный ответ\n\n';
+                msg += '📋 Тест №' + result.test_number + '\n\n';
+                msg += '📥 Ввод:\n';
+                if (Array.isArray(result.test_input)) {
+                    msg += result.test_input.join('\n');
+                } else {
+                    msg += result.test_input;
+                }
+                msg += '\n\n📤 Вывод программы:\n';
+                if (Array.isArray(result.output)) {
+                    msg += result.output.join('\n');
+                } else {
+                    msg += result.output;
+                }
+                msg += '\n\n✅ Ожидалось:\n';
+                if (Array.isArray(result.expected)) {
+                    msg += result.expected.join('\n');
+                } else {
+                    msg += result.expected;
+                }
+                addMessageToChat(msg, false);
+            } else if (result.verdict === 'ошибка компиляции' || result.verdict === 'ошибка выполнения') {
+                var msg = '❌ Вердикт: ' + result.verdict + '\n\n';
+                msg += '⚠️ Ошибка:\n' + result.error;
+                addMessageToChat(msg, false);
+            } else if (result.verdict === 'код не соответствует стандарту PEP8') {
+                var msg = '📝 ' + result.verdict + '\n\n';
+                msg += '⚠️ Ошибки стиля:\n' + result.PEP8;
+                addMessageToChat(msg, false);
+            }
+
+        } catch (error) {
+            addMessageToChat('⚠️ Ошибка соединения с сервером', false);
+            console.error(error);
+        }
+
         document.querySelector('[data-tab="compilation"]').click();
     };
 

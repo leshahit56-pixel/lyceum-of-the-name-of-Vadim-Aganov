@@ -75,7 +75,6 @@ def first_first(solution, tests):
         "error": ""
     }
 
-    # Проверка PEP8 перед тестами
     result['PEP8'] = check_pep8(solution)
     if result['PEP8'] != 'ok':
         result['verdict'] = 'код не соответствует стандарту PEP8'
