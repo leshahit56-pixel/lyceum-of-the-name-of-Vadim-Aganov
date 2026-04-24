@@ -8,6 +8,8 @@ from data.user import User
 from data import db_session
 import os
 from datetime import timedelta
+from checker import first_first
+from flask import jsonify
 
 
 app = Flask(__name__)
