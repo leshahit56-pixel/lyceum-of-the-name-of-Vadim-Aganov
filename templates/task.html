@@ -102,9 +102,9 @@
                 <div class="col-md-5">
                     <div class="chat-container">
                         <div class="chat-header">
-                            <button class="chat-submit-btn">
-                                <i class="bi bi-send"></i> Отправить
-                            </button>
+                                <button class="chat-submit-btn">
+                                    <i class="bi bi-send"></i> Отправить
+                                </button>
                             <button class="chat-tab active" data-tab="compilation">Компиляция</button>
                             <button class="chat-tab" data-tab="ai">Нейросеть</button>
                         </div>
@@ -253,10 +253,39 @@
         }
     }
 
-    document.querySelector('.chat-submit-btn').onclick = function() {
+    document.querySelector('.chat-submit-btn').onclick = function(event) {
+        event.preventDefault(); // Запрещаем браузеру любые попытки перезагрузить страницу
+        
         const code = editor.getValue();
-        addMessageToChat(`📤 Решение отправлено (заглушка). Код: ${code.slice(0, 50)}${code.length > 50 ? '...' : ''}`, false);
-        document.querySelector('[data-tab="compilation"]').click();
+        
+        // Показываем в чате, что процесс пошел
+        addMessageToChat(`📤 Отправка решения на сервер...`, false);
+
+        // Отправляем запрос на ТЕКУЩИЙ адрес (window.location.pathname)
+        fetch(window.location.pathname, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "code": code })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Ошибка HTTP: " + response.status);
+            }
+            return response.json(); // Теперь сервер точно вернет правильный JSON
+        })
+        .then(data => {
+            console.log('Ответ сервера:', data);
+            if (data.status === "success") {
+                addMessageToChat("✅ Решение успешно сохранено в 56.JSON!", false);
+                document.querySelector('[data-tab="compilation"]').click();
+            } else {
+                addMessageToChat("❌ Ошибка записи на сервере: " + data.message, false);
+            }
+        })
+        .catch(err => {
+            console.error('Ошибка:', err);
+            addMessageToChat("❌ Произошла ошибка: " + err.message, false);
+        });
     };
 
     function sendMessage() {

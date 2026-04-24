@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify
 from functools import wraps
 import smtplib
 from email.message import EmailMessage
@@ -8,6 +8,8 @@ from data.user import User
 from data import db_session
 import os
 from datetime import timedelta
+import json
+import subprocess
 
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'f8874661e03139f344aa90692fd4d642b1e7a89b9b817bba')
@@ -285,7 +287,7 @@ def book_for_first():
 def mine():
     return render_template('my_honest.html')
 
-@app.route('/course/python/lesson/<int:lesson_id>/task/<int:task_order>')
+@app.route('/course/python/lesson/<int:lesson_id>/task/<int:task_order>', methods=['GET', 'POST'])
 @login_required
 def task(lesson_id, task_order):
     task = {
@@ -299,9 +301,24 @@ def task(lesson_id, task_order):
         'status': None
     }
 
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+        received_value = data.get('code')
+
+        try:
+            with open("solution.json", "w", encoding="utf-8") as f:
+                json.dump({"received_code": received_value}, f, ensure_ascii=False, indent=4)
+            
+            # ИСПРАВЛЕНИЕ: Мы обязательно должны вернуть JSON после успешной записи!
+            # Если этого не сделать, код пойдет дальше и вернет HTML страницу, сломав JavaScript.
+            return jsonify({"status": "success", "message": "Код успешно сохранен!"})
+            
+        except Exception as e:
+            # Ошибка при записи
+            return jsonify({"status": "error", "message": f"Ошибка записи: {str(e)}"}), 500
+
+    # Это сработает только при обычном открытии страницы (GET)
     return render_template('task.html', task=task)
-
-
 if __name__ == '__main__':
     db_session.global_init('db/blogs.db')
     app.run(port=8080, host='127.0.0.1', debug=True)
