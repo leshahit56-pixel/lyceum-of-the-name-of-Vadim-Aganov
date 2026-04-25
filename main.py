@@ -207,13 +207,6 @@ def if_not_auth():
     return render_template('if_not_autorization.html')
 
 
-@app.route('/settings')
-@login_required
-def settings():
-    user = get_current_user()
-    return render_template('settings.html', Name=user.name, Surname=user.surname)
-
-
 @app.route('/profile')
 @login_required
 def profile():
