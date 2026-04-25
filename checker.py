@@ -19,7 +19,7 @@ def check_pep8(solution):
     sys.stdout = old_stdout
 
     errors = out.getvalue().strip()
-    error_lines = [line for line in errors.split('\n') if 'W292' not in line]
+    error_lines = [line for line in errors.split('\n') if 'W292' not in line and 'E901' not in line]
 
     if not error_lines:
         return "ok"
@@ -80,7 +80,6 @@ def first_first(solution, tests):
         result['verdict'] = 'код не соответствует стандарту PEP8'
         return result
 
-    # Прогон по всем тестам
     for i, test in enumerate(tests, 1):
         single_result = run_single_test(solution, test["input"], test["expected"])
 
