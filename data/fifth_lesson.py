@@ -1,8 +1,8 @@
 from .db_session import SqlAlchemyBase
 import sqlalchemy
 
-class First_lesson(SqlAlchemyBase):
-    __tablename__ = 'First_lesson'
+class Fifth_lesson(SqlAlchemyBase):
+    __tablename__ = 'Fifth_lesson'
     user_email = sqlalchemy.Column(sqlalchemy.String, sqlalchemy.ForeignKey('user_information.email'), primary_key=True)
     exersize_one = sqlalchemy.Column(sqlalchemy.Integer, nullable=True, default=0)
     exersize_one_solution = sqlalchemy.Column(sqlalchemy.Text, nullable=True)

@@ -9,3 +9,4 @@ class User(SqlAlchemyBase):
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     patronymic = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    scores = sqlalchemy.Column(sqlalchemy.Integer, nullable=True, default=0)

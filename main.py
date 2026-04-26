@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, jsonify
+from flask import Flask, render_template, request, session, redirect, url_for
 from functools import wraps
 import smtplib
 from email.message import EmailMessage
@@ -8,18 +8,25 @@ from data.user import User
 from data import db_session
 import os
 from datetime import timedelta
-<<<<<<< HEAD
-import json
-import subprocess
-=======
 from checker import first_first
 from flask import jsonify
->>>>>>> a1b13be58148d450d001ad5e1cfa03e292b39d20
+from data.lesson_first import First_lesson
+from data.lesson_second import Second_lesson
+from data.third_lesson import Third_lesson
+from data.fourth_lesson import Fourth_lesson
+from data.fifth_lesson import Fifth_lesson
+from data.sixth_lesson import Sixth_lesson
+from data.seventh_lesson import Seventh_lesson
+from data.eighth_lesson import Eighth_lesson
 
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'f8874661e03139f344aa90692fd4d642b1e7a89b9b817bba')
 app.permanent_session_lifetime = timedelta(days=30)
 
+@app.route('/logout_force')
+def logout_force():
+    session.clear()  # Полностью очищает куки сессии
+    return redirect(url_for('register')) # Или на главную
 
 def login_required(f):
     @wraps(f)
@@ -293,15 +300,16 @@ def book_for_first():
 def mine():
     return render_template('my_honest.html')
 
-<<<<<<< HEAD
-@app.route('/course/python/lesson/<int:lesson_id>/task/<int:task_order>', methods=['GET', 'POST'])
-=======
 
 def get_tasks_for_lesson(lesson_id):
     if lesson_id == 1:
         return [{'id': 1, 'lesson_id': 1, 'title': 'Привет, мир!', 'points': 10, 'difficulty': 'easy',
                  'description': '<p>Напишите программу, которая выводит "Привет, мир!"</p>',
-                 'starter_code': '# Напишите ваше решение здесь', 'status': None}]
+                 'starter_code': '# Напишите ваше решение здесь', 'status': None,
+                 'tests': [
+                     {'input': ['Hello, world!'], "expected": ['Hello, world!']}
+                 ]}
+                 ]
     elif lesson_id == 2:
         return []
     elif lesson_id == 3:
@@ -722,35 +730,56 @@ def get_tasks_for_lesson(lesson_id):
 
 
 @app.route('/course/python/lesson/<int:lesson_id>/task/<int:task_order>')
->>>>>>> a1b13be58148d450d001ad5e1cfa03e292b39d20
 @login_required
 def task(lesson_id, task_order):
+    db_session.global_init('db/blogs.db')
+    ses = db_session.create_session()
+    email = session['email']
     tasks = get_tasks_for_lesson(lesson_id)
     if not tasks:
         return f"<h2>Урок {lesson_id}</h2><p>Задания ещё не добавлены</p>"
     task = tasks[task_order - 1]
+
+    if lesson_id == 1:
+        less = First_lesson
+
+    elif lesson_id == 2:
+        less = Second_lesson
+
+    elif lesson_id == 3:
+        less = Third_lesson
+
+    elif lesson_id == 4:
+        less = Fourth_lesson
+
+    elif lesson_id == 5:
+        less = Fifth_lesson
+
+    elif lesson_id == 6:
+        less = Sixth_lesson
+
+    elif lesson_id == 7:
+        less = Seventh_lesson
+
+    elif lesson_id == 8:
+        less = Eighth_lesson
+    solution = ses.query(less).filter(less.user_email == email).first()
+
+    task_columns = {
+        1: "exersize_one_solution", 2: "exersize_two_solution", 3: "exersize_three_solution",
+        4: "exersize_four_solution", 5: "exersize_five_solution", 6: "exersize_six_solution",
+        7: "exersize_seven_solution", 8: "exersize_eight_solution", 9: "exersize_nine_solution"
+    }
+    if solution:
+        column_name = task_columns.get(task_order)
+
+        solution_in_db = getattr(solution, column_name)
+
+        if solution_in_db:
+            task['starter_code'] = solution_in_db
+        
     return render_template('task.html', task=task, lesson_id=lesson_id)
 
-<<<<<<< HEAD
-    if request.method == 'POST':
-        data = request.get_json(force=True)
-        received_value = data.get('code')
-
-        try:
-            with open("solution.json", "w", encoding="utf-8") as f:
-                json.dump({"received_code": received_value}, f, ensure_ascii=False, indent=4)
-            
-            # ИСПРАВЛЕНИЕ: Мы обязательно должны вернуть JSON после успешной записи!
-            # Если этого не сделать, код пойдет дальше и вернет HTML страницу, сломав JavaScript.
-            return jsonify({"status": "success", "message": "Код успешно сохранен!"})
-            
-        except Exception as e:
-            # Ошибка при записи
-            return jsonify({"status": "error", "message": f"Ошибка записи: {str(e)}"}), 500
-
-    # Это сработает только при обычном открытии страницы (GET)
-    return render_template('task.html', task=task)
-=======
 
 @app.route('/course/python/operators')
 @login_required
@@ -796,6 +825,116 @@ def book_for_strings():
     return render_template('book_for_strings.html')
 
 
+def add_verdict(lesson_id, exersize_id, code, verdict, email, points):
+    db_session.global_init('db/blogs.db')
+    session = db_session.create_session()
+
+    task_columns = {
+        1: "exersize_one", 2: "exersize_two", 3: "exersize_three",
+        4: "exersize_four", 5: "exersize_five", 6: "exersize_six",
+        7: "exersize_seven", 8: "exersize_eight", 9: "exersize_nine"
+    }
+
+    if lesson_id == 1:
+        new_verdict = First_lesson
+
+    elif lesson_id == 2:
+        new_verdict = Second_lesson
+
+    elif lesson_id == 3:
+        new_verdict = Third_lesson
+
+    elif lesson_id == 4:
+        new_verdict = Fourth_lesson
+
+    elif lesson_id == 5:
+        new_verdict = Fifth_lesson
+
+    elif lesson_id == 6:
+        new_verdict = Sixth_lesson
+
+    elif lesson_id == 7:
+        new_verdict = Seventh_lesson
+
+    elif lesson_id == 8:
+        new_verdict = Eighth_lesson
+        
+
+    user = session.query(new_verdict).filter(new_verdict.user_email == email).first()
+
+    column_name = task_columns.get(exersize_id)
+
+    if not user:
+        user = new_verdict(user_email=email)
+        session.add(user)
+        if verdict == 2:
+            user_in_main_db_scores = session.query(User).filter(User.email == email).first()
+            scores = user_in_main_db_scores.scores
+            new_scores = scores + points
+            user_in_main_db_scores.scores = new_scores
+
+    else:
+
+        verdict_in_db = getattr(user, column_name)
+
+        if verdict_in_db != 2 and verdict == 2:
+            user_in_main_db_scores = session.query(User).filter(User.email == email).first()
+            scores = user_in_main_db_scores.scores
+            new_scores = scores + points
+            user_in_main_db_scores.scores = new_scores
+
+        else:
+
+            verdict = 2
+
+
+    if exersize_id == 1:
+        user.exersize_one = verdict
+        user.exersize_one_solution = code
+
+    elif exersize_id == 2:
+        user.exersize_two = verdict
+        user.exersize_two_solution= code
+
+    elif exersize_id == 3:
+        user.exersize_three = verdict
+        user.exersize_three_solution = code
+            
+    elif exersize_id == 4:
+        user.exersize_four = verdict
+        user.exersize_four_solution= code
+
+    elif exersize_id == 5:
+        user.exersize_five = verdict
+        user.exersize_five_solution= code
+            
+    elif exersize_id == 6:
+        user.exersize_six = verdict
+        user.exersize_six_solution= code
+
+    elif exersize_id == 7:
+        user.exersize_seven = verdict
+        user.exersize_seven_solution= code
+
+    elif exersize_id == 8:
+        user.exersize_eight = verdict
+        user.exersize_eight_solution= code
+            
+    elif exersize_id == 9:
+        user.exersize_nine = verdict
+        user.exersize_nine_solution= code
+
+    try:
+        session.commit()
+        return 'Задача успешно сохранена'
+
+    except Exception:
+        return 'При ззагрузке задачи на сервер произошла ошибка'
+    
+    finally:
+        session.close()
+
+
 @app.route('/api/check_solution', methods=['POST'])
 @login_required
 def check_solution():
@@ -807,11 +946,29 @@ def check_solution():
     tasks = get_tasks_for_lesson(lesson_id)
     task = tasks[task_order - 1]
 
+    points = task['points']
+
     result = first_first(code, task['tests'])
+
+    email = session['email']
+
+    if result['verdict'] == 'ok':
+
+        save_decision = add_verdict(lesson_id, task_order, code, 2, email, points)
+
+        if save_decision != 'Задача успешно сохранена':
+            result['verdict'] = 'ошибка при отправке задачи на сервер. Попробуйте снова или позваоните в поддержку по номеру: +7 (910) 456-94-61'
+    else:
+        save_decision = add_verdict(lesson_id, task_order, code, 1, email, points)
+
+        if save_decision != 'Задача успешно сохранена':
+            result['verdict'] = 'ошибка при отправке задачи на сервер. Попробуйте снова или позваоните в поддержку по номеру: +7 (910) 456-94-61'
+
+
+        
     return jsonify(result)
 
 
->>>>>>> a1b13be58148d450d001ad5e1cfa03e292b39d20
 if __name__ == '__main__':
     db_session.global_init('db/blogs.db')
     app.run(port=8080, host='127.0.0.1', debug=True)
