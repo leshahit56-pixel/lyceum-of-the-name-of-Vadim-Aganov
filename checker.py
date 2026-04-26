@@ -95,8 +95,3 @@ def first_first(solution, tests):
 
     result["verdict"] = "ok"
     return result
-code = '''print('67'  )'''
-
-test = [{'input': ['67'], "expected": ['67']} ]
-
-print(first_first(code, test))
