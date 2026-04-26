@@ -23,10 +23,12 @@ app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'f8874661e03139f344aa90692fd4d642b1e7a89b9b817bba')
 app.permanent_session_lifetime = timedelta(days=30)
 
+
 @app.route('/logout_force')
 def logout_force():
     session.clear()  # Полностью очищает куки сессии
-    return redirect(url_for('register')) # Или на главную
+    return redirect(url_for('register'))  # Или на главную
+
 
 def login_required(f):
     @wraps(f)
@@ -344,14 +346,14 @@ def get_tasks_for_lesson(lesson_id):
                  'tests': [
                      {'input': [], "expected": ['Hello, world!']}
                  ]}
-                 ]
+                ]
     elif lesson_id == 2:
         return []
     elif lesson_id == 3:
         return [
             {'id': 1, 'lesson_id': 3, 'title': 'Секретный код', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Агент получил зашифрованное сообщение: три числа. Каждое число — это код символа. Помогите агенту прочитать послание.</p><p><strong>Формат ввода:</strong> Три целых числа, каждое с новой строки.</p><p><strong>Формат вывода:</strong> Строка из символов.</p><p><strong>Пример 1:</strong><br>Ввод:<br>72<br>105<br>33<br>Вывод:<br>Hi!</p><p><strong>Пример 2:</strong><br>Ввод:<br>80<br>121<br>116<br>Вывод:<br>Pyt</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': 'solved',
              'tests': [
                  {"input": ['72', '105', '33'], "expected": ['Hi!']},
                  {"input": ['80', '121', '116'], "expected": ['Pyt']},
@@ -812,8 +814,21 @@ def task(lesson_id, task_order):
 
         if solution_in_db:
             task['starter_code'] = solution_in_db
-        
-    return render_template('task.html', task=task, lesson_id=lesson_id)
+
+    status_dict = {}
+    if solution:
+        for num, col in {
+            1: "exersize_one", 2: "exersize_two", 3: "exersize_three",
+            4: "exersize_four", 5: "exersize_five", 6: "exersize_six",
+            7: "exersize_seven", 8: "exersize_eight", 9: "exersize_nine"
+        }.items():
+            val = getattr(solution, col)
+            status_dict[num] = val if val else 0
+    else:
+        for i in range(1, 10):
+            status_dict[i] = 0
+
+    return render_template('task.html', task=task, lesson_id=lesson_id, status_dict=status_dict)
 
 
 @app.route('/course/python/operators')
@@ -893,7 +908,6 @@ def add_verdict(lesson_id, exersize_id, code, verdict, email, points):
 
     elif lesson_id == 8:
         new_verdict = Eighth_lesson
-        
 
     user = session.query(new_verdict).filter(new_verdict.user_email == email).first()
 
@@ -922,42 +936,41 @@ def add_verdict(lesson_id, exersize_id, code, verdict, email, points):
 
             verdict = 2
 
-
     if exersize_id == 1:
         user.exersize_one = verdict
         user.exersize_one_solution = code
 
     elif exersize_id == 2:
         user.exersize_two = verdict
-        user.exersize_two_solution= code
+        user.exersize_two_solution = code
 
     elif exersize_id == 3:
         user.exersize_three = verdict
         user.exersize_three_solution = code
-            
+
     elif exersize_id == 4:
         user.exersize_four = verdict
-        user.exersize_four_solution= code
+        user.exersize_four_solution = code
 
     elif exersize_id == 5:
         user.exersize_five = verdict
-        user.exersize_five_solution= code
-            
+        user.exersize_five_solution = code
+
     elif exersize_id == 6:
         user.exersize_six = verdict
-        user.exersize_six_solution= code
+        user.exersize_six_solution = code
 
     elif exersize_id == 7:
         user.exersize_seven = verdict
-        user.exersize_seven_solution= code
+        user.exersize_seven_solution = code
 
     elif exersize_id == 8:
         user.exersize_eight = verdict
-        user.exersize_eight_solution= code
-            
+        user.exersize_eight_solution = code
+
     elif exersize_id == 9:
         user.exersize_nine = verdict
-        user.exersize_nine_solution= code
+        user.exersize_nine_solution = code
 
     try:
         session.commit()
@@ -965,7 +978,7 @@ def add_verdict(lesson_id, exersize_id, code, verdict, email, points):
 
     except Exception:
         return 'При ззагрузке задачи на сервер произошла ошибка'
-    
+
     finally:
         session.close()
 
@@ -992,15 +1005,15 @@ def check_solution():
         save_decision = add_verdict(lesson_id, task_order, code, 2, email, points)
 
         if save_decision != 'Задача успешно сохранена':
-            result['verdict'] = 'ошибка при отправке задачи на сервер. Попробуйте снова или позваоните в поддержку по номеру: +7 (910) 456-94-61'
+            result[
+                'verdict'] = 'ошибка при отправке задачи на сервер. Попробуйте снова или позваоните в поддержку по номеру: +7 (910) 456-94-61'
     else:
         save_decision = add_verdict(lesson_id, task_order, code, 1, email, points)
 
         if save_decision != 'Задача успешно сохранена':
-            result['verdict'] = 'ошибка при отправке задачи на сервер. Попробуйте снова или позваоните в поддержку по номеру: +7 (910) 456-94-61'
+            result[
+                'verdict'] = 'ошибка при отправке задачи на сервер. Попробуйте снова или позваоните в поддержку по номеру: +7 (910) 456-94-61'
 
-
-        
     return jsonify(result)
 
 
