@@ -298,7 +298,7 @@ def get_tasks_for_lesson(lesson_id):
     if lesson_id == 1:
         return [{'id': 1, 'lesson_id': 1, 'title': 'Привет, мир!', 'points': 10, 'difficulty': 'easy',
                  'description': '<p>Напишите программу, которая выводит "Привет, мир!"</p>',
-                 'starter_code': '# Напишите ваше решение здесь', 'status': None,
+                 'starter_code': '# Напишите ваше решение здесь', 'status': None, 'decided': 0,
                  'tests': [
                      {'input': ['Hello, world!'], "expected": ['Hello, world!']}
                  ]}
@@ -309,7 +309,7 @@ def get_tasks_for_lesson(lesson_id):
         return [
             {'id': 1, 'lesson_id': 3, 'title': 'Секретный код', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Агент получил зашифрованное сообщение: три числа. Каждое число — это код символа. Помогите агенту прочитать послание.</p><p><strong>Формат ввода:</strong> Три целых числа, каждое с новой строки.</p><p><strong>Формат вывода:</strong> Строка из символов.</p><p><strong>Пример 1:</strong><br>Ввод:<br>72<br>105<br>33<br>Вывод:<br>Hi!</p><p><strong>Пример 2:</strong><br>Ввод:<br>80<br>121<br>116<br>Вывод:<br>Pyt</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['72', '105', '33'], "expected": ['Hi!']},
                  {"input": ['80', '121', '116'], "expected": ['Pyt']},
@@ -318,7 +318,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 2, 'lesson_id': 3, 'title': 'Детский праздник', 'points': 10, 'difficulty': 'easy',
              'description': '<p>На день рождения к Пете пришли друзья. Мама купила мешок конфет и сказала разделить их поровну на всех, а остаток отдать имениннику.</p><p><strong>Формат ввода:</strong> Два целых числа, каждое с новой строки: сначала количество конфет, затем количество детей.</p><p><strong>Формат вывода:</strong> Два числа через пробел: сколько конфет получит каждый и сколько останется Пете.</p><p><strong>Пример 1:</strong><br>Ввод:<br>17<br>5<br>Вывод:<br>3 2</p><p><strong>Пример 2:</strong><br>Ввод:<br>42<br>10<br>Вывод:<br>4 2</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['17', '5'], "expected": ['3 2']},
                  {"input": ['42', '10'], "expected": ['4 2']},
@@ -327,7 +327,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 3, 'lesson_id': 3, 'title': 'Расстояние от дома', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Турист отмечал на карте свои перемещения: положительные числа — движение на север, отрицательные — на юг. В конце дня он записал одно итоговое число. Но ему нужно узнать, на каком расстоянии от дома (по модулю) он оказался.</p><p><strong>Формат ввода:</strong> Одно число (может быть целым или дробным).</p><p><strong>Формат вывода:</strong> Неотрицательное число — расстояние от нуля.</p><p><strong>Пример 1:</strong><br>Ввод:<br>-42<br>Вывод:<br>42.0</p><p><strong>Пример 2:</strong><br>Ввод:<br>-3.14<br>Вывод:<br>3.14</p><p><strong>Пример 3:</strong><br>Ввод:<br>15.7<br>Вывод:<br>15.7</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['-42'], "expected": ['42.0']},
                  {"input": ['-3.14'], "expected": ['3.14']},
@@ -337,7 +337,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 4, 'lesson_id': 3, 'title': 'Инженерный калькулятор', 'points': 11, 'difficulty': 'medium',
              'description': '<p>Инженеру нужна программа, которая выполняет одну арифметическую операцию над двумя числами.</p><p><strong>Формат ввода:</strong> Три строки: первое число, знак операции (+, -, *, /, **, //, %), второе число. Числа могут быть целыми или дробными.</p><p><strong>Формат вывода:</strong> Результат вычисления.</p><p><strong>Пример 1:</strong><br>Ввод:<br>17<br>%<br>5<br>Вывод:<br>2.0</p><p><strong>Пример 2:</strong><br>Ввод:<br>2<br>**<br>10<br>Вывод:<br>1024.0</p><p><strong>Пример 3:</strong><br>Ввод:<br>15<br>/<br>4<br>Вывод:<br>3.75</p><p><strong>Пример 4:</strong><br>Ввод:<br>20<br>//<br>6<br>Вывод:<br>3.0</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['17', '%', '5'], "expected": ['2.0']},
                  {"input": ['2', '**', '10'], "expected": ['1024.0']},
@@ -347,7 +347,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 5, 'lesson_id': 3, 'title': 'Метеостанция', 'points': 11, 'difficulty': 'medium',
              'description': '<p>Метеоролог записал показания термометра за неделю. Ему нужно определить самую высокую и самую низкую температуру, а также среднюю, округлённую до одного знака.</p><p><strong>Формат ввода:</strong> Шесть чисел, каждое с новой строки. Числа могут быть целыми или дробными.</p><p><strong>Формат вывода:</strong> Три строки: максимум и минимум через пробел, средняя (округлить до 1 знака), тип данных средней.</p><p><strong>Пример 1:</strong><br>Ввод:<br>-5.2<br>-3<br>0<br>2.5<br>-1<br>-7.3<br>Вывод:<br>2.5 -7.3<br>-2.3<br>&lt;class \'float\'&gt;</p><p><strong>Пример 2:</strong><br>Ввод:<br>12<br>15<br>10<br>14<br>13<br>16<br>Вывод:<br>16.0 10.0<br>13.3<br>&lt;class \'float\'&gt;</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['-5.2', '-3', '0', '2.5', '-1', '-7.3'],
                   "expected": ['2.5 -7.3', '-2.3', "<class 'float'>"]},
@@ -357,7 +357,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 6, 'lesson_id': 3, 'title': 'Анализ пароля', 'points': 11, 'difficulty': 'medium',
              'description': '<p>Пользователь придумал пароль. Система проверяет его длину и выводит тип данных этой длины.</p><p><strong>Формат ввода:</strong> Строка — пароль.</p><p><strong>Формат вывода:</strong> Две строки: длина пароля, тип данных длины.</p><p><strong>Пример 1:</strong><br>Ввод:<br>qwerty123<br>Вывод:<br>9<br>&lt;class \'int\'&gt;</p><p><strong>Пример 2:</strong><br>Ввод:<br>abc<br>Вывод:<br>3<br>&lt;class \'int\'&gt;</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['qwerty123'], "expected": ['9', "<class 'int'>"]},
                  {"input": ['abc'], "expected": ['3', "<class 'int'>"]},
@@ -366,7 +366,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 7, 'lesson_id': 3, 'title': 'Программист-археолог', 'points': 12, 'difficulty': 'hard',
              'description': '<p>Археолог нашёл древний диск с данными. Чтобы прочитать символ, нужно знать его код в трёх системах счисления.</p><p><strong>Формат ввода:</strong> Один символ.</p><p><strong>Формат вывода:</strong> Три строки: код в десятичной, двоичной и шестнадцатеричной системе.</p><p><strong>Пример 1:</strong><br>Ввод:<br>Z<br>Вывод:<br>90<br>0b1011010<br>0x5a</p><p><strong>Пример 2:</strong><br>Ввод:<br>@<br>Вывод:<br>64<br>0b1000000<br>0x40</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['Z'], "expected": ['90', '0b1011010', '0x5a']},
                  {"input": ['@'], "expected": ['64', '0b1000000', '0x40']},
@@ -375,7 +375,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 8, 'lesson_id': 3, 'title': 'Олимпиадный приз', 'points': 12, 'difficulty': 'hard',
              'description': '<p>На олимпиаде три победителя набрали разное количество баллов. Главный приз получает участник с максимальным баллом. Утешительные призы получают двое оставшихся. Найдите сумму баллов утешительных призов и сколько процентов от максимума она составляет.</p><p><strong>Формат ввода:</strong> Три целых числа, каждое с новой строки.</p><p><strong>Формат вывода:</strong> Две строки: сумма двух меньших, процент от максимума (округлить до целого).</p><p><strong>Пример 1:</strong><br>Ввод:<br>5<br>12<br>9<br>Вывод:<br>14<br>117</p><p><strong>Пример 2:</strong><br>Ввод:<br>100<br>50<br>75<br>Вывод:<br>125<br>125</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['5', '12', '9'], "expected": ['14', '117']},
                  {"input": ['100', '50', '75'], "expected": ['125', '125']},
@@ -384,7 +384,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 9, 'lesson_id': 3, 'title': 'Вадим Маликович и ручные проверки', 'points': 12, 'difficulty': 'hard',
              'description': '<p>Вадим Маликович получил от студента три числа: количество задач, количество строк кода и количество отступов. Он вычисляет индекс лени: (задачи * строки) // (отступы * 2). Если > 100 — "Я тебе не нейросеть...", 50-100 — "Ладно, проверю...", < 50 — "Идеально...".</p><p><strong>Формат ввода:</strong> Три целых числа, каждое с новой строки.</p><p><strong>Формат вывода:</strong> Индекс лени в восьмеричной системе, максимальное из трёх чисел, тип данных индекса, вердикт.</p><p><strong>Пример:</strong><br>Ввод:<br>10<br>200<br>2<br>Вывод:<br>0o764<br>200<br>&lt;class \'int\'&gt;<br>Я тебе не нейросеть, чтобы за тебя код писать.</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['10', '200', '2'],
                   "expected": ['0o764', '200', "<class 'int'>", 'Я тебе не нейросеть, чтобы за тебя код писать.']},
@@ -397,7 +397,7 @@ def get_tasks_for_lesson(lesson_id):
         return [
             {'id': 1, 'lesson_id': 4, 'title': 'Робот-пылесос', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Робот-пылесос движется по комнате и сообщает, сколько метров он проехал. Выведите пройденное расстояние от 1 до N метров.</p><p><strong>Формат ввода:</strong> Одно целое число N.</p><p><strong>Формат вывода:</strong> N строк вида "Проехал X метр(ов)".</p><p><strong>Пример:</strong><br>Ввод:<br>4<br>Вывод:<br>Проехал 1 метр(ов)<br>Проехал 2 метр(ов)<br>Проехал 3 метр(ов)<br>Проехал 4 метр(ов)</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['4'],
                   "expected": ['Проехал 1 метр(ов)', 'Проехал 2 метр(ов)', 'Проехал 3 метр(ов)', 'Проехал 4 метр(ов)']},
@@ -407,7 +407,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 2, 'lesson_id': 4, 'title': 'Космический запуск', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Центр управления полётами ведёт обратный отсчёт перед запуском ракеты. Выведите числа от N до 1, а затем слово "Поехали!".</p><p><strong>Формат ввода:</strong> Одно целое число N.</p><p><strong>Формат вывода:</strong> N строк с числами, затем строка "Поехали!".</p><p><strong>Пример:</strong><br>Ввод:<br>3<br>Вывод:<br>3<br>2<br>1<br>Поехали!</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['3'], "expected": ['3', '2', '1', 'Поехали!']},
                  {"input": ['1'], "expected": ['1', 'Поехали!']},
@@ -416,7 +416,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 3, 'lesson_id': 4, 'title': 'Зарядка', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Тренер просит сделать N отжиманий. После каждого десятого — "Есть!". Выведите номера отжиманий, помечая каждое десятое.</p><p><strong>Формат ввода:</strong> Одно целое число N.</p><p><strong>Формат вывода:</strong> N строк с номерами. После каждого числа, кратного 10, через пробел слово "Есть!".</p><p><strong>Пример:</strong><br>Ввод:<br>25<br>Вывод:<br>1<br>2<br>...<br>10 Есть!<br>11<br>...<br>20 Есть!<br>21<br>22<br>23<br>24<br>25</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['10'], "expected": ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10 Есть!']},
                  {"input": ['5'], "expected": ['1', '2', '3', '4', '5']},
@@ -427,7 +427,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 4, 'lesson_id': 4, 'title': 'Непослушный робот', 'points': 11, 'difficulty': 'medium',
              'description': '<p>Робот принимает команды: "вперёд", "назад", "стоп". Команда "вперёд" увеличивает расстояние на 10, "назад" уменьшает на 10. Робот не может уйти в минус. Команда "стоп" завершает работу.</p><p><strong>Формат ввода:</strong> Несколько строк с командами, каждая с новой строки. Последняя команда — "стоп".</p><p><strong>Формат вывода:</strong> После каждой команды (кроме "стоп") — текущее положение робота. Если "назад" привела бы к минусу — "Робот упёрся в стену".</p><p><strong>Пример:</strong><br>Ввод:<br>вперёд<br>вперёд<br>назад<br>назад<br>назад<br>вперёд<br>стоп<br>Вывод:<br>10<br>20<br>10<br>0<br>Робот упёрся в стену<br>10</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['вперёд', 'вперёд', 'назад', 'назад', 'назад', 'вперёд', 'стоп'],
                   "expected": ['10', '20', '10', '0', 'Робот упёрся в стену', '10']},
@@ -437,7 +437,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 5, 'lesson_id': 4, 'title': 'Капризный покупатель', 'points': 11, 'difficulty': 'medium',
              'description': '<p>Кассир сканирует цены. Если товар дороже 1000 рублей — "Дорогой товар, проверьте цену!" и не прибавлять к сумме. Ввод 0 — конец покупок.</p><p><strong>Формат ввода:</strong> Целые числа (цены), каждое с новой строки. Последнее число — 0.</p><p><strong>Формат вывода:</strong> Для каждого пропущенного товара — "Дорогой товар, проверьте цену!". В конце — итоговая сумма.</p><p><strong>Пример:</strong><br>Ввод:<br>150<br>1200<br>300<br>2500<br>50<br>0<br>Вывод:<br>Дорогой товар, проверьте цену!<br>Дорогой товар, проверьте цену!<br>500</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['150', '1200', '300', '2500', '50', '0'],
                   "expected": ['Дорогой товар, проверьте цену!', 'Дорогой товар, проверьте цену!', '500']},
@@ -447,7 +447,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 6, 'lesson_id': 4, 'title': 'Детектор лжи', 'points': 11, 'difficulty': 'medium',
              'description': '<p>Следователь допрашивает подозреваемого. Ответы: "да", "нет", "стоп". Если три "нет" подряд — "Ложь!". Если "стоп" раньше — "Допрос окончен".</p><p><strong>Формат ввода:</strong> Несколько строк с ответами. Последний ответ — "стоп" или три "нет" подряд.</p><p><strong>Формат вывода:</strong> Если три "нет" подряд — "Ложь!". Если "стоп" раньше — "Допрос окончен".</p><p><strong>Пример 1:</strong><br>Ввод:<br>да<br>нет<br>нет<br>нет<br>Вывод:<br>Ложь!</p><p><strong>Пример 2:</strong><br>Ввод:<br>да<br>нет<br>да<br>нет<br>стоп<br>Вывод:<br>Допрос окончен</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['да', 'нет', 'нет', 'нет'], "expected": ['Ложь!']},
                  {"input": ['да', 'нет', 'да', 'нет', 'стоп'], "expected": ['Допрос окончен']},
@@ -456,7 +456,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 7, 'lesson_id': 4, 'title': 'Шифровальщик-2', 'points': 12, 'difficulty': 'hard',
              'description': '<p>Агент передаёт сообщения, состоящие из отдельных символов. Каждый символ вводится с новой строки. Пустая строка — конец сообщения. Найдите символ с наибольшим кодом и количество символов.</p><p><strong>Формат ввода:</strong> Несколько строк с одиночными символами. Пустая строка — конец.</p><p><strong>Формат вывода:</strong> Две строки: символ с наибольшим кодом, общее количество символов.</p><p><strong>Пример:</strong><br>Ввод:<br>A<br>z<br>5<br>m<br><br>Вывод:<br>z<br>4</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['A', 'z', '5', 'm', ''], "expected": ['z', '4']},
                  {"input": ['a', 'b', 'c', ''], "expected": ['c', '3']},
@@ -465,7 +465,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 8, 'lesson_id': 4, 'title': 'Гадалка', 'points': 12, 'difficulty': 'hard',
              'description': '<p>Гадалка записывает возраст посетителей. Ввод 0 — конец. Найдите самого молодого, самого старого и есть ли ровесники.</p><p><strong>Формат ввода:</strong> Целые положительные числа (возраст), каждое с новой строки. Последнее — 0.</p><p><strong>Формат вывода:</strong> Три строки: "Самый молодой: X", "Самый старый: Y", "Есть ровесники" или "Нет ровесников".</p><p><strong>Пример 1:</strong><br>Ввод:<br>25<br>42<br>25<br>18<br>0<br>Вывод:<br>Самый молодой: 18<br>Самый старый: 42<br>Есть ровесники</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['25', '42', '25', '18', '0'],
                   "expected": ['Самый молодой: 18', 'Самый старый: 42', 'Есть ровесники']},
@@ -476,7 +476,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 9, 'lesson_id': 4, 'title': 'Вадим Маликович и бесконечный цикл', 'points': 12, 'difficulty': 'hard',
              'description': '<p>Вадим Маликович проверяет, сколько раз студенты готовы нажимать Enter. Секретный код выхода: 120. Программа считает попытки, максимум, минимум и был ли введён 0.</p><p><strong>Формат ввода:</strong> Целые числа, каждое с новой строки. Число 120 — сигнал остановки.</p><p><strong>Формат вывода:</strong> Четыре строки: количество попыток (не считая 120), максимум, минимум, "Обнаружена капитуляция" или "Без капитуляции". Затем "Вадим Маликович жмёт 120. Легко. Break — ваш друг."</p><p><strong>Пример:</strong><br>Ввод:<br>15<br>42<br>8<br>120<br>Вывод:<br>Всего попыток: 3<br>Максимум: 42<br>Минимум: 8<br>Без капитуляции.<br>Вадим Маликович жмёт 120. Легко. Break — ваш друг.</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['15', '42', '8', '120'],
                   "expected": ['Всего попыток: 3', 'Максимум: 42', 'Минимум: 8', 'Без капитуляции.',
@@ -493,7 +493,7 @@ def get_tasks_for_lesson(lesson_id):
         return [
             {'id': 1, 'lesson_id': 5, 'title': 'Гласные и согласные', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Робот проверяет текст и считает, сколько в слове гласных букв. Гласные: а, е, ё, и, о, у, ы, э, ю, я.</p><p><strong>Формат ввода:</strong> Одна строка — слово.</p><p><strong>Формат вывода:</strong> Одно число — количество гласных.</p><p><strong>Пример:</strong><br>Ввод:<br>привет<br>Вывод:<br>2</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['привет'], "expected": ['2']},
                  {"input": ['ааа'], "expected": ['3']},
@@ -502,7 +502,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 2, 'lesson_id': 5, 'title': 'Эхо', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Робот повторяет каждую букву слова дважды.</p><p><strong>Формат ввода:</strong> Одна строка — слово.</p><p><strong>Формат вывода:</strong> Строка, где каждая буква повторена дважды.</p><p><strong>Пример:</strong><br>Ввод:<br>привет<br>Вывод:<br>ппррииввеетт</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['привет'], "expected": ['ппррииввеетт']},
                  {"input": ['да'], "expected": ['ддаа']},
@@ -511,7 +511,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 3, 'lesson_id': 5, 'title': 'Скрытое послание', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Шпион зашифровал сообщение: каждую вторую букву нужно пропустить, а остальные вывести подряд (берём 0-ю, 2-ю, 4-ю...).</p><p><strong>Формат ввода:</strong> Одна строка.</p><p><strong>Формат вывода:</strong> Строка из символов через один.</p><p><strong>Пример:</strong><br>Ввод:<br>привет<br>Вывод:<br>пие</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['привет'], "expected": ['пие']},
                  {"input": ['abcdef'], "expected": ['ace']},
@@ -520,7 +520,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 4, 'lesson_id': 5, 'title': 'Пирамида из чисел', 'points': 11, 'difficulty': 'medium',
              'description': '<p>Выведите пирамиду из чисел высотой N. Каждая строка состоит из чисел от 1 до номера строки и обратно.</p><p><strong>Формат ввода:</strong> Одно целое число N.</p><p><strong>Формат вывода:</strong> N строк, образующих числовую пирамиду.</p><p><strong>Пример:</strong><br>Ввод:<br>4<br>Вывод:<br>   1<br>  1 2 1<br> 1 2 3 2 1<br>1 2 3 4 3 2 1</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['4'], "expected": ['   1', '  1 2 1', ' 1 2 3 2 1', '1 2 3 4 3 2 1']},
                  {"input": ['2'], "expected": [' 1', '1 2 1']},
@@ -529,7 +529,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 5, 'lesson_id': 5, 'title': 'Сумма нечётных', 'points': 11, 'difficulty': 'medium',
              'description': '<p>Посчитайте сумму всех нечётных чисел от 1 до N.</p><p><strong>Формат ввода:</strong> Одно целое число N.</p><p><strong>Формат вывода:</strong> Одно число — сумма нечётных.</p><p><strong>Пример:</strong><br>Ввод:<br>5<br>Вывод:<br>9</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['5'], "expected": ['9']},
                  {"input": ['1'], "expected": ['1']},
@@ -538,7 +538,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 6, 'lesson_id': 5, 'title': 'Таблица умножения', 'points': 11, 'difficulty': 'medium',
              'description': '<p>Выведите таблицу умножения от 1 до N. Числа в строке разделяйте пробелом.</p><p><strong>Формат ввода:</strong> Одно целое число N.</p><p><strong>Формат вывода:</strong> Таблица N×N.</p><p><strong>Пример:</strong><br>Ввод:<br>4<br>Вывод:<br>1 2 3 4<br>2 4 6 8<br>3 6 9 12<br>4 8 12 16</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['4'], "expected": ['1 2 3 4', '2 4 6 8', '3 6 9 12', '4 8 12 16']},
                  {"input": ['2'], "expected": ['1 2', '2 4']},
@@ -547,7 +547,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 7, 'lesson_id': 5, 'title': 'Диагонали квадрата', 'points': 12, 'difficulty': 'hard',
              'description': '<p>Нарисуйте квадрат N×N, где на главной и побочной диагоналях — #, а в остальных местах — . (точка). Символы разделены пробелом.</p><p><strong>Формат ввода:</strong> Одно целое число N.</p><p><strong>Формат вывода:</strong> Квадрат N×N с диагоналями.</p><p><strong>Пример:</strong><br>Ввод:<br>5<br>Вывод:<br># . . . #<br>. # . # .<br>. . # . .<br>. # . # .<br># . . . #</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['5'], "expected": ['# . . . #', '. # . # .', '. . # . .', '. # . # .', '# . . . #']},
                  {"input": ['3'], "expected": ['# . #', '. # .', '# . #']},
@@ -556,7 +556,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 8, 'lesson_id': 5, 'title': 'Простые числа', 'points': 12, 'difficulty': 'hard',
              'description': '<p>Выведите все простые числа от 2 до N через пробел. Простое число — это число, которое делится только на 1 и на само себя.</p><p><strong>Формат ввода:</strong> Одно целое число N.</p><p><strong>Формат вывода:</strong> Простые числа через пробел.</p><p><strong>Пример 1:</strong><br>Ввод:<br>20<br>Вывод:<br>2 3 5 7 11 13 17 19</p><p><strong>Пример 2:</strong><br>Ввод:<br>10<br>Вывод:<br>2 3 5 7</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['20'], "expected": ['2 3 5 7 11 13 17 19']},
                  {"input": ['10'], "expected": ['2 3 5 7']},
@@ -566,7 +566,7 @@ def get_tasks_for_lesson(lesson_id):
             {'id': 9, 'lesson_id': 5, 'title': 'Вадим Маликович и восстание принтеров', 'points': 12,
              'difficulty': 'hard',
              'description': '<p>Вадим Маликович обнаружил, что все 5 принтеров взбесились. Он проверяет по 4 отчёта от каждого. Если встречает "принтер" — выключает этот принтер. Если "бесконечный" — пропускает отчёт. Блоки разделяются строкой NEXT_PRINTER.</p><p><strong>Формат ввода:</strong> 5 блоков, каждый блок — отчёты одного принтера. Блоки разделяются строкой NEXT_PRINTER.</p><p><strong>Формат вывода:</strong> Для каждого выключенного принтера — "Принтер №X выключен.". Затем итоги: всего прочитано, выключено принтеров, лучший принтер, и фраза "И да, я жму 120. Легко."</p><p><strong>Пример:</strong><br>Ввод:<br>Отчёт 1.1<br>бесконечный<br>Отчёт 1.2<br>Отчёт 1.3<br>NEXT_PRINTER<br>Отчёт 2.1<br>принтер<br>Отчёт 2.2<br>Отчёт 2.3<br>NEXT_PRINTER<br>Отчёт 3.1<br>Отчёт 3.2<br>Отчёт 3.3<br>Отчёт 3.4<br>NEXT_PRINTER<br>Отчёт 4.1<br>бесконечный<br>отчёт 4.2<br>бесконечный<br>NEXT_PRINTER<br>Отчёт 5.1<br>Отчёт 5.2<br>принтер<br>Отчёт 5.3<br>Вывод:<br>Принтер №2 выключен.<br>Принтер №5 выключен.<br>Всего прочитано отчётов: 12<br>Выключено принтеров: 2<br>Лучший принтер: №3<br>И да, я жму 120. Легко.</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": [
                      'Отчёт 1.1', 'бесконечный', 'Отчёт 1.2', 'Отчёт 1.3',
@@ -632,7 +632,7 @@ def get_tasks_for_lesson(lesson_id):
         return [
             {'id': 1, 'lesson_id': 6, 'title': 'Шпионский пароль', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Шпион передаёт пароль, который состоит из первого и последнего символа кодовой фразы.</p><p><strong>Формат ввода:</strong> Одна строка — кодовая фраза.</p><p><strong>Формат вывода:</strong> Два символа подряд — пароль.</p><p><strong>Пример:</strong><br>Ввод:<br>пингвин<br>Вывод:<br>пн</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['пингвин'], "expected": ['пн']},
                  {"input": ['привет'], "expected": ['пт']},
@@ -641,7 +641,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 2, 'lesson_id': 6, 'title': 'Ленивый попугай', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Попугай Кеша ленится учить новые слова и просто повторяет то, что сказал хозяин, но 4 раза подряд.</p><p><strong>Формат ввода:</strong> Одна строка — слово.</p><p><strong>Формат вывода:</strong> Строка, повторённая 4 раза.</p><p><strong>Пример:</strong><br>Ввод:<br>Кеша<br>Вывод:<br>КешаКешаКешаКеша</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['Кеша'], "expected": ['КешаКешаКешаКеша']},
                  {"input": ['да'], "expected": ['дададада']},
@@ -650,7 +650,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 3, 'lesson_id': 6, 'title': 'Разделитель тысяч', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Напишите программу, которая принимает строку из цифр и вставляет пробелы каждые 3 цифры справа налево.</p><p><strong>Формат ввода:</strong> Одна строка из цифр.</p><p><strong>Формат вывода:</strong> Строка с пробелами между тройками цифр.</p><p><strong>Пример 1:</strong><br>Ввод:<br>1234567890<br>Вывод:<br>1 234 567 890</p><p><strong>Пример 2:</strong><br>Ввод:<br>12345<br>Вывод:<br>12 345</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['1234567890'], "expected": ['1 234 567 890']},
                  {"input": ['12345'], "expected": ['12 345']},
@@ -660,7 +660,7 @@ def get_tasks_for_lesson(lesson_id):
             {'id': 4, 'lesson_id': 6, 'title': 'Символы в обратном порядке через два', 'points': 11,
              'difficulty': 'medium',
              'description': '<p>Выведите символы строки в обратном порядке, пропуская каждые два символа (берёте каждый третий с конца).</p><p><strong>Формат ввода:</strong> Одна строка.</p><p><strong>Формат вывода:</strong> Строка из символов.</p><p><strong>Пример:</strong><br>Ввод:<br>abcdefghijk<br>Вывод:<br>kheb</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['abcdefghijk'], "expected": ['kheb']},
                  {"input": ['abcdef'], "expected": ['fc']},
@@ -669,7 +669,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 5, 'lesson_id': 6, 'title': 'Сравнение половин', 'points': 11, 'difficulty': 'medium',
              'description': '<p>Разделите строку пополам (если нечётная длина — середина не учитывается) и сравните левую половину с перевёрнутой правой. Если равны — "Симметричные", иначе — "Несимметричные".</p><p><strong>Формат ввода:</strong> Одна строка.</p><p><strong>Формат вывода:</strong> "Симметричные" или "Несимметричные".</p><p><strong>Пример 1:</strong><br>Ввод:<br>абвгвба<br>Вывод:<br>Симметричные</p><p><strong>Пример 2:</strong><br>Ввод:<br>привет<br>Вывод:<br>Несимметричные</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['абвгвба'], "expected": ['Симметричные']},
                  {"input": ['привет'], "expected": ['Несимметричные']},
@@ -679,7 +679,7 @@ def get_tasks_for_lesson(lesson_id):
             {'id': 6, 'lesson_id': 6, 'title': 'Самая длинная подстрока без повторений', 'points': 11,
              'difficulty': 'medium',
              'description': '<p>Найдите длину самой длинной подстроки, в которой все символы уникальны.</p><p><strong>Формат ввода:</strong> Одна строка.</p><p><strong>Формат вывода:</strong> Одно число — длина подстроки.</p><p><strong>Пример 1:</strong><br>Ввод:<br>abcabcbb<br>Вывод:<br>3</p><p><strong>Пример 2:</strong><br>Ввод:<br>bbbbb<br>Вывод:<br>1</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['abcabcbb'], "expected": ['3']},
                  {"input": ['bbbbb'], "expected": ['1']},
@@ -688,7 +688,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 7, 'lesson_id': 6, 'title': 'Римские цифры в арабские', 'points': 12, 'difficulty': 'hard',
              'description': '<p>Переведите римское число (до 3999) в арабское.</p><p><strong>Формат ввода:</strong> Одна строка — римское число.</p><p><strong>Формат вывода:</strong> Одно целое число.</p><p><strong>Пример 1:</strong><br>Ввод:<br>XIV<br>Вывод:<br>14</p><p><strong>Пример 2:</strong><br>Ввод:<br>MCMXCIV<br>Вывод:<br>1994</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['XIV'], "expected": ['14']},
                  {"input": ['MCMXCIV'], "expected": ['1994']},
@@ -697,7 +697,7 @@ def get_tasks_for_lesson(lesson_id):
 
             {'id': 8, 'lesson_id': 6, 'title': 'Самое длинное слово', 'points': 12, 'difficulty': 'hard',
              'description': '<p>Найдите самое длинное слово в строке. Слова разделены пробелами. Если слов несколько — выведите первое по порядку.</p><p><strong>Формат ввода:</strong> Одна строка.</p><p><strong>Формат вывода:</strong> Самое длинное слово.</p><p><strong>Пример 1:</strong><br>Ввод:<br>привет мир программирование<br>Вывод:<br>программирование</p><p><strong>Пример 2:</strong><br>Ввод:<br>a bb ccc dddd<br>Вывод:<br>dddd</p><p><strong>Пример 3:</strong><br>Ввод:<br>один два три<br>Вывод:<br>один</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['привет мир программирование'], "expected": ['программирование']},
                  {"input": ['a bb ccc dddd'], "expected": ['dddd']},
@@ -707,7 +707,7 @@ def get_tasks_for_lesson(lesson_id):
             {'id': 9, 'lesson_id': 6, 'title': 'Вадим Маликович и шифр подмазавшегося студента', 'points': 12,
              'difficulty': 'hard',
              'description': '<p>Студент зашифровал комплимент. Каждую цифру на чётном индексе заменил на текст (0→ноль, 1→один, ... 9→девять). Если есть "120" — "Вадим Маликович жмёт 120! Легко!". Если "принтер" — "Принтер? Опять?!". Иначе расшифрованная строка.</p><p><strong>Формат ввода:</strong> Одна строка.</p><p><strong>Формат вывода:</strong> Расшифрованная строка или сообщение.</p><p><strong>Пример 1:</strong><br>Ввод:<br>Я поднял 1два0 кг<br>Вывод:<br>Вадим Маликович жмёт 120! Легко! Подмазаться не вышло.</p><p><strong>Пример 2:</strong><br>Ввод:<br>У меня 2 яблока и 3 груши<br>Вывод:<br>У меня 2 яблока и три груши</p><p><strong>Пример 3:</strong><br>Ввод:<br>Код с принтер и 2 три<br>Вывод:<br>Принтер? Опять?! Всё, хватит.</p>',
-             'starter_code': '', 'status': None,
+             'starter_code': '', 'status': None, 'decided': 0,
              'tests': [
                  {"input": ['Я поднял 1два0 кг'],
                   "expected": ['Вадим Маликович жмёт 120! Легко! Подмазаться не вышло.']},
@@ -763,10 +763,25 @@ def task(lesson_id, task_order):
         4: "exersize_four_solution", 5: "exersize_five_solution", 6: "exersize_six_solution",
         7: "exersize_seven_solution", 8: "exersize_eight_solution", 9: "exersize_nine_solution"
     }
+
+    task_columns_2 = {
+        1: "exersize_one_solution", 2: "exersize_two_solution", 3: "exersize_three_solution",
+        4: "exersize_four_solution", 5: "exersize_five_solution", 6: "exersize_six_solution",
+        7: "exersize_seven_solution", 8: "exersize_eight_solution", 9: "exersize_nine_solution"
+    }
     if solution:
         column_name = task_columns.get(task_order)
 
         solution_in_db = getattr(solution, column_name)
+
+        column_name_2 = task_columns_2.get(task_order)
+
+        decided = getattr(solution, column_name_2)
+        
+        if decided == 1:
+            task['decided'] = 1
+        elif decided == 2:
+            task['decided'] = 2
 
         if solution_in_db:
             task['starter_code'] = solution_in_db
