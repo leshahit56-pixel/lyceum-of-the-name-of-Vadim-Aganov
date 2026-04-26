@@ -763,25 +763,10 @@ def task(lesson_id, task_order):
         4: "exersize_four_solution", 5: "exersize_five_solution", 6: "exersize_six_solution",
         7: "exersize_seven_solution", 8: "exersize_eight_solution", 9: "exersize_nine_solution"
     }
-
-    task_columns_2 = {
-        1: "exersize_one_solution", 2: "exersize_two_solution", 3: "exersize_three_solution",
-        4: "exersize_four_solution", 5: "exersize_five_solution", 6: "exersize_six_solution",
-        7: "exersize_seven_solution", 8: "exersize_eight_solution", 9: "exersize_nine_solution"
-    }
     if solution:
         column_name = task_columns.get(task_order)
 
         solution_in_db = getattr(solution, column_name)
-
-        column_name_2 = task_columns_2.get(task_order)
-
-        decided = getattr(solution, column_name_2)
-        
-        if decided == 1:
-            task['decided'] = 1
-        elif decided == 2:
-            task['decided'] = 2
 
         if solution_in_db:
             task['starter_code'] = solution_in_db
