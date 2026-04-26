@@ -26,8 +26,8 @@ app.permanent_session_lifetime = timedelta(days=30)
 
 @app.route('/logout_force')
 def logout_force():
-    session.clear()  # Полностью очищает куки сессии
-    return redirect(url_for('register'))  # Или на главную
+    session.clear()
+    return redirect(url_for('register'))
 
 
 def login_required(f):
@@ -52,6 +52,39 @@ def get_current_user():
         return user
     except:
         return None
+
+
+def get_status_dict(lesson_id):
+    email = session.get('email')
+    if not email:
+        return {i: 0 for i in range(1, 10)}
+
+    db_session.global_init('db/blogs.db')
+    ses = db_session.create_session()
+
+    lesson_models = {1: First_lesson, 2: Second_lesson, 3: Third_lesson, 4: Fourth_lesson, 5: Fifth_lesson, 6: Sixth_lesson, 7: Seventh_lesson, 8: Eighth_lesson}
+    model = lesson_models.get(lesson_id)
+
+    status_dict = {}
+    if model:
+        solution = ses.query(model).filter(model.user_email == email).first()
+        if solution:
+            for num, col in {
+                1: "exersize_one", 2: "exersize_two", 3: "exersize_three",
+                4: "exersize_four", 5: "exersize_five", 6: "exersize_six",
+                7: "exersize_seven", 8: "exersize_eight", 9: "exersize_nine"
+            }.items():
+                val = getattr(solution, col)
+                status_dict[num] = val if val else 0
+        else:
+            for i in range(1, 10):
+                status_dict[i] = 0
+    else:
+        for i in range(1, 10):
+            status_dict[i] = 0
+
+    ses.close()
+    return status_dict
 
 
 @app.context_processor
@@ -212,12 +245,10 @@ def election_course():
 def if_not_auth():
     if request.method == 'POST':
         action = request.form.get('action')
-
         if action == 'reg':
             return redirect(url_for('register'))
         elif action == 'aut':
             return redirect(url_for('login'))
-
     return render_template('if_not_autorization.html')
 
 
@@ -231,9 +262,8 @@ def profile():
     ses = db_session.create_session()
 
     lesson_models = [Third_lesson, Fourth_lesson, Fifth_lesson, Sixth_lesson]
-    total_tasks = 36  # 4 урока × 9 задач
+    total_tasks = 36
     solved = 0
-    total_score = 0
 
     for model in lesson_models:
         row = ses.query(model).filter(model.user_email == email).first()
@@ -285,7 +315,27 @@ def course():
 @app.route('/course/python')
 @login_required
 def coursepython():
-    return render_template('course_python.html')
+    email = session['email']
+    db_session.global_init('db/blogs.db')
+    ses = db_session.create_session()
+
+    lesson_models = {1: First_lesson, 2: Second_lesson, 3: Third_lesson, 4: Fourth_lesson, 5: Fifth_lesson,
+                     6: Sixth_lesson, 7: Seventh_lesson, 8: Eighth_lesson}
+    lesson_progress = {}
+
+    for lesson_id, model in lesson_models.items():
+        row = ses.query(model).filter(model.user_email == email).first()
+        solved = 0
+        if row:
+            for i in range(1, 10):
+                col = getattr(row,
+                              f'exersize_{["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"][i - 1]}')
+                if col == 2:
+                    solved += 1
+        lesson_progress[lesson_id] = {"solved": solved, "total": 9, "percent": round(solved / 9 * 100)}
+
+    ses.close()
+    return render_template('course_python.html', lesson_progress=lesson_progress)
 
 
 @app.route('/test')
@@ -325,7 +375,8 @@ def test_6():
 
 @app.route('/course/python/hello_world')
 def hello_world():
-    return render_template('first_lesson.html')
+    status_dict = get_status_dict(1)
+    return render_template('first_lesson.html', status_dict=status_dict)
 
 
 @app.route('/book_for_first_lessonn')
@@ -353,7 +404,7 @@ def get_tasks_for_lesson(lesson_id):
         return [
             {'id': 1, 'lesson_id': 3, 'title': 'Секретный код', 'points': 10, 'difficulty': 'easy',
              'description': '<p>Агент получил зашифрованное сообщение: три числа. Каждое число — это код символа. Помогите агенту прочитать послание.</p><p><strong>Формат ввода:</strong> Три целых числа, каждое с новой строки.</p><p><strong>Формат вывода:</strong> Строка из символов.</p><p><strong>Пример 1:</strong><br>Ввод:<br>72<br>105<br>33<br>Вывод:<br>Hi!</p><p><strong>Пример 2:</strong><br>Ввод:<br>80<br>121<br>116<br>Вывод:<br>Pyt</p>',
-             'starter_code': '', 'status': 'solved',
+             'starter_code': '', 'status': None,
              'tests': [
                  {"input": ['72', '105', '33'], "expected": ['Hi!']},
                  {"input": ['80', '121', '116'], "expected": ['Pyt']},
@@ -779,27 +830,21 @@ def task(lesson_id, task_order):
 
     if lesson_id == 1:
         less = First_lesson
-
     elif lesson_id == 2:
         less = Second_lesson
-
     elif lesson_id == 3:
         less = Third_lesson
-
     elif lesson_id == 4:
         less = Fourth_lesson
-
     elif lesson_id == 5:
         less = Fifth_lesson
-
     elif lesson_id == 6:
         less = Sixth_lesson
-
     elif lesson_id == 7:
         less = Seventh_lesson
-
     elif lesson_id == 8:
         less = Eighth_lesson
+
     solution = ses.query(less).filter(less.user_email == email).first()
 
     task_columns = {
@@ -809,11 +854,21 @@ def task(lesson_id, task_order):
     }
     if solution:
         column_name = task_columns.get(task_order)
-
         solution_in_db = getattr(solution, column_name)
-
         if solution_in_db:
             task['starter_code'] = solution_in_db
+
+    if solution:
+        status_col = {
+            1: "exersize_one", 2: "exersize_two", 3: "exersize_three",
+            4: "exersize_four", 5: "exersize_five", 6: "exersize_six",
+            7: "exersize_seven", 8: "exersize_eight", 9: "exersize_nine"
+        }.get(task_order)
+        val = getattr(solution, status_col)
+        if val == 2:
+            task['status'] = 'solved'
+        elif val == 1:
+            task['status'] = 'failed'
 
     status_dict = {}
     if solution:
@@ -828,31 +883,44 @@ def task(lesson_id, task_order):
         for i in range(1, 10):
             status_dict[i] = 0
 
-    return render_template('task.html', task=task, lesson_id=lesson_id, status_dict=status_dict)
+    lesson_urls = {
+        1: 'hello_world',
+        3: 'lesson_operators',
+        4: 'lesson_while',
+        5: 'lesson_for',
+        6: 'lesson_strings',
+    }
+    back_url = url_for(lesson_urls.get(lesson_id, 'hello_world'))
+
+    return render_template('task.html', task=task, lesson_id=lesson_id, status_dict=status_dict, back_url=back_url)
 
 
 @app.route('/course/python/operators')
 @login_required
 def lesson_operators():
-    return render_template('lesson_operators.html')
+    status_dict = get_status_dict(3)
+    return render_template('lesson_operators.html', status_dict=status_dict)
 
 
 @app.route('/course/python/while')
 @login_required
 def lesson_while():
-    return render_template('lesson_while.html')
+    status_dict = get_status_dict(4)
+    return render_template('lesson_while.html', status_dict=status_dict)
 
 
 @app.route('/course/python/for')
 @login_required
 def lesson_for():
-    return render_template('lesson_for.html')
+    status_dict = get_status_dict(5)
+    return render_template('lesson_for.html', status_dict=status_dict)
 
 
 @app.route('/course/python/strings')
 @login_required
 def lesson_strings():
-    return render_template('lesson_strings.html')
+    status_dict = get_status_dict(6)
+    return render_template('lesson_strings.html', status_dict=status_dict)
 
 
 @app.route('/book_for_operators')
@@ -923,51 +991,39 @@ def add_verdict(lesson_id, exersize_id, code, verdict, email, points):
             user_in_main_db_scores.scores = new_scores
 
     else:
-
         verdict_in_db = getattr(user, column_name)
-
         if verdict_in_db != 2 and verdict == 2:
             user_in_main_db_scores = session.query(User).filter(User.email == email).first()
             scores = user_in_main_db_scores.scores
             new_scores = scores + points
             user_in_main_db_scores.scores = new_scores
-
         else:
-
             verdict = 2
 
     if exersize_id == 1:
         user.exersize_one = verdict
         user.exersize_one_solution = code
-
     elif exersize_id == 2:
         user.exersize_two = verdict
         user.exersize_two_solution = code
-
     elif exersize_id == 3:
         user.exersize_three = verdict
         user.exersize_three_solution = code
-
     elif exersize_id == 4:
         user.exersize_four = verdict
         user.exersize_four_solution = code
-
     elif exersize_id == 5:
         user.exersize_five = verdict
         user.exersize_five_solution = code
-
     elif exersize_id == 6:
         user.exersize_six = verdict
         user.exersize_six_solution = code
-
     elif exersize_id == 7:
         user.exersize_seven = verdict
         user.exersize_seven_solution = code
-
     elif exersize_id == 8:
         user.exersize_eight = verdict
         user.exersize_eight_solution = code
-
     elif exersize_id == 9:
         user.exersize_nine = verdict
         user.exersize_nine_solution = code
@@ -975,10 +1031,8 @@ def add_verdict(lesson_id, exersize_id, code, verdict, email, points):
     try:
         session.commit()
         return 'Задача успешно сохранена'
-
     except Exception:
-        return 'При ззагрузке задачи на сервер произошла ошибка'
-
+        return 'При загрузке задачи на сервер произошла ошибка'
     finally:
         session.close()
 
@@ -1001,18 +1055,15 @@ def check_solution():
     email = session['email']
 
     if result['verdict'] == 'ok':
-
         save_decision = add_verdict(lesson_id, task_order, code, 2, email, points)
-
         if save_decision != 'Задача успешно сохранена':
             result[
-                'verdict'] = 'ошибка при отправке задачи на сервер. Попробуйте снова или позваоните в поддержку по номеру: +7 (910) 456-94-61'
+                'verdict'] = 'ошибка при отправке задачи на сервер. Попробуйте снова или позвоните в поддержку по номеру: +7 (910) 456-94-61'
     else:
         save_decision = add_verdict(lesson_id, task_order, code, 1, email, points)
-
         if save_decision != 'Задача успешно сохранена':
             result[
-                'verdict'] = 'ошибка при отправке задачи на сервер. Попробуйте снова или позваоните в поддержку по номеру: +7 (910) 456-94-61'
+                'verdict'] = 'ошибка при отправке задачи на сервер. Попробуйте снова или позвоните в поддержку по номеру: +7 (910) 456-94-61'
 
     return jsonify(result)
 
