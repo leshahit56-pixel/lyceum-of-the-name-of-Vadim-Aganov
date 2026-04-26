@@ -27,7 +27,7 @@
                     <div class="indicator-dots">
                         {% for i in range(1, 4) %}
                         <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="indicator-icon">
+                            <img src="{{ url_for('static', filename='img/' + ('solved.png' if status_dict.get(i, 0) == 2 else 'failed.png' if status_dict.get(i, 0) == 1 else 'not_solution.png')) }}" alt="Task {{ i }}" class="indicator-icon">
                         </a>
                         {% endfor %}
                     </div>
@@ -38,7 +38,7 @@
                     <div class="indicator-dots">
                         {% for i in range(4, 7) %}
                         <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="indicator-icon">
+                            <img src="{{ url_for('static', filename='img/' + ('solved.png' if status_dict.get(i, 0) == 2 else 'failed.png' if status_dict.get(i, 0) == 1 else 'not_solution.png')) }}" alt="Task {{ i }}" class="indicator-icon">
                         </a>
                         {% endfor %}
                     </div>
@@ -49,7 +49,7 @@
                     <div class="indicator-dots">
                         {% for i in range(7, 10) %}
                         <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="indicator-icon">
+                            <img src="{{ url_for('static', filename='img/' + ('solved.png' if status_dict.get(i, 0) == 2 else 'failed.png' if status_dict.get(i, 0) == 1 else 'not_solution.png')) }}" alt="Task {{ i }}" class="indicator-icon">
                         </a>
                         {% endfor %}
                     </div>
@@ -280,36 +280,24 @@
 
             if (result.verdict === 'ok') {
                 addMessageToChat('✅ Вердикт: OK', false);
+                const icons = document.querySelectorAll('.indicator-icon');
+                icons.forEach(icon => {
+                    if (icon.alt === 'Task ' + taskOrder) {
+                        icon.src = "{{ url_for('static', filename='img/solved.png') }}";
+                    }
+                });
             } else if (result.verdict === 'неверный ответ') {
-                var msg = '❌ Вердикт: неверный ответ\n\n';
-                msg += '📋 Тест №' + result.test_number + '\n\n';
-                msg += '📥 Ввод:\n';
-                if (Array.isArray(result.test_input)) {
-                    msg += result.test_input.join('\n');
-                } else {
-                    msg += result.test_input;
-                }
-                msg += '\n\n📤 Вывод программы:\n';
-                if (Array.isArray(result.output)) {
-                    msg += result.output.join('\n');
-                } else {
-                    msg += result.output;
-                }
-                msg += '\n\n✅ Ожидалось:\n';
-                if (Array.isArray(result.expected)) {
-                    msg += result.expected.join('\n');
-                } else {
-                    msg += result.expected;
-                }
-                addMessageToChat(msg, false);
+                addMessageToChat('❌ Вердикт: неверный ответ\n\n📋 Тест №' + result.test_number + '\n\n📥 Ввод:\n' + (Array.isArray(result.test_input) ? result.test_input.join('\n') : result.test_input) + '\n\n📤 Вывод программы:\n' + (Array.isArray(result.output) ? result.output.join('\n') : result.output) + '\n\n✅ Ожидалось:\n' + (Array.isArray(result.expected) ? result.expected.join('\n') : result.expected), false);
+                const icons = document.querySelectorAll('.indicator-icon');
+                icons.forEach(icon => {
+                    if (icon.alt === 'Task ' + taskOrder) {
+                        icon.src = "{{ url_for('static', filename='img/failed.png') }}";
+                    }
+                });
             } else if (result.verdict === 'ошибка компиляции' || result.verdict === 'ошибка выполнения') {
-                var msg = '❌ Вердикт: ' + result.verdict + '\n\n';
-                msg += '⚠️ Ошибка:\n' + result.error;
-                addMessageToChat(msg, false);
+                addMessageToChat('❌ Вердикт: ' + result.verdict + '\n\n⚠️ Ошибка:\n' + result.error, false);
             } else if (result.verdict === 'код не соответствует стандарту PEP8') {
-                var msg = '📝 ' + result.verdict + '\n\n';
-                msg += '⚠️ Ошибки стиля:\n' + result.PEP8;
-                addMessageToChat(msg, false);
+                addMessageToChat('📝 ' + result.verdict + '\n\n⚠️ Ошибки стиля:\n' + result.PEP8, false);
             }
 
         } catch (error) {

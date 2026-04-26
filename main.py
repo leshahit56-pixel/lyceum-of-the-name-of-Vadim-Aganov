@@ -223,7 +223,49 @@ def if_not_auth():
 @login_required
 def profile():
     user = get_current_user()
-    return render_template('profile.html', Name=user.name, Surname=user.surname)
+    email = session['email']
+
+    db_session.global_init('db/blogs.db')
+    ses = db_session.create_session()
+
+    lesson_models = [Third_lesson, Fourth_lesson, Fifth_lesson, Sixth_lesson]
+    total_tasks = 36  # 4 урока × 9 задач
+    solved = 0
+    total_score = 0
+
+    for model in lesson_models:
+        row = ses.query(model).filter(model.user_email == email).first()
+        if row:
+            for i in range(1, 10):
+                col = getattr(row,
+                              f'exersize_{["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"][i - 1]}')
+                if col == 2:
+                    solved += 1
+
+    total_score = user.scores if user.scores else 0
+
+    all_users = ses.query(User).order_by(User.scores.desc()).all()
+    rank = 1
+    for u in all_users:
+        if u.email == email:
+            break
+        rank += 1
+
+    progress = round(solved / total_tasks * 100) if total_tasks > 0 else 0
+
+    courses = [
+        {
+            "name": "Основы программирования на Python",
+            "score": total_score,
+            "solved": solved,
+            "total": total_tasks,
+            "progress": progress
+        }
+    ]
+
+    ses.close()
+
+    return render_template('profile.html', courses=courses, rank=rank)
 
 
 @app.route('/logout')
@@ -300,7 +342,7 @@ def get_tasks_for_lesson(lesson_id):
                  'description': '<p>Напишите программу, которая выводит "Привет, мир!"</p>',
                  'starter_code': '# Напишите ваше решение здесь', 'status': None,
                  'tests': [
-                     {'input': ['Hello, world!'], "expected": ['Hello, world!']}
+                     {'input': [], "expected": ['Hello, world!']}
                  ]}
                  ]
     elif lesson_id == 2:
