@@ -18,10 +18,23 @@ from data.fifth_lesson import Fifth_lesson
 from data.sixth_lesson import Sixth_lesson
 from data.seventh_lesson import Seventh_lesson
 from data.eighth_lesson import Eighth_lesson
+import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'f8874661e03139f344aa90692fd4d642b1e7a89b9b817bba')
 app.permanent_session_lifetime = timedelta(days=30)
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route('/logout_force')
@@ -299,6 +312,30 @@ def profile():
     ses.close()
 
     return render_template('profile.html', courses=courses, rank=rank)
+
+
+@app.route('/upload_avatar', methods=['POST'])
+@login_required
+def upload_avatar():
+    if 'avatar' not in request.files:
+        return redirect(url_for('profile'))
+
+    file = request.files['avatar']
+    if file.filename == '':
+        return redirect(url_for('profile'))
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(f"{get_current_user().id}_{file.filename}")
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        db_session.global_init('db/blogs.db')
+        ses = db_session.create_session()
+        user = ses.query(User).filter(User.email == session['email']).first()
+        user.avatar = filename
+        ses.commit()
+        ses.close()
+
+    return redirect(url_for('profile'))
 
 
 @app.route('/logout')
@@ -896,12 +933,14 @@ def task(lesson_id, task_order):
 
     return render_template('task.html', task=task, lesson_id=lesson_id, status_dict=status_dict, back_url=back_url)
 
+
 def get_lesson_progress(lesson_id):
     status_dict = get_status_dict(lesson_id)
     solved = sum(1 for v in status_dict.values() if v == 2)
     total = 9
     percent = round(solved / total * 100) if total > 0 else 0
     return {"solved": solved, "total": total, "percent": percent}
+
 
 @app.route('/course/python/operators')
 @login_required
