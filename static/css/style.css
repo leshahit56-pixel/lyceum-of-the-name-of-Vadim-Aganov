@@ -1028,6 +1028,6 @@ body.dark .auth-card-container .card {
 body.dark .modal-border-light {
     border-color: #2d2d44 !important;
 }
-.task-link[data-status="unsolved"] .task-icon { filter: none; }
-.task-link[data-status="solved"] .task-icon { filter: sepia(1) saturate(5) hue-rotate(70deg); }
-.task-link[data-status="failed"] .task-icon { filter: sepia(1) saturate(5) hue-rotate(-20deg); }
+.indicator-link[data-status="unsolved"] .task-icon { filter: none; }
+.indicator-link[data-status="solved"] .task-icon { filter: sepia(1) saturate(5) hue-rotate(70deg); }
+.indicator-link[data-status="failed"] .task-icon { filter: sepia(1) saturate(5) hue-rotate(-20deg); }

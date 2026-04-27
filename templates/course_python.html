@@ -9,7 +9,6 @@
         <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
             <div class="card-body p-4 p-md-5">
 
-                <!-- Заголовок -->
                 <div class="text-center mb-4">
                     <h2 class="fw-bold"
                         style="background: linear-gradient(135deg, #0d6efd, #6f42c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
@@ -27,9 +26,9 @@
                             <p class="text-muted small mb-2">Напишем свою первую программу</p>
                             <div class="d-flex align-items-center gap-2">
                                 <div class="progress flex-grow-1" style="height: 6px;">
-                                    <div class="progress-bar bg-success" style="width: 0%"></div>
+                                    <div class="progress-bar bg-success" style="width: {{ lesson_progress[1].percent }}%"></div>
                                 </div>
-                                <span class="text-muted small">0/9</span>
+                                <span class="text-muted small">{{ lesson_progress[1].solved }}/{{ lesson_progress[1].total }}</span>
                             </div>
                         </div>
                     </a>
@@ -41,9 +40,9 @@
                             <p class="text-muted small mb-2">Учим программу выбирать</p>
                             <div class="d-flex align-items-center gap-2">
                                 <div class="progress flex-grow-1" style="height: 6px;">
-                                    <div class="progress-bar bg-success" style="width: 0%"></div>
+                                    <div class="progress-bar bg-success" style="width: {{ lesson_progress[2].percent }}%"></div>
                                 </div>
-                                <span class="text-muted small">0/9</span>
+                                <span class="text-muted small">{{ lesson_progress[2].solved }}/{{ lesson_progress[2].total }}</span>
                             </div>
                         </div>
                     </a>
@@ -55,9 +54,9 @@
                             <p class="text-muted small mb-2">Типы данных, числа, строки и базовые функции</p>
                             <div class="d-flex align-items-center gap-2">
                                 <div class="progress flex-grow-1" style="height: 6px;">
-                                    <div class="progress-bar bg-success" style="width: 0%"></div>
+                                    <div class="progress-bar bg-success" style="width: {{ lesson_progress[3].percent }}%"></div>
                                 </div>
-                                <span class="text-muted small">0/9</span>
+                                <span class="text-muted small">{{ lesson_progress[3].solved }}/{{ lesson_progress[3].total }}</span>
                             </div>
                         </div>
                     </a>
@@ -69,9 +68,9 @@
                             <p class="text-muted small mb-2">Пока условие верно — повторяем</p>
                             <div class="d-flex align-items-center gap-2">
                                 <div class="progress flex-grow-1" style="height: 6px;">
-                                    <div class="progress-bar bg-success" style="width: 0%"></div>
+                                    <div class="progress-bar bg-success" style="width: {{ lesson_progress[4].percent }}%"></div>
                                 </div>
-                                <span class="text-muted small">0/9</span>
+                                <span class="text-muted small">{{ lesson_progress[4].solved }}/{{ lesson_progress[4].total }}</span>
                             </div>
                         </div>
                     </a>
@@ -83,9 +82,9 @@
                             <p class="text-muted small mb-2">Цикл for и функция range</p>
                             <div class="d-flex align-items-center gap-2">
                                 <div class="progress flex-grow-1" style="height: 6px;">
-                                    <div class="progress-bar bg-success" style="width: 0%"></div>
+                                    <div class="progress-bar bg-success" style="width: {{ lesson_progress[5].percent }}%"></div>
                                 </div>
-                                <span class="text-muted small">0/9</span>
+                                <span class="text-muted small">{{ lesson_progress[5].solved }}/{{ lesson_progress[5].total }}</span>
                             </div>
                         </div>
                     </a>
@@ -97,9 +96,9 @@
                             <p class="text-muted small mb-2">Управляем поведением цикла</p>
                             <div class="d-flex align-items-center gap-2">
                                 <div class="progress flex-grow-1" style="height: 6px;">
-                                    <div class="progress-bar bg-success" style="width: 0%"></div>
+                                    <div class="progress-bar bg-success" style="width: {{ lesson_progress[6].percent }}%"></div>
                                 </div>
-                                <span class="text-muted small">0/9</span>
+                                <span class="text-muted small">{{ lesson_progress[6].solved }}/{{ lesson_progress[6].total }}</span>
                             </div>
                         </div>
                     </a>
@@ -111,9 +110,9 @@
                             <p class="text-muted small mb-2">Храним наборы данных в одной переменной</p>
                             <div class="d-flex align-items-center gap-2">
                                 <div class="progress flex-grow-1" style="height: 6px;">
-                                    <div class="progress-bar bg-success" style="width: 0%"></div>
+                                    <div class="progress-bar bg-success" style="width: {{ lesson_progress[7].percent }}%"></div>
                                 </div>
-                                <span class="text-muted small">0/9</span>
+                                <span class="text-muted small">{{ lesson_progress[7].solved }}/{{ lesson_progress[7].total }}</span>
                             </div>
                         </div>
                     </a>
@@ -125,9 +124,9 @@
                             <p class="text-muted small mb-2">Полезные приёмы работы с текстом и коллекциями</p>
                             <div class="d-flex align-items-center gap-2">
                                 <div class="progress flex-grow-1" style="height: 6px;">
-                                    <div class="progress-bar bg-success" style="width: 0%"></div>
+                                    <div class="progress-bar bg-success" style="width: {{ lesson_progress[8].percent }}%"></div>
                                 </div>
-                                <span class="text-muted small">0/9</span>
+                                <span class="text-muted small">{{ lesson_progress[8].solved }}/{{ lesson_progress[8].total }}</span>
                             </div>
                         </div>
                     </a>

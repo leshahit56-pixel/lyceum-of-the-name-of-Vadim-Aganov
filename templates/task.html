@@ -12,7 +12,7 @@
 <div class="container-fluid px-4 py-3">
 
     <div class="mb-4">
-        <a href="{{ url_for('hello_world') }}" class="back-lesson-btn">
+        <a href="{{ back_url }}" class="back-lesson-btn">
             <i class="bi bi-arrow-left"></i> Вернуться к уроку
         </a>
     </div>
@@ -26,8 +26,8 @@
                     <div class="indicator-label">🌱</div>
                     <div class="indicator-dots">
                         {% for i in range(1, 4) %}
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/' + ('solved.png' if status_dict.get(i, 0) == 2 else 'failed.png' if status_dict.get(i, 0) == 1 else 'not_solution.png')) }}" alt="Task {{ i }}" class="indicator-icon">
+                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link task-link" data-status="{{ 'solved' if status_dict.get(i, 0) == 2 else 'failed' if status_dict.get(i, 0) == 1 else 'unsolved' }}">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="task-icon">
                         </a>
                         {% endfor %}
                     </div>
@@ -37,8 +37,8 @@
                     <div class="indicator-label">🍀</div>
                     <div class="indicator-dots">
                         {% for i in range(4, 7) %}
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/' + ('solved.png' if status_dict.get(i, 0) == 2 else 'failed.png' if status_dict.get(i, 0) == 1 else 'not_solution.png')) }}" alt="Task {{ i }}" class="indicator-icon">
+                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link task-link" data-status="{{ 'solved' if status_dict.get(i, 0) == 2 else 'failed' if status_dict.get(i, 0) == 1 else 'unsolved' }}">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="task-icon">
                         </a>
                         {% endfor %}
                     </div>
@@ -48,8 +48,8 @@
                     <div class="indicator-label">🔥</div>
                     <div class="indicator-dots">
                         {% for i in range(7, 10) %}
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link">
-                            <img src="{{ url_for('static', filename='img/' + ('solved.png' if status_dict.get(i, 0) == 2 else 'failed.png' if status_dict.get(i, 0) == 1 else 'not_solution.png')) }}" alt="Task {{ i }}" class="indicator-icon">
+                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link task-link" data-status="{{ 'solved' if status_dict.get(i, 0) == 2 else 'failed' if status_dict.get(i, 0) == 1 else 'unsolved' }}">
+                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="task-icon">
                         </a>
                         {% endfor %}
                     </div>
@@ -280,18 +280,19 @@
 
             if (result.verdict === 'ok') {
                 addMessageToChat('✅ Вердикт: OK', false);
-                const icons = document.querySelectorAll('.indicator-icon');
-                icons.forEach(icon => {
-                    if (icon.alt === 'Task ' + taskOrder) {
-                        icon.src = "{{ url_for('static', filename='img/solved.png') }}";
+                sessionStorage.setItem('reload_lesson', 'true');
+                const links = document.querySelectorAll('.task-link');
+                links.forEach(link => {
+                    if (link.href.includes('/task/' + taskOrder)) {
+                        link.setAttribute('data-status', 'solved');
                     }
                 });
             } else if (result.verdict === 'неверный ответ') {
                 addMessageToChat('❌ Вердикт: неверный ответ\n\n📋 Тест №' + result.test_number + '\n\n📥 Ввод:\n' + (Array.isArray(result.test_input) ? result.test_input.join('\n') : result.test_input) + '\n\n📤 Вывод программы:\n' + (Array.isArray(result.output) ? result.output.join('\n') : result.output) + '\n\n✅ Ожидалось:\n' + (Array.isArray(result.expected) ? result.expected.join('\n') : result.expected), false);
-                const icons = document.querySelectorAll('.indicator-icon');
-                icons.forEach(icon => {
-                    if (icon.alt === 'Task ' + taskOrder) {
-                        icon.src = "{{ url_for('static', filename='img/failed.png') }}";
+                const links = document.querySelectorAll('.task-link');
+                links.forEach(link => {
+                    if (link.href.includes('/task/' + taskOrder)) {
+                        link.setAttribute('data-status', 'failed');
                     }
                 });
             } else if (result.verdict === 'ошибка компиляции' || result.verdict === 'ошибка выполнения') {
