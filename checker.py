@@ -95,5 +95,3 @@ def first_first(solution, tests):
 
     result["verdict"] = "ok"
     return result
-
-print(first_first('',[{'input': [], 'expected': ['2024']}]))
