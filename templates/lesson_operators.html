@@ -25,14 +25,22 @@
                         <div class="col-md-7">
                             <div class="d-flex justify-content-between small mb-1">
                                 <span class="progress-label">Прогресс урока</span>
-                                <span class="progress-value"><strong>0</strong> из 9 задач решено</span>
+                                <span class="progress-value"><strong>{{ solved }}</strong> из {{ total }} задач решено</span>
                             </div>
-                            <div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: 0%;"></div></div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ percent }}%;"></div>
+                            </div>
                         </div>
                         <div class="col-md-5 mt-3 mt-md-0">
                             <div class="d-flex justify-content-md-end gap-4">
-                                <div class="text-center"><div class="small progress-label">Решено задач</div><div class="fw-bold fs-5 progress-value">0/9</div></div>
-                                <div class="text-center"><div class="small progress-label">Заработано баллов</div><div class="fw-bold fs-5 text-success progress-value">0</div></div>
+                                <div class="text-center">
+                                    <div class="small progress-label">Решено задач</div>
+                                    <div class="fw-bold fs-5 progress-value">{{ solved }}/{{ total }}</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="small progress-label">Заработано баллов</div>
+                                    <div class="fw-bold fs-5 text-success progress-value">0</div>
+                                </div>
                             </div>
                         </div>
                     </div>

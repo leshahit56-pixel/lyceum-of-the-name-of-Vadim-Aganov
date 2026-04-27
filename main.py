@@ -62,7 +62,8 @@ def get_status_dict(lesson_id):
     db_session.global_init('db/blogs.db')
     ses = db_session.create_session()
 
-    lesson_models = {1: First_lesson, 2: Second_lesson, 3: Third_lesson, 4: Fourth_lesson, 5: Fifth_lesson, 6: Sixth_lesson, 7: Seventh_lesson, 8: Eighth_lesson}
+    lesson_models = {1: First_lesson, 2: Second_lesson, 3: Third_lesson, 4: Fourth_lesson, 5: Fifth_lesson,
+                     6: Sixth_lesson, 7: Seventh_lesson, 8: Eighth_lesson}
     model = lesson_models.get(lesson_id)
 
     status_dict = {}
@@ -375,8 +376,9 @@ def test_6():
 
 @app.route('/course/python/hello_world')
 def hello_world():
-    status_dict = get_status_dict(1)
-    return render_template('first_lesson.html', status_dict=status_dict)
+    progress = get_lesson_progress(1)
+    return render_template('first_lesson.html', status_dict=get_status_dict(1),
+                           solved=progress['solved'], total=progress['total'], percent=progress['percent'])
 
 
 @app.route('/book_for_first_lessonn')
@@ -894,33 +896,43 @@ def task(lesson_id, task_order):
 
     return render_template('task.html', task=task, lesson_id=lesson_id, status_dict=status_dict, back_url=back_url)
 
+def get_lesson_progress(lesson_id):
+    status_dict = get_status_dict(lesson_id)
+    solved = sum(1 for v in status_dict.values() if v == 2)
+    total = 9
+    percent = round(solved / total * 100) if total > 0 else 0
+    return {"solved": solved, "total": total, "percent": percent}
 
 @app.route('/course/python/operators')
 @login_required
 def lesson_operators():
-    status_dict = get_status_dict(3)
-    return render_template('lesson_operators.html', status_dict=status_dict)
+    progress = get_lesson_progress(3)
+    return render_template('lesson_operators.html', status_dict=get_status_dict(3),
+                           solved=progress['solved'], total=progress['total'], percent=progress['percent'])
 
 
 @app.route('/course/python/while')
 @login_required
 def lesson_while():
-    status_dict = get_status_dict(4)
-    return render_template('lesson_while.html', status_dict=status_dict)
+    progress = get_lesson_progress(4)
+    return render_template('lesson_while.html', status_dict=get_status_dict(4),
+                           solved=progress['solved'], total=progress['total'], percent=progress['percent'])
 
 
 @app.route('/course/python/for')
 @login_required
 def lesson_for():
-    status_dict = get_status_dict(5)
-    return render_template('lesson_for.html', status_dict=status_dict)
+    progress = get_lesson_progress(5)
+    return render_template('lesson_for.html', status_dict=get_status_dict(5),
+                           solved=progress['solved'], total=progress['total'], percent=progress['percent'])
 
 
 @app.route('/course/python/strings')
 @login_required
 def lesson_strings():
-    status_dict = get_status_dict(6)
-    return render_template('lesson_strings.html', status_dict=status_dict)
+    progress = get_lesson_progress(6)
+    return render_template('lesson_strings.html', status_dict=get_status_dict(6),
+                           solved=progress['solved'], total=progress['total'], percent=progress['percent'])
 
 
 @app.route('/book_for_operators')
