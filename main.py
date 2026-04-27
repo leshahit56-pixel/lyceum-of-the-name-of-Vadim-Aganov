@@ -435,7 +435,62 @@ def get_tasks_for_lesson(lesson_id):
                  'starter_code': '# Напишите ваше решение здесь', 'status': None,
                  'tests': [
                      {'input': [], "expected": ['Hello, world!']}
-                 ]}
+                 ]},
+                {'id': 2, 'lesson_id': 1, 'title': 'Число 2024', 'points': 10, 'difficulty': 'easy',
+                'description': '<p>Выведите на экран число 2024</p>',
+                'starter_code': '', 'status': None,
+                'tests': [{'input': [], 'expected': ['2024']}]},
+
+                {'id': 3, 'lesson_id': 1, 'title': 'Три строки', 'points': 10, 'difficulty': 'easy',
+                'description': '<p>Выведите три строки: "Python", "это", "просто!" каждую на новой строке.</p>',
+                'starter_code': '', 'status': None,
+                'tests': [{'input': [], 'expected': ['Python', 'это', 'просто!']}]},
+
+                {'id': 4, 'lesson_id': 1, 'title': 'Числа через разделитель', 'points': 15, 'difficulty': 'medium',
+                'description': '<p>Выведите числа от 1 до 5 в одной строке, разделив их символом "|". Результат: 1|2|3|4|5</p>',
+                'starter_code': '', 'status': None,
+                'tests': [{'input': [], 'expected': ['1|2|3|4|5']}]},
+
+                {'id': 5, 'lesson_id': 1, 'title': 'Разделитель sep', 'points': 15, 'difficulty': 'medium',
+                'description': '<p>Выведите фразу "Python - лучший язык!", передав слова "Python", "лучший", "язык!" отдельными аргументами в print() и указав разделитель " - ".</p>',
+                'starter_code': '', 'status': None,
+                'tests': [{'input': [], 'expected': ['Python - лучший язык!']}]},
+
+                {'id': 6, 'lesson_id': 1, 'title': 'Арифметика в print', 'points': 15, 'difficulty': 'medium',
+                'description': '<p>Выведите на экран "5 + 3 = 8", вычислив сумму прямо внутри print (не используя f-строки). Разрешены несколько аргументов и параметр sep.</p>',
+                'starter_code': '', 'status': None,
+                'tests': [{'input': [], 'expected': ['5 + 3 = 8']}]},
+
+                {'id': 7, 'lesson_id': 1, 'title': 'Таблица умножения на 3 (без циклов)', 'points': 20, 'difficulty': 'hard',
+                'description': '<p>Выведите таблицу умножения на 3 для чисел от 1 до 10. Каждая строка в формате "3 x N = результат". Используйте ОДИН вызов print() с символом \\n, без циклов и переменных.</p>',
+                'starter_code': '', 'status': None,
+                'tests': [{'input': [], 'expected': [
+                    '3 x 1 = 3', '3 x 2 = 6', '3 x 3 = 9', '3 x 4 = 12',
+                    '3 x 5 = 15', '3 x 6 = 18', '3 x 7 = 21', '3 x 8 = 24',
+                    '3 x 9 = 27', '3 x 10 = 30'
+                ]}]},
+
+                {'id': 8, 'lesson_id': 1, 'title': 'Прямоугольник из звёздочек', 'points': 20, 'difficulty': 'hard',
+                'description': '<p>Выведите прямоугольник из символов * размером 4 строки и 8 столбцов. Используйте умножение строк и один print() с \\n. Без циклов.</p>',
+                'starter_code': '', 'status': None,
+                'tests': [{'input': [], 'expected': [
+                    '********',
+                    '********',
+                    '********',
+                    '********'
+                ]}]},
+
+                {'id': 9, 'lesson_id': 1, 'title': 'Треугольник из звёздочек', 'points': 20, 'difficulty': 'hard',
+                'description': '<p>Выведите равнобедренный треугольник из * высотой 5 строк:</p><pre>    *\n   ***\n  *****\n *******\n*********</pre><p>Используйте умножение строк и один print() с \\n. Без циклов.</p>',
+                'starter_code': '', 'status': None,
+                'tests': [{'input': [], 'expected': [
+                    '    *',
+                    '   ***',
+                    '  *****',
+                    ' *******',
+                    '*********'
+                ]}]}
+
                 ]
     elif lesson_id == 2:
         return []
@@ -917,7 +972,7 @@ def task(lesson_id, task_order):
             7: "exersize_seven", 8: "exersize_eight", 9: "exersize_nine"
         }.items():
             val = getattr(solution, col)
-            status_dict[num] = val if val else 0
+            status_dict[num] = val 
     else:
         for i in range(1, 10):
             status_dict[i] = 0
@@ -1049,7 +1104,10 @@ def add_verdict(lesson_id, exersize_id, code, verdict, email, points):
             new_scores = scores + points
             user_in_main_db_scores.scores = new_scores
         else:
-            verdict = 2
+            if verdict_in_db == 2:
+                verdict = 2
+            else:
+                verdict = verdict
 
     if exersize_id == 1:
         user.exersize_one = verdict
