@@ -18,7 +18,6 @@ from data.fifth_lesson import Fifth_lesson
 from data.sixth_lesson import Sixth_lesson
 from data.seventh_lesson import Seventh_lesson
 from data.eighth_lesson import Eighth_lesson
-import os
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
