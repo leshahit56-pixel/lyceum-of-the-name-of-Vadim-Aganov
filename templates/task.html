@@ -303,7 +303,7 @@
 
         } catch (error) {
             addMessageToChat('⚠️ Ошибка соединения с сервером', false);
-            console.error(error);
+            addMessageToChat(error);
         }
 
         document.querySelector('[data-tab="compilation"]').click();
