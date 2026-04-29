@@ -194,21 +194,26 @@
             </button>
         </div>
 
-
         <!-- Профиль -->
         <button type="button" class="btn p-0 d-flex align-items-center gap-2"
                 onclick="window.location.href='/profile'"
                 style="background: none; border: none;">
+            {% if current_user and current_user.avatar %}
+            <img src="{{ url_for('static', filename='uploads/' + current_user.avatar) }}"
+                 alt="Profile"
+                 style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; object-fit: cover;">
+            {% else %}
             <img src="{{ url_for('static', filename='img/logo.png') }}"
                  alt="Profile"
                  style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; object-fit: cover;">
+            {% endif %}
             <span class="text-white fw-semibold" style="font-size: 1rem;">
-        {% if current_user %}
-            {{ current_user.name }} {{ current_user.surname }}
-        {% else %}
-            Имя Фамилия
-        {% endif %}
-    </span>
+                {% if current_user %}
+                    {{ current_user.name }} {{ current_user.surname }}
+                {% else %}
+                    Имя Фамилия
+                {% endif %}
+            </span>
         </button>
 
     </div>

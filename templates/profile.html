@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль - ЛиВА{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-12">
+
+        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
+            <div class="card-body p-4 p-md-5">
+
+                <!-- Аватар и ФИО -->
+                <div class="text-center mb-4">
+                    {% if current_user.avatar %}
+                    <img src="{{ url_for('static', filename='uploads/' + current_user.avatar) }}"
+                         alt="Аватар"
+                         style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #0d6efd; object-fit: cover;">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='img/logo.png') }}"
+                         alt="Аватар"
+                         style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #0d6efd; object-fit: cover;">
+                    {% endif %}
+                    
+                    <h2 class="fw-bold mt-3 mb-1">{{ current_user.name }} {{ current_user.surname }}</h2>
+                    <p class="text-muted mb-1">{{ current_user.email }}</p>
+
+                    <form method="POST" action="/upload_avatar" enctype="multipart/form-data" class="mt-2">
+                        <div class="d-flex gap-2 justify-content-center">
+                            <input type="file" name="avatar" accept="image/*" class="form-control form-control-sm w-auto" style="font-size: 0.8rem;" required>
+                            <button type="submit" class="btn btn-sm btn-primary">Загрузить</button>
+                        </div>
+                    </form>
+
+                    <span class="badge bg-warning text-dark px-3 py-2 mt-2">
+                        🏆 {{ rank }} место в рейтинге
+                    </span>
+                </div>
+
+                <hr>
+
+                <h5 class="fw-bold mb-3">Мои курсы</h5>
+
+                {% for course in courses %}
+                <div class="mb-3 p-3 rounded-3 border">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold">{{ course.name }}</span>
+                        <span class="badge bg-primary">{{ course.score }} баллов</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-success" role="progressbar"
+                             style="width: {{ course.progress }}%;">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between small text-muted mt-1">
+                        <span>{{ course.solved }}/{{ course.total }} задач</span>
+                        <span>{{ course.progress }}%</span>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <hr>
+
+                <div class="d-flex flex-column gap-2">
+                    <a href="/course/python" class="btn btn-outline-secondary rounded-pill">
+                        <i class="bi bi-arrow-left"></i> Назад к курсам
+                    </a>
+                    <a href="/test" class="btn btn-success btn-lg rounded-pill">
+                        <i class="bi bi-question-circle"></i> Пройти тест
+                    </a>
+                    <a href="/logout" class="btn btn-outline-danger rounded-pill">
+                        <i class="bi bi-box-arrow-right"></i> Выйти из аккаунта
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
