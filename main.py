@@ -411,15 +411,11 @@ def test_6():
     return render_template('test_6.html')
 
 
-
 @app.route('/book_for_first_lessonn')
 def book_for_first():
     return render_template('book_for_first_lessonn.html')
 
 
-
-
-<<<<<<< HEAD
 def get_tasks_for_lesson(lesson_id):
     if lesson_id == 1:
         return [{'id': 1, 'lesson_id': 1, 'title': 'Привет, мир!', 'points': 10, 'difficulty': 'easy',
@@ -429,149 +425,148 @@ def get_tasks_for_lesson(lesson_id):
                      {'input': [], "expected": ['Hello, world!']}
                  ]},
                 {'id': 2, 'lesson_id': 1, 'title': 'Число 2024', 'points': 10, 'difficulty': 'easy',
-                'description': '<p>Выведите на экран число 2024</p>',
-                'starter_code': '', 'status': None,
-                'tests': [{'input': [], 'expected': ['2024']}]},
+                 'description': '<p>Выведите на экран число 2024</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [{'input': [], 'expected': ['2024']}]},
 
                 {'id': 3, 'lesson_id': 1, 'title': 'Три строки', 'points': 10, 'difficulty': 'easy',
-                'description': '<p>Выведите три строки: "Python", "это", "просто!" каждую на новой строке.</p>',
-                'starter_code': '', 'status': None,
-                'tests': [{'input': [], 'expected': ['Python', 'это', 'просто!']}]},
+                 'description': '<p>Выведите три строки: "Python", "это", "просто!" каждую на новой строке.</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [{'input': [], 'expected': ['Python', 'это', 'просто!']}]},
 
                 {'id': 4, 'lesson_id': 1, 'title': 'Числа через разделитель', 'points': 15, 'difficulty': 'medium',
-                'description': '<p>Выведите числа от 1 до 5 в одной строке, разделив их символом "|". Результат: 1|2|3|4|5</p>',
-                'starter_code': '', 'status': None,
-                'tests': [{'input': [], 'expected': ['1|2|3|4|5']}]},
+                 'description': '<p>Выведите числа от 1 до 5 в одной строке, разделив их символом "|". Результат: 1|2|3|4|5</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [{'input': [], 'expected': ['1|2|3|4|5']}]},
 
                 {'id': 5, 'lesson_id': 1, 'title': 'Разделитель sep', 'points': 15, 'difficulty': 'medium',
-                'description': '<p>Выведите фразу "Python - лучший язык!", передав слова "Python", "лучший", "язык!" отдельными аргументами в print() и указав разделитель " - ".</p>',
-                'starter_code': '', 'status': None,
-                'tests': [{'input': [], 'expected': ['Python - лучший язык!']}]},
+                 'description': '<p>Выведите фразу "Python - лучший язык!", передав слова "Python", "лучший", "язык!" отдельными аргументами в print() и указав разделитель " - ".</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [{'input': [], 'expected': ['Python - лучший язык!']}]},
 
                 {'id': 6, 'lesson_id': 1, 'title': 'Арифметика в print', 'points': 15, 'difficulty': 'medium',
-                'description': '<p>Выведите на экран "5 + 3 = 8", вычислив сумму прямо внутри print (не используя f-строки). Разрешены несколько аргументов и параметр sep.</p>',
-                'starter_code': '', 'status': None,
-                'tests': [{'input': [], 'expected': ['5 + 3 = 8']}]},
+                 'description': '<p>Выведите на экран "5 + 3 = 8", вычислив сумму прямо внутри print (не используя f-строки). Разрешены несколько аргументов и параметр sep.</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [{'input': [], 'expected': ['5 + 3 = 8']}]},
 
-                {'id': 7, 'lesson_id': 1, 'title': 'Таблица умножения на 3 (без циклов)', 'points': 20, 'difficulty': 'hard',
-                'description': '<p>Выведите таблицу умножения на 3 для чисел от 1 до 10. Каждая строка в формате "3 x N = результат". Используйте ОДИН вызов print() с символом \\n, без циклов и переменных.</p>',
-                'starter_code': '', 'status': None,
-                'tests': [{'input': [], 'expected': [
-                    '3 x 1 = 3', '3 x 2 = 6', '3 x 3 = 9', '3 x 4 = 12',
-                    '3 x 5 = 15', '3 x 6 = 18', '3 x 7 = 21', '3 x 8 = 24',
-                    '3 x 9 = 27', '3 x 10 = 30'
-                ]}]},
+                {'id': 7, 'lesson_id': 1, 'title': 'Таблица умножения на 3 (без циклов)', 'points': 20,
+                 'difficulty': 'hard',
+                 'description': '<p>Выведите таблицу умножения на 3 для чисел от 1 до 10. Каждая строка в формате "3 x N = результат". Используйте ОДИН вызов print() с символом \\n, без циклов и переменных.</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [{'input': [], 'expected': [
+                     '3 x 1 = 3', '3 x 2 = 6', '3 x 3 = 9', '3 x 4 = 12',
+                     '3 x 5 = 15', '3 x 6 = 18', '3 x 7 = 21', '3 x 8 = 24',
+                     '3 x 9 = 27', '3 x 10 = 30'
+                 ]}]},
 
                 {'id': 8, 'lesson_id': 1, 'title': 'Прямоугольник из звёздочек', 'points': 20, 'difficulty': 'hard',
-                'description': '<p>Выведите прямоугольник из символов * размером 4 строки и 8 столбцов. Используйте умножение строк и один print() с \\n. Без циклов.</p>',
-                'starter_code': '', 'status': None,
-                'tests': [{'input': [], 'expected': [
-                    '********',
-                    '********',
-                    '********',
-                    '********'
-                ]}]},
+                 'description': '<p>Выведите прямоугольник из символов * размером 4 строки и 8 столбцов. Используйте умножение строк и один print() с \\n. Без циклов.</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [{'input': [], 'expected': [
+                     '********',
+                     '********',
+                     '********',
+                     '********'
+                 ]}]},
 
                 {'id': 9, 'lesson_id': 1, 'title': 'Треугольник из звёздочек', 'points': 20, 'difficulty': 'hard',
-                'description': '<p>Выведите равнобедренный треугольник из * высотой 5 строк:</p><pre>    *\n   ***\n  *****\n *******\n*********</pre><p>Используйте умножение строк и один print() с \\n. Без циклов.</p>',
-                'starter_code': '', 'status': None,
-                'tests': [{'input': [], 'expected': [
-                    '    *',
-                    '   ***',
-                    '  *****',
-                    ' *******',
-                    '*********'
-                ]}]}
+                 'description': '<p>Выведите равнобедренный треугольник из * высотой 5 строк:</p><pre>    *\n   ***\n  *****\n *******\n*********</pre><p>Используйте умножение строк и один print() с \\n. Без циклов.</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [{'input': [], 'expected': [
+                     '    *',
+                     '   ***',
+                     '  *****',
+                     ' *******',
+                     '*********'
+                 ]}]}
 
                 ]
     elif lesson_id == 2:
         return [{'id': 1, 'lesson_id': 2, 'title': 'Чётное или нечётное?', 'points': 10, 'difficulty': 'easy',
-                'description': '<p>Введите целое число. Если оно чётное, выведите "Чётное". Если нечётное — "Нечётное".</p>',
-                'starter_code': '', 'status': None,
-                'tests': [
-                    {'input': ['4'], 'expected': ['Чётное']},
-                    {'input': ['7'], 'expected': ['Нечётное']},
-                    {'input': ['0'], 'expected': ['Чётное']}
-                ]},
+                 'description': '<p>Введите целое число. Если оно чётное, выведите "Чётное". Если нечётное — "Нечётное".</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [
+                     {'input': ['4'], 'expected': ['Чётное']},
+                     {'input': ['7'], 'expected': ['Нечётное']},
+                     {'input': ['0'], 'expected': ['Чётное']}
+                 ]},
 
                 {'id': 2, 'lesson_id': 2, 'title': 'Какое число больше?', 'points': 10, 'difficulty': 'easy',
-                'description': '<p>Введите два целых числа. Выведите "Первое больше", если первое больше второго; "Второе больше", если второе больше; "Равны", если равны.</p>',
-                'starter_code': '', 'status': None,
-                'tests': [
-                    {'input': ['5', '3'], 'expected': ['Первое больше']},
-                    {'input': ['2', '7'], 'expected': ['Второе больше']},
-                    {'input': ['4', '4'], 'expected': ['Равны']}
-                ]},
+                 'description': '<p>Введите два целых числа. Выведите "Первое больше", если первое больше второго; "Второе больше", если второе больше; "Равны", если равны.</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [
+                     {'input': ['5', '3'], 'expected': ['Первое больше']},
+                     {'input': ['2', '7'], 'expected': ['Второе больше']},
+                     {'input': ['4', '4'], 'expected': ['Равны']}
+                 ]},
 
                 {'id': 3, 'lesson_id': 2, 'title': 'Знак числа', 'points': 10, 'difficulty': 'easy',
-                'description': '<p>Введите целое число. Выведите "Положительное", если число > 0; "Отрицательное", если < 0; "Ноль", если равно 0.</p>',
-                'starter_code': '', 'status': None,
-                'tests': [
-                    {'input': ['10'], 'expected': ['Положительное']},
-                    {'input': ['-5'], 'expected': ['Отрицательное']},
-                    {'input': ['0'], 'expected': ['Ноль']}
-                ]},
+                 'description': '<p>Введите целое число. Выведите "Положительное", если число > 0; "Отрицательное", если < 0; "Ноль", если равно 0.</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [
+                     {'input': ['10'], 'expected': ['Положительное']},
+                     {'input': ['-5'], 'expected': ['Отрицательное']},
+                     {'input': ['0'], 'expected': ['Ноль']}
+                 ]},
 
                 {'id': 4, 'lesson_id': 2, 'title': 'Високосный год', 'points': 15, 'difficulty': 'medium',
-                'description': '<p>Введите год (целое число). Выведите "Високосный", если год делится на 4, но не делится на 100, или делится на 400. Иначе выведите "Не високосный".</p>',
-                'starter_code': '', 'status': None,
-                'tests': [
-                    {'input': ['2024'], 'expected': ['Високосный']},
-                    {'input': ['1900'], 'expected': ['Не високосный']},
-                    {'input': ['2000'], 'expected': ['Високосный']}
-                ]},
+                 'description': '<p>Введите год (целое число). Выведите "Високосный", если год делится на 4, но не делится на 100, или делится на 400. Иначе выведите "Не високосный".</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [
+                     {'input': ['2024'], 'expected': ['Високосный']},
+                     {'input': ['1900'], 'expected': ['Не високосный']},
+                     {'input': ['2000'], 'expected': ['Високосный']}
+                 ]},
 
                 {'id': 5, 'lesson_id': 2, 'title': 'Максимум из трёх', 'points': 15, 'difficulty': 'medium',
-                'description': '<p>Введите три целых числа. Выведите наибольшее из них.</p>',
-                'starter_code': '', 'status': None,
-                'tests': [
-                    {'input': ['3', '7', '5'], 'expected': ['7']},
-                    {'input': ['10', '2', '10'], 'expected': ['10']},
-                    {'input': ['-1', '-5', '-3'], 'expected': ['-1']}
-                ]},
+                 'description': '<p>Введите три целых числа. Выведите наибольшее из них.</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [
+                     {'input': ['3', '7', '5'], 'expected': ['7']},
+                     {'input': ['10', '2', '10'], 'expected': ['10']},
+                     {'input': ['-1', '-5', '-3'], 'expected': ['-1']}
+                 ]},
 
                 {'id': 6, 'lesson_id': 2, 'title': 'Простой калькулятор', 'points': 15, 'difficulty': 'medium',
-                'description': '<p>Введите два числа и знак операции (+, -, *, /). Выведите результат. Для деления на ноль выведите "Ошибка".</p><p>Пример ввода построчно: число1, число2, знак.</p>',
-                'starter_code': '', 'status': None,
-                'tests': [
-                    {'input': ['10', '3', '+'], 'expected': ['13']},
-                    {'input': ['10', '0', '/'], 'expected': ['Ошибка']},
-                    {'input': ['8', '2', '*'], 'expected': ['16']}
-                ]},
+                 'description': '<p>Введите два числа и знак операции (+, -, *, /). Выведите результат. Для деления на ноль выведите "Ошибка".</p><p>Пример ввода построчно: число1, число2, знак.</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [
+                     {'input': ['10', '3', '+'], 'expected': ['13']},
+                     {'input': ['10', '0', '/'], 'expected': ['Ошибка']},
+                     {'input': ['8', '2', '*'], 'expected': ['16']}
+                 ]},
 
                 {'id': 7, 'lesson_id': 2, 'title': 'Корни квадратного уравнения', 'points': 20, 'difficulty': 'hard',
-                'description': '<p>Введите коэффициенты a, b, c (целые). Решите уравнение ax² + bx + c = 0. Выведите "Нет корней" (если D < 0), "Один корень: X" (если D = 0), "Два корня: X1 X2" (если D > 0). Корни выводите с двумя знаками (через пробел).</p>',
-                'starter_code': '', 'status': None,
-                'tests': [
-                    {'input': ['1', '-3', '2'], 'expected': ['Два корня: 2.00 1.00']},
-                    {'input': ['1', '2', '1'], 'expected': ['Один корень: -1.00']},
-                    {'input': ['1', '0', '1'], 'expected': ['Нет корней']}
-                ]},
+                 'description': '<p>Введите коэффициенты a, b, c (целые). Решите уравнение ax² + bx + c = 0. Выведите "Нет корней" (если D < 0), "Один корень: X" (если D = 0), "Два корня: X1 X2" (если D > 0). Корни выводите с двумя знаками (через пробел).</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [
+                     {'input': ['1', '-3', '2'], 'expected': ['Два корня: 2.00 1.00']},
+                     {'input': ['1', '2', '1'], 'expected': ['Один корень: -1.00']},
+                     {'input': ['1', '0', '1'], 'expected': ['Нет корней']}
+                 ]},
 
                 {'id': 8, 'lesson_id': 2, 'title': 'Склонение возраста', 'points': 20, 'difficulty': 'hard',
-                'description': '<p>Введите возраст (целое число от 1 до 120). Выведите фразу "Мне X год/года/лет", правильно склоняя слово "год".</p>',
-                'starter_code': '', 'status': None,
-                'tests': [
-                    {'input': ['1'], 'expected': ['Мне 1 год']},
-                    {'input': ['3'], 'expected': ['Мне 3 года']},
-                    {'input': ['11'], 'expected': ['Мне 11 лет']},
-                    {'input': ['25'], 'expected': ['Мне 25 лет']}
-                ]},
+                 'description': '<p>Введите возраст (целое число от 1 до 120). Выведите фразу "Мне X год/года/лет", правильно склоняя слово "год".</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [
+                     {'input': ['1'], 'expected': ['Мне 1 год']},
+                     {'input': ['3'], 'expected': ['Мне 3 года']},
+                     {'input': ['11'], 'expected': ['Мне 11 лет']},
+                     {'input': ['25'], 'expected': ['Мне 25 лет']}
+                 ]},
 
                 {'id': 9, 'lesson_id': 2, 'title': 'Битва чисел', 'points': 20, 'difficulty': 'hard',
-                'description': '<p>Введите три целых числа A, B, C. Определите:<br> - "Все равны" – если A=B=C<br> - "Два равны и больше третьего" – если два равны и они больше третьего<br> - "Два равны и меньше третьего" – если два равны и они меньше третьего<br> - "Все разные и есть чётное" – если все разные и хотя бы одно чётное<br> - "Иначе" – во всех остальных случаях.</p>',
-                'starter_code': '', 'status': None,
-                'tests': [
-                    {'input': ['5', '5', '5'], 'expected': ['Все равны']},
-                    {'input': ['7', '7', '3'], 'expected': ['Два равны и больше третьего']},
-                    {'input': ['2', '2', '8'], 'expected': ['Два равны и меньше третьего']},
-                    {'input': ['1', '3', '5'], 'expected': ['Все разные и есть чётное']},
-                    {'input': ['1', '3', '7'], 'expected': ['Иначе']}
-                ]}
+                 'description': '<p>Введите три целых числа A, B, C. Определите:<br> - "Все равны" – если A=B=C<br> - "Два равны и больше третьего" – если два равны и они больше третьего<br> - "Два равны и меньше третьего" – если два равны и они меньше третьего<br> - "Все разные и есть чётное" – если все разные и хотя бы одно чётное<br> - "Иначе" – во всех остальных случаях.</p>',
+                 'starter_code': '', 'status': None,
+                 'tests': [
+                     {'input': ['5', '5', '5'], 'expected': ['Все равны']},
+                     {'input': ['7', '7', '3'], 'expected': ['Два равны и больше третьего']},
+                     {'input': ['2', '2', '8'], 'expected': ['Два равны и меньше третьего']},
+                     {'input': ['1', '3', '5'], 'expected': ['Все разные и есть чётное']},
+                     {'input': ['1', '3', '7'], 'expected': ['Иначе']}
+                 ]}
 
-
-
-        ]
+                ]
     elif lesson_id == 3:
         return [
             {'id': 1, 'lesson_id': 3, 'title': 'Секретный код', 'points': 10, 'difficulty': 'easy',
@@ -985,95 +980,93 @@ def get_tasks_for_lesson(lesson_id):
     elif lesson_id == 7:
         return [
             {'id': 1, 'lesson_id': 4, 'title': 'Создание списка из чисел', 'points': 10, 'difficulty': 'easy',
-            'description': '<p>Пользователь вводит целые числа через пробел в одной строке. Выведите полученный список чисел.</p>',
-            'starter_code': '', 'status': None,
-            'tests': [
-                {'input': ['1 2 3'], 'expected': ['[1, 2, 3]']},
-                {'input': ['10'], 'expected': ['[10]']},
-                {'input': ['7 8 9 10'], 'expected': ['[7, 8, 9, 10]']}
-            ]},
+             'description': '<p>Пользователь вводит целые числа через пробел в одной строке. Выведите полученный список чисел.</p>',
+             'starter_code': '', 'status': None,
+             'tests': [
+                 {'input': ['1 2 3'], 'expected': ['[1, 2, 3]']},
+                 {'input': ['10'], 'expected': ['[10]']},
+                 {'input': ['7 8 9 10'], 'expected': ['[7, 8, 9, 10]']}
+             ]},
 
             {'id': 2, 'lesson_id': 4, 'title': 'Первый и последний элемент', 'points': 10, 'difficulty': 'easy',
-            'description': '<p>Введите список целых чисел через пробел. Выведите первый и последний элемент каждый на новой строке.</p>',
-            'starter_code': '', 'status': None,
-            'tests': [
-                {'input': ['5 10 15'], 'expected': ['5', '15']},
-                {'input': ['42'], 'expected': ['42', '42']},
-                {'input': ['1 2 3 4'], 'expected': ['1', '4']}
-            ]},
+             'description': '<p>Введите список целых чисел через пробел. Выведите первый и последний элемент каждый на новой строке.</p>',
+             'starter_code': '', 'status': None,
+             'tests': [
+                 {'input': ['5 10 15'], 'expected': ['5', '15']},
+                 {'input': ['42'], 'expected': ['42', '42']},
+                 {'input': ['1 2 3 4'], 'expected': ['1', '4']}
+             ]},
 
             {'id': 3, 'lesson_id': 4, 'title': 'Длина списка', 'points': 10, 'difficulty': 'easy',
-            'description': '<p>Введите список любых элементов через пробел (могут быть числа или слова). Выведите количество элементов в списке.</p>',
-            'starter_code': '', 'status': None,
-            'tests': [
-                {'input': ['a b c'], 'expected': ['3']},
-                {'input': ['1 2 3 4 5'], 'expected': ['5']},
-                {'input': ['hello'], 'expected': ['1']}
-            ]},
+             'description': '<p>Введите список любых элементов через пробел (могут быть числа или слова). Выведите количество элементов в списке.</p>',
+             'starter_code': '', 'status': None,
+             'tests': [
+                 {'input': ['a b c'], 'expected': ['3']},
+                 {'input': ['1 2 3 4 5'], 'expected': ['5']},
+                 {'input': ['hello'], 'expected': ['1']}
+             ]},
 
             {'id': 4, 'lesson_id': 4, 'title': 'Сумма элементов списка', 'points': 15, 'difficulty': 'medium',
-            'description': '<p>Введите список целых чисел через пробел. Вычислите и выведите сумму всех элементов.</p>',
-            'starter_code': '', 'status': None,
-            'tests': [
-                {'input': ['1 2 3'], 'expected': ['6']},
-                {'input': ['10 20 30 40'], 'expected': ['100']},
-                {'input': ['-5 5'], 'expected': ['0']}
-            ]},
+             'description': '<p>Введите список целых чисел через пробел. Вычислите и выведите сумму всех элементов.</p>',
+             'starter_code': '', 'status': None,
+             'tests': [
+                 {'input': ['1 2 3'], 'expected': ['6']},
+                 {'input': ['10 20 30 40'], 'expected': ['100']},
+                 {'input': ['-5 5'], 'expected': ['0']}
+             ]},
 
             {'id': 5, 'lesson_id': 4, 'title': 'Поиск индекса элемента', 'points': 15, 'difficulty': 'medium',
-            'description': '<p>Сначала введите список целых чисел через пробел. Затем введите одно искомое число. Выведите индекс ПЕРВОГО вхождения этого числа в списке (начиная с 0). Если число не найдено, выведите -1.</p>',
-            'starter_code': '', 'status': None,
-            'tests': [
-                {'input': ['10 20 30 20', '20'], 'expected': ['1']},
-                {'input': ['1 2 3', '4'], 'expected': ['-1']},
-                {'input': ['7 7 7', '7'], 'expected': ['0']}
-            ]},
+             'description': '<p>Сначала введите список целых чисел через пробел. Затем введите одно искомое число. Выведите индекс ПЕРВОГО вхождения этого числа в списке (начиная с 0). Если число не найдено, выведите -1.</p>',
+             'starter_code': '', 'status': None,
+             'tests': [
+                 {'input': ['10 20 30 20', '20'], 'expected': ['1']},
+                 {'input': ['1 2 3', '4'], 'expected': ['-1']},
+                 {'input': ['7 7 7', '7'], 'expected': ['0']}
+             ]},
 
             {'id': 6, 'lesson_id': 4, 'title': 'Объединение двух списков', 'points': 15, 'difficulty': 'medium',
-            'description': '<p>Введите первый список чисел через пробел (на одной строке). Введите второй список чисел через пробел (на второй строке). Выведите объединённый список: сначала все элементы первого, затем все элементы второго.</p>',
-            'starter_code': '', 'status': None,
-            'tests': [
-                {'input': ['1 2', '3 4'], 'expected': ['[1, 2, 3, 4]']},
-                {'input': ['10', '20 30'], 'expected': ['[10, 20, 30]']},
-                {'input': ['', '5 6'], 'expected': ['[5, 6]']}
-            ]},
+             'description': '<p>Введите первый список чисел через пробел (на одной строке). Введите второй список чисел через пробел (на второй строке). Выведите объединённый список: сначала все элементы первого, затем все элементы второго.</p>',
+             'starter_code': '', 'status': None,
+             'tests': [
+                 {'input': ['1 2', '3 4'], 'expected': ['[1, 2, 3, 4]']},
+                 {'input': ['10', '20 30'], 'expected': ['[10, 20, 30]']},
+                 {'input': ['', '5 6'], 'expected': ['[5, 6]']}
+             ]},
 
             {'id': 7, 'lesson_id': 4, 'title': 'Удаление дубликатов', 'points': 20, 'difficulty': 'hard',
-            'description': '<p>Введите список чисел через пробел. Удалите все повторяющиеся элементы, сохранив порядок ПЕРВОГО вхождения каждого числа. Выведите полученный список.</p>',
-            'starter_code': '', 'status': None,
-            'tests': [
-                {'input': ['1 2 2 3 1'], 'expected': ['[1, 2, 3]']},
-                {'input': ['5 5 5'], 'expected': ['[5]']},
-                {'input': ['1 2 3'], 'expected': ['[1, 2, 3]']}
-            ]},
+             'description': '<p>Введите список чисел через пробел. Удалите все повторяющиеся элементы, сохранив порядок ПЕРВОГО вхождения каждого числа. Выведите полученный список.</p>',
+             'starter_code': '', 'status': None,
+             'tests': [
+                 {'input': ['1 2 2 3 1'], 'expected': ['[1, 2, 3]']},
+                 {'input': ['5 5 5'], 'expected': ['[5]']},
+                 {'input': ['1 2 3'], 'expected': ['[1, 2, 3]']}
+             ]},
 
             {'id': 8, 'lesson_id': 4, 'title': 'Циклический сдвиг вправо', 'points': 20, 'difficulty': 'hard',
-            'description': '<p>Введите список чисел через пробел. Затем введите целое число K (количество позиций сдвига). Выполните циклический сдвиг списка вправо на K позиций. Например, [1,2,3] при K=1 → [3,1,2]. Выведите полученный список.</p>',
-            'starter_code': '', 'status': None,
-            'tests': [
-                {'input': ['1 2 3', '1'], 'expected': ['[3, 1, 2]']},
-                {'input': ['10 20 30 40', '2'], 'expected': ['[30, 40, 10, 20]']},
-                {'input': ['5', '3'], 'expected': ['[5]']}
-            ]},
+             'description': '<p>Введите список чисел через пробел. Затем введите целое число K (количество позиций сдвига). Выполните циклический сдвиг списка вправо на K позиций. Например, [1,2,3] при K=1 → [3,1,2]. Выведите полученный список.</p>',
+             'starter_code': '', 'status': None,
+             'tests': [
+                 {'input': ['1 2 3', '1'], 'expected': ['[3, 1, 2]']},
+                 {'input': ['10 20 30 40', '2'], 'expected': ['[30, 40, 10, 20]']},
+                 {'input': ['5', '3'], 'expected': ['[5]']}
+             ]},
 
             {'id': 9, 'lesson_id': 4, 'title': 'Палиндром списка', 'points': 20, 'difficulty': 'hard',
-            'description': '<p>Введите список чисел через пробел. Проверьте, является ли он палиндромом (читается одинаково слева направо и справа налево). Выведите "Да" или "Нет".</p>',
-            'starter_code': '', 'status': None,
-            'tests': [
-                {'input': ['1 2 3 2 1'], 'expected': ['Да']},
-                {'input': ['1 2 3'], 'expected': ['Нет']},
-                {'input': ['7 7 7 7'], 'expected': ['Да']}
-            ]}
+             'description': '<p>Введите список чисел через пробел. Проверьте, является ли он палиндромом (читается одинаково слева направо и справа налево). Выведите "Да" или "Нет".</p>',
+             'starter_code': '', 'status': None,
+             'tests': [
+                 {'input': ['1 2 3 2 1'], 'expected': ['Да']},
+                 {'input': ['1 2 3'], 'expected': ['Нет']},
+                 {'input': ['7 7 7 7'], 'expected': ['Да']}
+             ]}
         ]
     elif lesson_id == 8:
         return [
-            
+
         ]
     return []
 
 
-=======
->>>>>>> b039c84f61ecaae70d91167f4206f2f4465372de
 @app.route('/course/python/lesson/<int:lesson_id>/task/<int:task_order>')
 @login_required
 def task(lesson_id, task_order):
@@ -1141,15 +1134,15 @@ def task(lesson_id, task_order):
             status_dict[i] = 0
 
     lesson_urls = {
-    1: 'hello_world',
-    2: 'usloviya',
-    3: 'operators',
-    4: 'while',
-    5: 'for',
-    6: 'strings',
-    7: 'spiski',
-    8: 'instrumenty'
-}
+        1: 'hello_world',
+        2: 'usloviya',
+        3: 'operators',
+        4: 'while',
+        5: 'for',
+        6: 'strings',
+        7: 'spiski',
+        8: 'instrumenty'
+    }
     current_slug = lesson_urls.get(lesson_id)
     back_url = url_for('lesson_operators', lesson=current_slug)
 
@@ -1163,12 +1156,8 @@ def get_lesson_progress(lesson_id):
     percent = round(solved / total * 100) if total > 0 else 0
     return {"solved": solved, "total": total, "percent": percent}
 
-<<<<<<< HEAD
-@app.route('/course/python/<lesson>')
-=======
 
-@app.route('/course/python/operators')
->>>>>>> b039c84f61ecaae70d91167f4206f2f4465372de
+@app.route('/course/python/<lesson>')
 @login_required
 def lesson_operators(lesson):
     lessons = {
@@ -1204,10 +1193,9 @@ def lesson_operators(lesson):
     for i in lesson_info:
         description.append(i['title'])
     return render_template('all_lessons.html', status_dict=get_status_dict(les),
-                           solved=progress['solved'], total=progress['total'], percent=progress['percent'], book=book_and_title[0], 
+                           solved=progress['solved'], total=progress['total'], percent=progress['percent'],
+                           book=book_and_title[0],
                            title=book_and_title[1], lesson_id=les, description=description)
-
-
 
 
 @app.route('/book_for_operators')
