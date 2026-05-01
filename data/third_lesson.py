@@ -22,5 +22,6 @@ class Third_lesson(SqlAlchemyBase):
     exersize_eight_solution = sqlalchemy.Column(sqlalchemy.Text, nullable=True)
     exersize_nine = sqlalchemy.Column(sqlalchemy.Integer, nullable=True, default=0)
     exersize_nine_solution = sqlalchemy.Column(sqlalchemy.Text, nullable=True)
+    chat_history = sqlalchemy.Column(sqlalchemy.JSON, nullable=True, default=[])
 
     # 0 - ЗАДАЧА НЕ РЕШЕНА 1 - ЗАДАЧА РЕШЕНА НЕВЕРНО 2 - ЗАДАЧА РЕШЕНА ВЕРНО

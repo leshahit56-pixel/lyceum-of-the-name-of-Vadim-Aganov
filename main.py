@@ -20,6 +20,11 @@ from data.seventh_lesson import Seventh_lesson
 from data.eighth_lesson import Eighth_lesson
 from werkzeug.utils import secure_filename
 from tasks_data import get_tasks_for_lesson
+from gigachat import GigaChat
+from gigachat.models import Chat, Messages
+from dotenv import load_dotenv
+load_dotenv()
+
 
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'f8874661e03139f344aa90692fd4d642b1e7a89b9b817bba')
@@ -32,6 +37,27 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+
+def get_lesson_id(lesson_id):
+
+    if lesson_id == 1:
+        less = First_lesson
+    elif lesson_id == 2:
+        less = Second_lesson
+    elif lesson_id == 3:
+        less = Third_lesson
+    elif lesson_id == 4:
+        less = Fourth_lesson
+    elif lesson_id == 5:
+        less = Fifth_lesson
+    elif lesson_id == 6:
+        less = Sixth_lesson
+    elif lesson_id == 7:
+        less = Seventh_lesson
+    elif lesson_id == 8:
+        less = Eighth_lesson
+
+    return less
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -411,11 +437,9 @@ def test_6():
     return render_template('test_6.html')
 
 
-
 @app.route('/book_for_first_lessonn')
 def book_for_first():
     return render_template('book_for_first_lessonn.html')
-
 
 
 @app.route('/course/python/lesson/<int:lesson_id>/task/<int:task_order>')
@@ -485,15 +509,15 @@ def task(lesson_id, task_order):
             status_dict[i] = 0
 
     lesson_urls = {
-    1: 'hello_world',
-    2: 'usloviya',
-    3: 'operators',
-    4: 'while',
-    5: 'for',
-    6: 'strings',
-    7: 'spiski',
-    8: 'instrumenty'
-}
+        1: 'hello_world',
+        2: 'usloviya',
+        3: 'operators',
+        4: 'while',
+        5: 'for',
+        6: 'strings',
+        7: 'spiski',
+        8: 'instrumenty'
+    }
     current_slug = lesson_urls.get(lesson_id)
     back_url = url_for('lesson_operators', lesson=current_slug)
 
@@ -544,10 +568,9 @@ def lesson_operators(lesson):
     for i in lesson_info:
         description.append(i['title'])
     return render_template('all_lessons.html', status_dict=get_status_dict(les),
-                           solved=progress['solved'], total=progress['total'], percent=progress['percent'], book=book_and_title[0], 
+                           solved=progress['solved'], total=progress['total'], percent=progress['percent'],
+                           book=book_and_title[0],
                            title=book_and_title[1], lesson_id=les, description=description)
-
-
 
 
 @app.route('/book_for_operators')
@@ -580,29 +603,7 @@ def add_verdict(lesson_id, exersize_id, code, verdict, email, points):
         7: "exersize_seven", 8: "exersize_eight", 9: "exersize_nine"
     }
 
-    if lesson_id == 1:
-        new_verdict = First_lesson
-
-    elif lesson_id == 2:
-        new_verdict = Second_lesson
-
-    elif lesson_id == 3:
-        new_verdict = Third_lesson
-
-    elif lesson_id == 4:
-        new_verdict = Fourth_lesson
-
-    elif lesson_id == 5:
-        new_verdict = Fifth_lesson
-
-    elif lesson_id == 6:
-        new_verdict = Sixth_lesson
-
-    elif lesson_id == 7:
-        new_verdict = Seventh_lesson
-
-    elif lesson_id == 8:
-        new_verdict = Eighth_lesson
+    new_verdict = get_lesson_id(lesson_id)
 
     user = session.query(new_verdict).filter(new_verdict.user_email == email).first()
 
@@ -697,6 +698,89 @@ def check_solution():
 
     return jsonify(result)
 
+
+@app.route('/api/ai_chat', methods=['POST'])
+def aichat():
+    data = request.get_json()
+    user_mes = data.get('message')
+    lesson_id = int(data.get('lesson_id'))
+
+    less = get_lesson_id(lesson_id)
+
+    db_session.global_init('db/blogs.db')
+    ses = db_session.create_session()
+
+    email = session['email']
+
+    user = ses.query(less).filter(less.user_email == email).first()
+
+    history = []
+
+    if not user:
+        user = less(user_email=email)
+        ses.add(user)
+    else:
+        history = list(user.chat_history) if user.chat_history else []
+
+
+
+    ban_messages = []
+
+    for i in range(1, 11):
+        descriptions = get_tasks_for_lesson(i)
+        for j in descriptions:
+            ban_messages.append(j['description'])
+
+    promt_for_ai = f'''Ты - помощник на сайте по курсам программирования. Твоя задача - помогать ученику разобраться в теме.
+                       Ты должен четко отвечать на  его вопрос: лаконично и без лишней воды.
+                        '''
+    api_key = os.getenv('DEEPSEK_SECRET_KEY')
+    client = GigaChat(credentials=api_key, verify_ssl_certs=False)
+
+    all_messages = [{'role': 'system', 'content': promt_for_ai}]
+    all_messages.extend(history)
+    all_messages.append({'role': 'user', 'content': user_mes})
+
+
+    chat = Chat(messages=[Messages(**msg) for msg in all_messages])
+    
+    response = client.chat(chat)
+
+
+    ai_answer = response.choices[0].message.content
+
+    history.append({'role': 'user', 'content': user_mes})
+    history.append({'role': 'assistant', 'content': ai_answer})
+    user.chat_history = history
+    ses.commit()
+    ses.close()
+
+    return jsonify({"answer": ai_answer})
+    
+
+@app.route('/api/chat_history/<lesson_id>', methods=['POST'])
+def load_history(lesson_id):
+
+    less = get_lesson_id(int(lesson_id))
+
+    email = session['email']
+
+    db_session.global_init('db/blogs.db')
+    ses = db_session.create_session()
+
+    history = []
+
+    user = ses.query(less).filter(less.user_email == email).first()
+    if not user:
+        user = less(user_email=email)
+        ses.add(user)
+    else:
+        history = user.chat_history if user.chat_history else []
+
+    ses.commit()
+    ses.close()
+
+    return jsonify({'messages':history})
 
 if __name__ == '__main__':
     db_session.global_init('db/blogs.db')

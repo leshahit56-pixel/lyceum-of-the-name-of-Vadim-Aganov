@@ -139,8 +139,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/python-hint.min.js"></script>
 
 <script>
+    // ---------- Глобальные переменные из URL ----------
+    const pathParts = window.location.pathname.split('/');
+    const lessonId = parseInt(pathParts[4]);   // ID урока
+    const taskOrder = parseInt(pathParts[6]);  // порядковый номер задачи
 
-    const Datatask = {{task | tojson | safe}}
+    // ---------- Инициализация редактора кода ----------
+    const Datatask = {{task | tojson | safe}};
     const editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
         lineNumbers: true,
         mode: 'python',
@@ -173,19 +178,19 @@
         }
     });
 
+    // ---------- Модальное окно с условием задачи ----------
     const modal = document.getElementById('conditionModal');
     const toggleBtn = document.getElementById('conditionToggleBtn');
-
     toggleBtn.onclick = function() {
         modal.classList.toggle('show');
     };
-
     document.addEventListener('click', function(event) {
         if (!modal.contains(event.target) && !toggleBtn.contains(event.target)) {
             modal.classList.remove('show');
         }
     });
 
+    // ---------- Переключение темы редактора ----------
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.attributeName === 'class') {
@@ -195,6 +200,7 @@
     });
     observer.observe(document.body, { attributes: true });
 
+    // ---------- Переменные для чата ----------
     const chatBody = document.getElementById('chatBody');
     const chatTabs = document.querySelectorAll('.chat-tab');
     const chatInput = document.getElementById('chatInput');
@@ -204,11 +210,13 @@
     let compilationMessages = [];
     let aiMessages = [];
 
+    // ---------- Функции для чата ----------
     function initChat() {
         chatBody.innerHTML = '<p class="chat-placeholder">Здесь будет результат проверки</p>';
     }
     initChat();
 
+    // Переключение вкладок
     chatTabs.forEach(tab => {
         tab.addEventListener('click', function() {
             chatTabs.forEach(t => t.classList.remove('active'));
@@ -225,22 +233,22 @@
                 }
             } else {
                 if (aiMessages.length === 0) {
-                    chatBody.innerHTML = `
-                        <div class="ai-chat-placeholder">
-                            <i class="bi bi-robot robot-icon"></i>
-                            <p class="ai-hint">Вы сможете задать вопрос по задаче</p>
-                        </div>
-                    `;
+                    loadChatHistory();
                 } else {
-                    chatBody.innerHTML = aiMessages.map(msg =>
-                        `<div class="chat-message ai-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
-                    ).join('');
+                    renderAiMessages();
                 }
             }
+            chatBody.scrollTop = chatBody.scrollHeight;
         });
     });
 
-    function addMessageToChat(text, isAi = false) {
+    function renderAiMessages() {
+        chatBody.innerHTML = aiMessages.map(msg =>
+            `<div class="chat-message ${msg.role === 'assistant' ? 'ai-message' : ''}"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
+        ).join('');
+    }
+
+    function addMessageToChat(text, isAi = false, role = 'user') {
         const time = new Date().toLocaleTimeString().slice(0, 5);
         if (currentTab === 'compilation' && !isAi) {
             if (compilationMessages.length === 0) chatBody.innerHTML = '';
@@ -248,20 +256,17 @@
             chatBody.innerHTML = compilationMessages.map(msg =>
                 `<div class="chat-message"><span class="chat-time">${msg.time}</span> <pre style="margin:0; font-family:inherit; white-space:pre-wrap;">${msg.text}</pre></div>`
             ).join('');
-        } else if (currentTab === 'ai' && isAi) {
+        } else if (currentTab === 'ai') {
             if (aiMessages.length === 0) chatBody.innerHTML = '';
-            aiMessages.push({ text, time });
-            chatBody.innerHTML = aiMessages.map(msg =>
-                `<div class="chat-message ai-message"><span class="chat-time">${msg.time}</span> ${msg.text}</div>`
-            ).join('');
+            aiMessages.push({ text, time, role: isAi ? 'assistant' : 'user' });
+            renderAiMessages();
         }
+        chatBody.scrollTop = chatBody.scrollHeight;
     }
 
+    // ---------- Отправка решения на проверку ----------
     document.querySelector('.chat-submit-btn').onclick = async function() {
         const code = editor.getValue();
-        const pathParts = window.location.pathname.split('/');
-        const lessonId = parseInt(pathParts[4]);
-        const taskOrder = parseInt(pathParts[6]);
 
         addMessageToChat('📤 Решение отправляется...', false);
 
@@ -303,22 +308,82 @@
 
         } catch (error) {
             addMessageToChat('⚠️ Ошибка соединения с сервером', false);
-            addMessageToChat(error);
+            console.error(error);
         }
 
         document.querySelector('[data-tab="compilation"]').click();
     };
 
-    function sendMessage() {
+    // ---------- Загрузка истории чата с сервера ----------
+    async function loadChatHistory() {
+    try {
+        // Меняем формат URL на /api/chat_history/1 и добавляем method: 'POST'
+        const response = await fetch(`/api/chat_history/${lessonId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        
+        const result = await response.json();
+        if (result.messages && result.messages.length > 0) {
+            aiMessages = result.messages.map(msg => ({
+                text: msg.content,
+                role: msg.role,
+                time: "История"
+            }));
+            renderAiMessages();
+        } else {
+            chatBody.innerHTML = `
+                <div class="ai-chat-placeholder">
+                    <i class="bi bi-robot robot-icon"></i>
+                    <p class="ai-hint">Вы сможете задать вопрос по задаче</p>
+                </div>
+            `;
+        }
+    } catch (e) {
+        console.error('Ошибка загрузки истории чата', e);
+        chatBody.innerHTML = `<p class="chat-placeholder">Не удалось загрузить историю</p>`;
+    }
+}
+
+    // ---------- Отправка сообщения нейросети ----------
+    async function sendMessage() {
         const text = chatInput.value.trim();
         if (!text) return;
-        addMessageToChat(text, currentTab === 'ai');
+
+        addMessageToChat(text, false); 
         chatInput.value = '';
+
+        if (currentTab === 'ai') {
+            try {
+                const response = await fetch('/api/ai_chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: text,
+                        lesson_id: lessonId
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.answer) {
+                    addMessageToChat(result.answer, true);
+                } else if (result.error) {
+                    addMessageToChat("⚠️ " + result.error, true);
+                } else {
+                    addMessageToChat("⚠️ Неизвестный ответ от сервера", true);
+                }
+            } catch (error) {
+                console.error("Ошибка AI чата:", error);
+                addMessageToChat("⚠️ Не удалось получить ответ от нейросети", true);
+            }
+        }
     }
 
     chatSendBtn.addEventListener('click', sendMessage);
     chatInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') sendMessage();
     });
+
 </script>
 {% endblock %}
