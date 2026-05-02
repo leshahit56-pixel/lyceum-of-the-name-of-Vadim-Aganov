@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="auth-wrapper">
-    <div class="auth-card p-5 text-center animate-up" style="max-width: 420px; width: 100%;">
-        <h2 class="auth-title">Лицей имени <br> Вадима Аганова</h2>
+<div class="auth-v2-wrapper">
+    <div class="auth-v2-card p-5 text-center animate-v2-up" style="max-width: 420px; width: 100%;">
+        <h2 class="auth-v2-title">Лицей имени <br> Вадима Аганова</h2>
         <p class="text-white-50 mb-4">Войдите или зарегистрируйтесь, чтобы продолжить</p>
         
         <form method="post" class="d-grid gap-3">
-            <button name="action" value="aut" type="submit" class="btn btn-custom btn-login">
+            <button name="action" value="aut" type="submit" class="btn-v2-main btn-v2-login">
                 <i class="bi bi-box-arrow-in-right"></i> Вход
             </button>
-            <button name="action" value="reg" type="submit" class="btn btn-custom btn-reg">
+            <button name="action" value="reg" type="submit" class="btn-v2-main btn-v2-reg">
                 <i class="bi bi-person-plus"></i> Регистрация
             </button>
         </form>

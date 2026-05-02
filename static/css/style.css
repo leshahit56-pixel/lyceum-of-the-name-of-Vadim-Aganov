@@ -1025,6 +1025,93 @@ body.dark .auth-card-container .card {
     border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
+/* Контейнер-обертка, не конфликтующий с .registration-wrapper */
+.auth-v2-wrapper {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Карточка с эффектом Glassmorphism */
+.auth-v2-card {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 28px !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Стили для темной темы (синхронизировано с вашим body.dark) */
+body.dark .auth-v2-card {
+    background: rgba(22, 33, 62, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Заголовок */
+.auth-v2-title {
+    font-weight: 850 !important;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 1.1;
+}
+
+/* Кнопки (уникальные префиксы во избежание конфликта с .btn-action) */
+.btn-v2-main {
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: white;
+}
+
+.btn-v2-login {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-v2-login:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+    filter: brightness(1.1);
+}
+
+.btn-v2-reg {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.btn-v2-reg:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
+}
+
+/* Уникальная анимация (чтобы не дублировать slideUp) */
+.animate-v2-up {
+    animation: authSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+@keyframes authSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 body.dark .modal-border-light {
     border-color: #2d2d44 !important;
 }
