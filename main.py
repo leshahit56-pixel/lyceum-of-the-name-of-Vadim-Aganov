@@ -554,7 +554,7 @@ def lesson_operators(lesson):
         5: ['/book_for_for', 'Цикл for'],
         6: ['/book_for_strings', 'Строки. Индексация и срезы'],
         7: ['/book_for_list', 'Списки в Python'],
-        8: ['/book_for_list_operators', 'Инструменты для строк и списков']
+        8: ['/book_for_list_and_strinng_operators', 'Инструменты для строк и списков']
     }
     les = lessons[lesson]
 
@@ -578,6 +578,10 @@ def book_for_operators():
     return render_template('book_for_operators.html')
 
 
+@app.route('/book_for_usloviya')
+def usloviya():
+    return render_template('book_for_usloviya.html')
+
 @app.route('/book_for_while')
 def book_for_while():
     return render_template('book_for_while.html')
@@ -591,6 +595,15 @@ def book_for_for():
 @app.route('/book_for_strings')
 def book_for_strings():
     return render_template('book_for_strings.html')
+
+@app.route('/book_for_list')
+def listt():
+    return render_template('book_for_list.html')
+
+
+@app.route('/book_for_list_and_strinng_operators')
+def list_and_strinng_operators():
+    return render_template('book_for_list_and_string_operators.html')
 
 
 def add_verdict(lesson_id, exersize_id, code, verdict, email, points):
@@ -732,7 +745,7 @@ def aichat():
             ban_messages.append(j['description'])
 
     promt_for_ai = f'''Ты - помощник на сайте по курсам программирования. Твоя задача - помогать ученику разобраться в теме.
-                       Ты должен четко отвечать на  его вопрос: лаконично и без лишней воды.
+                       Ты должен четко отвечать на  его вопрос: лаконично и без лишней воды. Разговаривай как мудрец.
                         '''
     api_key = os.getenv('DEEPSEK_SECRET_KEY')
     client = GigaChat(credentials=api_key, verify_ssl_certs=False)
@@ -749,6 +762,8 @@ def aichat():
 
     ai_answer = response.choices[0].message.content
 
+    if len(history) > 50:
+        history = history[3:]
     history.append({'role': 'user', 'content': user_mes})
     history.append({'role': 'assistant', 'content': ai_answer})
     user.chat_history = history
