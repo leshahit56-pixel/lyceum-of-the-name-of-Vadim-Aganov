@@ -3,139 +3,132 @@
 {% block title %}Лицей имени Вадима Аганова{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-lg-8 col-md-9 col-12">
-
-        <!-- Карточка -->
-        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
-            <div class="card-body p-4 p-md-5 text-center">
-
-                <!-- Приветствие -->
-                <h2 class="h4 mb-3 text-dark">Привет, дорогой путник, ищущий знаний в цифровой сфере!</h2>
-
-                <!-- Описание -->
-                <p class="text-muted mb-4">
-                    Ты попал в <strong>Лицей имени Вадима Аганова</strong>. Здесь ты сможешь получить
-                    важнейшие знания по программированию, или дальше блуждать по бесконечным просторам цифровой
-                    степи.
-                </p>
-
-                <!-- Преимущества -->
-                <div class="row g-3 mb-5 text-center">
-                    <div class="col-md-4">
-                        <div class="display-5 mb-2">🎓</div>
-                        <div class="fw-bold text-dark">Практика с нуля</div>
-                        <div class="small text-secondary">учись на реальных примерах и задачах</div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="display-5 mb-2">🤖</div>
-                        <div class="fw-bold text-dark">Автопроверка кода</div>
-                        <div class="small text-secondary">мгновенная обратная связь по решениям</div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="display-5 mb-2">🏆</div>
-                        <div class="fw-bold text-dark">Достижения и баллы</div>
-                        <div class="small text-secondary">зарабатывай бейджи и повышай уровень</div>
-                    </div>
-                </div>
-
-                <!-- Дополнительный блок -->
-                <div class="bg-light rounded-4 p-4 mb-5 text-start">
-                    <h5 class="fw-bold text-dark mb-3 text-center">
-                        <i class="text-primary me-2"></i>Что вас ждёт в лицее?
-                    </h5>
-                    <div class="small text-secondary">
-                        <div class="mb-2">— Интерактивный учебник и возможность задать вопрос китайскому другу</div>
-                        <div class="mb-2">— Встроенный редактор кода для решения задач прямо на сайте</div>
-                        <div class="mb-2">— Мгновенная проверка решений с разбором ошибок</div>
-                        <div class="mb-2">— Подсказки и помощь при ошибках</div>
-                        <div class="mb-2">— Личный кабинет с отслеживанием прогресса</div>
-                    </div>
-                </div>
-
-                <!-- Кнопки -->
-                <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mb-4">
-                    <a href="/register" class="btn btn-primary btn-lg px-5 rounded-pill">
-                        <i class="bi bi-person-plus"></i> Регистрация
-                    </a>
-                    <a href="/login" class="btn btn-outline-primary btn-lg px-5 rounded-pill">
-                        <i class="bi bi-box-arrow-in-right"></i> Вход
-                    </a>
-                </div>
-
-                <!--  кнопка теста -->
-                <div class="mb-4">
-                    <a href="/test" class="btn btn-success btn-lg px-5 rounded-pill">
-                        <i class="bi bi-question-circle"></i> Пройти тест по Python
-                    </a>
-                    <p class="small text-muted mt-2">Проверь свои знания программирования</p>
-                </div>
-
-                <!-- Завершающая фраза -->
-                <hr class="my-4">
-                <p class="text-muted small mb-0">
-                    <i class="bi bi-code-slash"></i> Погрузись в мир кода вместе с нами
-                </p>
-
-            </div>
+<section class="hero">
+    <div>
+        <div class="sheet-kicker">Python с нуля · автопроверка · ЛиВА</div>
+        <h1>
+            Привет, путник, ищущий знаний в&nbsp;цифровой
+            <span class="underlined">степи
+                <svg viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
+                    <path pathLength="1" d="M2 6 C 20 2, 40 9, 60 5 S 90 3, 98 6"/>
+                </svg>
+            </span>
+        </h1>
+        <p class="lead-text">
+            Ты попал в <strong>Лицей имени Вадима Аганова</strong>. Здесь можно получить важнейшие знания
+            по программированию — или дальше блуждать по бесконечным просторам цифровой степи.
+        </p>
+        <div class="hero-actions">
+            <a href="/register" class="btn btn-primary">Регистрация <span class="arrow">→</span></a>
+            <a href="/login" class="btn btn-outline-primary">У меня уже есть аккаунт</a>
         </div>
-
     </div>
-</div>
+
+    <div class="code-sheet" id="codeSheet" title="Наведи — поправим отступы">
+        <div><span class="ln">1</span><span class="kw">for</span> день <span class="kw">in</span> <span class="fn">range</span>(365):</div>
+        <div><span class="ln">2</span><span class="indent"></span>учиться()</div>
+        <div><span class="ln">3</span><span class="indent"></span><span class="kw">if</span> понятно:</div>
+        <div><span class="ln">4</span><span class="indent"></span><span class="indent"></span><span class="kw">break</span>  <span class="cm"># шутка</span></div>
+        <div><span class="ln">5</span><span class="fn">print</span>(<span class="str">"Готово!"</span>)</div>
+        <div class="teacher-note">
+            <svg width="34" height="26" viewBox="0 0 34 26" aria-hidden="true">
+                <path d="M32 24 C 22 22, 10 16, 4 4 M4 4 L 3 13 M4 4 L 12 7"/>
+            </svg>
+            <span class="todo">отступы кривые!</span>
+            <span class="done">вот теперь — 5</span>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature">
+        <div class="feature-num">01</div>
+        <svg viewBox="0 0 54 54" aria-hidden="true">
+            <path pathLength="1" d="M4 48 L 16 48 L 16 36 L 28 36 L 28 24 L 40 24 L 40 12 L 51 12"/>
+            <path class="accent" pathLength="1" d="M44 4 L 51 12 L 44 19"/>
+        </svg>
+        <h3>Практика с нуля</h3>
+        <p>Учись на реальных примерах и задачах, ступенька за ступенькой.</p>
+    </div>
+    <div class="feature">
+        <div class="feature-num">02</div>
+        <svg viewBox="0 0 54 54" aria-hidden="true">
+            <path pathLength="1" d="M5 7 L 49 6 L 48 48 L 6 49 Z"/>
+            <path class="accent" pathLength="1" d="M14 27 L 23 37 L 41 15"/>
+        </svg>
+        <h3>Автопроверка кода</h3>
+        <p>Отправил решение — через секунду знаешь, прошло оно тесты или нет.</p>
+    </div>
+    <div class="feature">
+        <div class="feature-num">03</div>
+        <svg viewBox="0 0 54 54" aria-hidden="true">
+            <path class="accent" pathLength="1" d="M27 4 C 42 3, 51 14, 50 28 C 49 43, 37 51, 25 50 C 11 49, 3 38, 5 24 C 7 12, 16 6, 31 6"/>
+            <path pathLength="1" d="M33 16 L 22 16 L 20 26 C 30 23, 35 30, 32 36 C 29 41, 22 40, 19 37"/>
+        </svg>
+        <h3>Баллы и рейтинг</h3>
+        <p>За каждую решённую задачу — баллы, а за баллы — место в рейтинге.</p>
+    </div>
+</section>
+
+<section class="row g-5 align-items-start">
+    <div class="col-lg-7">
+        <h2 class="h3 mb-3">Что тебя ждёт в лицее</h2>
+        <ul class="ruled-list">
+            <li><span><strong>Интерактивный учебник</strong> и возможность задать вопрос китайскому другу</span></li>
+            <li><span><strong>Встроенный редактор</strong> — решаешь задачи прямо на сайте</span></li>
+            <li><span><strong>Мгновенная проверка</strong> решений с разбором ошибок</span></li>
+            <li><span><strong>Подсказки</strong> и помощь, когда что-то не получается</span></li>
+            <li><span><strong>Личный кабинет</strong> с отслеживанием прогресса</span></li>
+        </ul>
+    </div>
+    <div class="col-lg-5">
+        <div class="sheet" style="padding: 30px 28px;">
+            <div class="sheet-kicker">Самопроверка</div>
+            <h3 class="h4">Не уверен в своём уровне?</h3>
+            <p class="text-muted mb-4">Шесть тестов — от «первых шагов» до сеньора. Без регистрации.</p>
+            <a href="/test" class="btn btn-success w-100 d-flex justify-content-between">Пройти тест по Python <span class="arrow">→</span></a>
+            <p class="hand mt-3 mb-0">погрузись в мир кода вместе с нами</p>
+        </div>
+    </div>
+</section>
+<div style="height: 60px;"></div>
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+        // на телефоне нет наведения — отступы «исправляются» по нажатию
+        const sheet = document.getElementById('codeSheet');
+        if (sheet) sheet.addEventListener('click', () => sheet.classList.toggle('fixed'));
 
-        // Находим кнопку профиля
-        const profileBtn = document.querySelector('button[onclick*="/profile"]');
+        // гостю вместо профиля показываем приглашение войти
+        const profileBtn = document.getElementById('profileLink');
 
-        // Находим кнопку настроек
-        const settingsBtn = document.querySelector('button[onclick*="/settings"]');
-
-        // Функция, которая показывает всплывающее окно
         function showPopup(event) {
-            // Отменяем стандартное действие
             event.preventDefault();
-            // Останавливаем всплытие события
             event.stopPropagation();
 
             const popup = document.createElement('div');
-            popup.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99999;display:flex;align-items:center;justify-content:center';
-
-            // СОЗДАЕМ  ОКНО С КНОПКАМИ
+            popup.className = 'auth-popup';
             popup.innerHTML = `
-
-                <div style="background:white;border-radius:15px;padding:25px;width:350px;text-align:center;box-shadow:0 5px 20px rgba(0,0,0,0.3)">
-                    <!-- Крестик закрытия в правом верхнем углу -->
-                    <div style="text-align:right">
-                        <button class="close-popup" style="background:none;border:none;font-size:24px;cursor:pointer">&times;</button>
-                    </div>
-                    <!-- Заголовок -->
-                    <h3 style="margin-bottom:15px">🔐 Требуется авторизация</h3>
-                    <!-- Описание -->
-                    <p style="color:#666;margin-bottom:25px">Зарегистрируйтесь или войдите, чтобы продолжить</p>
-                    <!-- Кнопки: Регистрация и Вход -->
-                    <div style="display:flex;gap:15px;justify-content:center">
-                        <a href="/register" style="background:#0d6efd;color:white;padding:10px 25px;border-radius:30px;text-decoration:none">Регистрация</a>
-                        <a href="/login" style="background:transparent;color:#0d6efd;padding:10px 25px;border-radius:30px;text-decoration:none;border:1px solid #0d6efd">Вход</a>
+                <div class="sheet">
+                    <button class="close-popup" aria-label="Закрыть">×</button>
+                    <div class="sheet-kicker">Стоп</div>
+                    <h3 class="h4 mb-2">Нужно войти</h3>
+                    <p class="text-muted mb-4">Зарегистрируйтесь или войдите, чтобы продолжить.</p>
+                    <div class="d-grid gap-2">
+                        <a href="/register" class="btn btn-primary d-flex justify-content-between">Регистрация <span class="arrow">→</span></a>
+                        <a href="/login" class="btn btn-outline-primary">Вход</a>
                     </div>
                 </div>
             `;
-
             document.body.appendChild(popup);
 
-            // ПРИ КЛИКЕ НА КРЕСТИК - УДАЛЯЕМ ОКНО
-            popup.querySelector('.close-popup').onclick = function() {
-                popup.remove();  // Удаляем затемнение и окно со страницы
-            };
+            popup.addEventListener('click', function (e) {
+                if (e.target === popup || e.target.closest('.close-popup')) popup.remove();
+            });
         }
 
-        // ПРИВЯЗЫВАЕМ ФУНКЦИЮ ПОКАЗА ОКНА
-        if (profileBtn) profileBtn.onclick = showPopup;
-
-        // ПРИВЯЗЫВАЕМ ФУНКЦИЮ ПОКАЗА ОКНА
-        if (settingsBtn) settingsBtn.onclick = showPopup;
+        if (profileBtn) profileBtn.addEventListener('click', showPopup);
     });
 </script>
 {% endblock %}

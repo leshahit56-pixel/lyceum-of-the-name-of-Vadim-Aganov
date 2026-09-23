@@ -4,40 +4,27 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-lg-8 col-md-9 col-12">
+    <div class="col-lg-8 col-md-10 col-12">
 
-        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
-            <div class="card-body p-4 p-md-5">
+        <div class="sheet">
+            <div class="sheet-kicker">Шаг первый</div>
+            <h2 class="mb-2"><span class="title">Курсы</span></h2>
+            <p class="text-muted mb-4">Выбери направление и начни обучение.</p>
 
-                <!-- Заголовок -->
-                <div class="text-center mb-4">
-                    <div class="display-6 mb-2">📚</div>
-                    <h2 class="fw-bold"
-                        style="background: linear-gradient(135deg, #0d6efd, #6f42c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                        Курсы
-                    </h2>
-                    <div class="small text-muted">Выбери направление и начни обучение</div>
+            <a href="/course/python" class="course-card">
+                <svg class="snake" viewBox="0 0 84 34" aria-hidden="true">
+                    <path pathLength="1" d="M2 20 C 12 4, 22 4, 32 20 S 52 36, 62 20 S 74 8, 76 14"/>
+                    <circle cx="78" cy="15" r="3"/>
+                </svg>
+                <div>
+                    <h3>Основы программирования на Python</h3>
+                    <p>Изучите самый популярный язык с нуля</p>
                 </div>
+                <span class="go">Открыть <span class="arrow">→</span></span>
+            </a>
 
-                <div class="d-flex flex-column gap-3">
-
-                    <!-- Курс Python -->
-                    <a href="/course/python" class="text-decoration-none">
-                        <div class="d-flex align-items-center gap-3 p-3 rounded-4 border shadow-sm hover-effect"
-                             style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-                            <div class="display-4">🐍</div>
-                            <div>
-                                <h4 class="mb-1 text-dark">Основы программирования на Python</h4>
-                                <p class="text-muted small mb-0">Изучите самый популярный язык с нуля</p>
-                            </div>
-                            <div class="ms-auto">
-                                <i class="bi bi-arrow-right-circle fs-3 text-primary"></i>
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-
+            <div class="course-soon">
+                <span>здесь скоро появятся новые курсы…</span>
             </div>
         </div>
 

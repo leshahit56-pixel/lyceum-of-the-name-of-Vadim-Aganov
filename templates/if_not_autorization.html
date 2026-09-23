@@ -2,18 +2,20 @@
 
 {% block content %}
 <div class="auth-v2-wrapper">
-    <div class="auth-v2-card p-5 text-center animate-v2-up" style="max-width: 420px; width: 100%;">
-        <h2 class="auth-v2-title">Лицей имени <br> Вадима Аганова</h2>
-        <p class="text-white-50 mb-4">Войдите или зарегистрируйтесь, чтобы продолжить</p>
-        
+    <div class="sheet auth-sheet">
+        <div class="sheet-kicker">Стоп</div>
+        <h2>Сначала — войти</h2>
+        <p class="text-muted mb-4">Войдите или зарегистрируйтесь, чтобы продолжить.</p>
+
         <form method="post" class="d-grid gap-3">
             <button name="action" value="aut" type="submit" class="btn-v2-main btn-v2-login">
-                <i class="bi bi-box-arrow-in-right"></i> Вход
+                <span>Вход</span> <span class="arrow">→</span>
             </button>
             <button name="action" value="reg" type="submit" class="btn-v2-main btn-v2-reg">
-                <i class="bi bi-person-plus"></i> Регистрация
+                <span>Регистрация</span> <span class="arrow">→</span>
             </button>
         </form>
+        <p class="hand mt-4 mb-0">без этого Вадим Маликович не пустит</p>
     </div>
 </div>
 {% endblock %}

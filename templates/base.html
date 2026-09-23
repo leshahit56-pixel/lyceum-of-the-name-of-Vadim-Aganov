@@ -4,220 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Лицей имени Вадима Аганова{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block extra_css %}{% endblock %}
 </head>
 <body class="min-vh-100">
+<script>
+    try {
+        if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+    } catch (e) {}
+</script>
 
-<!-- Шапка -->
-<div style="display: flex; justify-content: space-between; align-items: center; padding-left: 20px; padding-top: 20px; padding-right: 20px; margin-bottom: 5rem;">
+<!-- Рисунки на полях тетради -->
+<div class="doodles" aria-hidden="true">
+    <svg class="d1" style="left: calc(var(--margin-x) + 26px); top: 24%;" width="30" height="124" viewBox="0 0 30 124">
+        <path pathLength="1" d="M28 2 C 12 4, 18 32, 16 46 C 14 56, 7 60, 2 62 C 7 64, 14 68, 16 80 C 18 94, 12 120, 28 122"/>
+    </svg>
+    <svg class="d2" style="right: 3.5%; top: 17%;" width="130" height="90" viewBox="0 0 130 90">
+        <path class="spin" pathLength="1" d="M2 40 C 18 8, 46 8, 46 30 C 46 52, 18 52, 24 32 C 30 10, 66 10, 70 32 C 74 54, 46 56, 52 34 C 58 12, 96 12, 100 34 C 104 56, 76 56, 82 36 C 88 18, 116 20, 126 34"/>
+        <text x="30" y="84" font-size="21">while True</text>
+    </svg>
+    <svg class="d3" style="left: calc(var(--margin-x) + 22px); bottom: 14%;" width="90" height="60" viewBox="0 0 90 60">
+        <text x="2" y="30" font-size="30">&gt;&gt;&gt;</text>
+        <path pathLength="1" d="M2 42 C 20 38, 40 46, 58 40 S 80 38, 86 42"/>
+    </svg>
+    <svg class="d4" style="right: 4%; bottom: 18%;" width="150" height="50" viewBox="0 0 150 50">
+        <path pathLength="1" d="M2 26 C 17 4, 32 4, 47 26 S 77 48, 92 26 S 122 4, 136 24"/>
+        <circle pathLength="1" cx="140" cy="27" r="5"/>
+        <path pathLength="1" d="M145 28 L 150 26 M145 28 L 150 31"/>
+    </svg>
+    <svg class="d5" style="left: calc(var(--margin-x) + 30px); top: 54%;" width="60" height="90" viewBox="0 0 60 90">
+        <path pathLength="1" d="M4 2 C 34 12, 54 42, 40 82"/>
+        <path pathLength="1" d="M28 72 L 40 83 L 52 70"/>
+    </svg>
+    <svg class="d6" style="right: 6%; top: 52%;" width="120" height="70" viewBox="0 0 120 70">
+        <path pathLength="1" d="M18 6 L 18 38 M4 14 L 32 30 M4 30 L 32 14"/>
+        <text x="40" y="30" font-size="20">не забыть</text>
+        <text x="40" y="54" font-size="20">про break!</text>
+    </svg>
+</div>
+<canvas id="trail" aria-hidden="true"></canvas>
 
-    <!-- Логотип и название -->
-    <div class="d-flex align-items-center gap-3">
-        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Логотип Лицея"
-             style="height: 45px; width: auto;" class="logo-img">
-        <div class="d-flex align-items-center gap-2">
-            <h4 class="text-white mb-0 fw-bold">Лицей имени Вадима Аганова</h4>
-            <!-- Кнопка с информацией -->
-            <button type="button" class="btn btn-link text-white p-0 d-flex align-items-center justify-content-center"
-                    style="width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.15); text-decoration: none;"
-                    data-bs-toggle="modal" data-bs-target="#aganovBioModal"
-                    title="О Вадиме Аганове">
-                <i class="bi bi-info-circle-fill" style="font-size: 1rem;"></i>
-            </button>
-        </div>
+<header class="topbar">
+    <a class="brand" href="/">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Логотип Лицея">
+        <span class="brand-name">Лицей имени Вадима Аганова</span>
+    </a>
+    <button type="button" class="who-btn" data-bs-toggle="modal" data-bs-target="#aganovBioModal">кто это?</button>
+
+    <div class="topbar-note" id="dateNote">
+        <span data-date></span>
+        <small>Классная работа</small>
     </div>
 
-    <!-- Модальное окно с биографией Вадима Аганова -->
-    <div class="modal fade" id="aganovBioModal" tabindex="-1" aria-labelledby="aganovBioModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header border-0 pb-0">
-                    <h3 class="modal-title fw-bold" id="aganovBioModalLabel">
-                        <i class="bi bi-person-circle me-2"></i>Вадим Маликович Аганов
-                    </h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
-                <div class="modal-body pt-3">
-                    <div class="bio-content" style="max-height: 60vh; overflow-y: auto; padding-right: 10px;">
+    <div class="topbar-controls">
+        <button type="button" class="theme-switch" id="themeSwitch" aria-label="Переключить тему">
+            <span>бумага</span><span>доска</span>
+        </button>
 
-                        <div class="bio-section mb-4">
-                            <p class="lead" style="font-size: 1.1rem;">
-                                <i class="bi bi-quote me-1"></i>
-                                Если вы думаете, что я проверяю домашки руками, то вы ошибаетесь. У меня для этого есть
-                                целая нейросеть. И она тоже не проверяет. Она просто пишет вам "молодец" и ставит
-                                пятёрку. Шучу. Или нет.
-                                <i class="bi bi-quote ms-1"></i>
-                            </p>
-                        </div>
-
-                        <div class="bio-section mb-3">
-                            <h5><i class="bi bi-calendar-event me-2"></i>Рождение и ранние годы</h5>
-                            <p>Вадим Маликович Аганов родился 12 сентября 1996 года в Москве. По семейной легенде, в
-                                роддоме отказал датчик температуры, и новорождённый Вадим, недовольно хмурясь, починил
-                                его первым в жизни скриптом — говорят, написанным прямо на пелёнке шариковой ручкой. С
-                                тех пор техника при нём работает безотказно. Кроме принтера. Принтер его ненавидит. Это
-                                взаимно.</p>
-                        </div>
-
-                        <div class="bio-section mb-3">
-                            <h5><i class="bi bi-mortarboard me-2"></i>Образование</h5>
-                            <p>Окончил РГУ нефти и газа имени И. М. Губкина: бакалавриат в 2017 году, магистратуру в
-                                2019-м. Факультет автоматики и вычислительной техники, кафедра автоматизированных систем
-                                управления. Уже в студенческие годы проявилась его главная особенность: Вадим Маликович
-                                проверяет задачи, требующие ручной проверки, с такой тщательностью, что студенты
-                                успевают забыть, что вообще их сдавали. Ходят легенды, что однажды он проверял курсовую
-                                работу три семестра. Студент за это время успел жениться, завести ребёнка и переехать в
-                                другой город. Когда оценка наконец пришла, в ведомости значилось: «Хорошо. Но отступы
-                                кривые». Говорят, именно эта история вдохновила создателей ЛиВА внедрить автоматическую
-                                проверку кода — чтобы спасти психику будущих поколений.</p>
-                        </div>
-
-                        <div class="bio-section mb-3">
-                            <h5><i class="bi bi-briefcase me-2"></i>Карьера и педагогический стаж</h5>
-                            <p>После выпуска остался в университете. Работал ассистентом кафедры АСУ, позже занял
-                                должность педагога-организатора. Параллельно стал преподавателем Яндекс Лицея, где вёл
-                                курсы по Python для школьников и студентов. Общий педагогический стаж — 26 лет 11
-                                месяцев. Цифра вызывает вопросы у отдела кадров, ведь на 2026 год Вадиму Маликовичу
-                                всего 29 лет. Отдел кадров спорить не стал — списали на стаж, полученный в предыдущих
-                                жизнях. Зато теперь у него надбавка за выслугу лет идёт с минус двадцати одного
-                                года.</p>
-                        </div>
-
-                        <div class="bio-section mb-3">
-                            <h5><i class="bi bi-robot me-2"></i>Педагогический принцип</h5>
-                            <p>Главный педагогический принцип Вадима Маликовича прост и суров: если студент просит
-                                помочь с задачей, он неизменно отвечает: «Я тебе не нейросеть, чтобы за тебя код
-                                писать». Студенты сначала обижались, но потом выяснилось, что после этой фразы они
-                                действительно садятся и разбираются сами. Сам Вадим Маликович считает это своим
-                                величайшим вкладом в образование — он научил студентов самостоятельности одним
-                                предложением.</p>
-                        </div>
-
-                        <div class="bio-section mb-3">
-                            <h5><i class="bi bi-bar-chart me-2"></i>Дополнительное образование</h5>
-                            <p>В 2020 году прошёл переподготовку в Школе анализа данных по Python. Объём курса, согласно
-                                документам, составил 2160 часов. Отдел кадров сначала подумал, что это опечатка, но
-                                Вадим Маликович заверил, что учился круглосуточно, включая сон, во время которого ему
-                                снились декораторы и генераторы. В 2025 году освоил курс «Нейронные сети в
-                                образовательной и научной деятельности преподавателя» объёмом около 2400 часов.</p>
-                        </div>
-
-                        <div class="bio-section mb-3">
-                            <h5><i class="bi bi-arrow-repeat me-2"></i>Случай с бесконечным циклом</h5>
-                            <p>Однажды на онлайн-занятии в Яндекс Лицее Вадим Маликович объяснял тему циклов. Всё шло
-                                хорошо, пока он не решил запустить демонстрацию кода прямо в прямом эфире. Написал
-                                простой <code>while True: print("Поняли?")</code>, запустил — и трансляция зависла.
-                                Намертво. Студенты видели застывшее лицо Вадима Маликовича с открытым ртом на слове
-                                «итерация». В чате началась паника: «Преподаватель сломался», «Вадим Маликович, вы
-                                живы?», «Кажется, он ушёл в бесконечный цикл».</p>
-                            <p>Через минуту тишины в чат от него пришло сообщение: «Я случайно запустил бесконечный
-                                цикл. Буквально. Перезагружаюсь. Если не вернусь — передайте маме, что я любил отступы».
-                                Ещё через две минуты он вернулся в эфир с идеально ровной осанкой, невозмутимо поправил
-                                очки и сказал: «Вот видите, что бывает, когда не ставите условие выхода. А теперь
-                                запишите: break — ваш друг. В отличие от моего интернета и этого ноутбука».</p>
-                            <p>Студенты потом ещё месяц спамили в чате фразу «break — ваш друг» на каждом занятии. Вадим
-                                Маликович каждый раз тяжело вздыхал и говорил: «Я создал монстров». Но улыбался.</p>
-                        </div>
-
-                        <div class="bio-section mb-3">
-                            <h5><i class="bi bi-star me-2"></i>Причина создания ЛиВА</h5>
-                            <p>Мы с другом учились в Яндекс Лицее, и Вадим Маликович вёл у нас Python. Это были
-                                легендарные пары. Он мог начать с декораторов, а потом внезапно сказать: «Кстати, о
-                                циклах — вот был у меня случай в Губкинском...» — и уйти в историю минут на двадцать.
-                                Про то, как принтер съел курсовую. Про то, как он случайно удалил базу данных и делал
-                                вид, что так и надо. Про то, как студент прислал домашку с паролем «12345» и искренне
-                                удивлялся, почему её взломали. Мы сидели с открытыми ртами, забыв, что вообще-то пришли
-                                учить Python.</p>
-                            <p>А в конце каждой истории он обязательно добавлял, как бы между прочим: «Ну и в зале я,
-                                кстати, сто двадцать на раз жму. Легко». Поправлял очки, наклонялся к камере и ждал
-                                реакции. Чат взрывался смеющимися эмодзи, потому что все мы знали: единственное, что он
-                                жал в своей жизни — это кнопку «Отправить на доработку». И максимум, что его прижимало —
-                                это принтер кипой непроверенных домашек. Килограмм двадцать, не больше. Но мы
-                                подыгрывали. Потому что Вадим Маликович — легенда.</p>
-                            <p>На финальной защите проектов мы с другом показали свою работу. Он посмотрел, покивал и
-                                сказал: «Неплохо. Но если бы вы сделали свою платформу, да с нормальной автоматической
-                                проверкой, да без этих вот ручных домашек — вот это был бы проект. Я бы даже пожал вам
-                                руки. Обеими. А это, знаете ли, нагрузка». Мы переглянулись и поняли: это вызов.</p>
-                            <p>Через полгода мы начали пилить ЛиВА. Когда выбирали название, друг сказал: «Только
-                                Аганов. Больше некому». Я показал Вадиму Маликовичу прототип и объяснил идею. Он
-                                помолчал, потыкал кнопки, нашёл баг и выдал: «Ну, двое — это уже команда. Называйте.
-                                Только не подведите, я на вас ставку сделал. И отступы поправьте, они всё ещё кривые. И
-                                да, я жму сто двадцать, если что».</p>
-                            <p>Так появился Лицей имени Вадима Аганова — ЛиВА. Проект двух студентов, которые решили,
-                                что учиться программированию должно быть весело, домашки должны проверяться сами, а
-                                двадцать килограмм — это тоже вес. Особенно если это стопка курсовых в Zoom-эфире.</p>
-                        </div>
-
-                        <div class="bio-section">
-                            <h5><i class="bi bi-info-circle me-2"></i>Что сейчас</h5>
-                            <p>Сейчас Вадим Маликович продолжает работать в Губкинском университете и преподаёт в Яндекс
-                                Лицее. Периодически заходит в ЛиВА — проверяет, не завис ли интерфейс, и оставляет в
-                                логах загадочные комментарии, которые студенты потом цитируют в чатах. Говорят, он до
-                                сих пор не доверяет кнопке «Запустить код» и перед каждым нажатием шепчет: «Только не
-                                бесконечный цикл».</p>
-                            <p>Принтер его по-прежнему ненавидит. Но теперь это проблема кафедры, а не ЛиВА.</p>
-                        </div>
-
-                        <hr>
-
-                        <div class="text-muted small d-flex align-items-center justify-content-end gap-2">
-                            <i class="bi bi-check-circle"></i>
-                            <span>Биография составлена при личном одобрении Вадима Маликовича</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">
-                        <i class="bi bi-x-circle me-1"></i>Закрыть
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Панель с кнопками -->
-    <div class="d-flex align-items-center gap-3 bg-dark bg-opacity-25 rounded-4 px-4 py-3"
-         style="backdrop-filter: blur(5px);">
-
-        <!-- Кнопка темы -->
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-light" onclick="setTheme('light')"
-                    style="border-top-left-radius: 25px; border-bottom-left-radius: 25px; padding: 8px 15px;">
-                ☀️
-            </button>
-            <button type="button" class="btn btn-light" onclick="setTheme('dark')"
-                    style="border-top-right-radius: 25px; border-bottom-right-radius: 25px; padding: 8px 15px;">
-                🌙
-            </button>
-        </div>
-
-        <!-- Профиль -->
-        <button type="button" class="btn p-0 d-flex align-items-center gap-2"
-                onclick="window.location.href='/profile'"
-                style="background: none; border: none;">
+        {% if not hide_profile %}
+        <a href="/profile" class="profile-link" id="profileLink">
             {% if current_user and current_user.avatar %}
-            <img src="{{ url_for('static', filename='uploads/' + current_user.avatar) }}"
-                 alt="Profile"
-                 style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; object-fit: cover;">
+            <img src="{{ url_for('static', filename='uploads/' + current_user.avatar) }}" alt="Профиль">
             {% else %}
-            <img src="{{ url_for('static', filename='img/logo.png') }}"
-                 alt="Profile"
-                 style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; object-fit: cover;">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Профиль">
             {% endif %}
-            <span class="text-white fw-semibold" style="font-size: 1rem;">
+            <span>
                 {% if current_user %}
                     {{ current_user.name }} {{ current_user.surname }}
                 {% else %}
-                    Имя Фамилия
+                    Гость
                 {% endif %}
             </span>
-        </button>
-
+        </a>
+        {% endif %}
     </div>
-</div>
+</header>
+
+{% include "_bio_modal.html" %}
 
 <div class="container">
     {% block content %}
@@ -225,25 +93,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    function setTheme(theme) {
-        if (theme === 'dark') {
-            document.body.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.body.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        }
-    }
-
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark');
-    } else {
-        document.body.classList.remove('dark');
-    }
-</script>
+<script src="{{ url_for('static', filename='js/liva.js') }}"></script>
 
 {% block extra_js %}{% endblock %}
 </body>

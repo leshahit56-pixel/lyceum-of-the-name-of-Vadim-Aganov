@@ -11,11 +11,8 @@
 
                 <!-- Заголовок -->
                 <div class="text-center mb-4">
-                    <div class="display-6 mb-2">🔥</div>
-                    <h2 class="fw-bold mb-2"
-                        style="background: linear-gradient(135deg, #0d6efd, #6f42c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                        Тест №5: «Мидл»
-                    </h2>
+                    <div class="sheet-kicker">Тест · 05</div>
+                    <h2 class="fw-bold mb-2"><span class="title">Тест №5: «Мидл»</span></h2>
                     <p class="text-muted">Middle • 2-5 лет опыта • Яндекс, Тинькофф, Сбер • 25 вопросов</p>
                     <div class="mt-2">
                         <span class="badge bg-success px-3 py-2 me-2">5 оч. лёгких</span>
@@ -29,7 +26,7 @@
                 <form id="testForm" onsubmit="checkAnswers(event)">
 
                     <!-- Очень лёгкие вопросы (1-5) -->
-                    <div class="mb-3 mt-4"><span class="badge bg-success">🌱 Очень лёгкие вопросы</span></div>
+                    <div class="mb-3 mt-4"><span class="badge bg-success"><span class="tally" style="--n:1"></span>Очень лёгкие вопросы</span></div>
 
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">1. Что такое GIL (Global Interpreter Lock)?</h5>
@@ -100,7 +97,7 @@
                     </div>
 
                     <!-- Лёгкие вопросы (6-10) -->
-                    <div class="mb-3 mt-4"><span class="badge bg-info text-white">🍀 Лёгкие вопросы</span></div>
+                    <div class="mb-3 mt-4"><span class="badge bg-info text-white"><span class="tally" style="--n:2"></span>Лёгкие вопросы</span></div>
 
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">6. В чём разница между __init__ и __new__?</h5>
@@ -171,7 +168,7 @@
                     </div>
 
                     <!-- Средние вопросы (11-15) -->
-                    <div class="mb-3 mt-4"><span class="badge bg-warning text-dark">⚡ Средние вопросы</span></div>
+                    <div class="mb-3 mt-4"><span class="badge bg-warning text-dark"><span class="tally" style="--n:3"></span>Средние вопросы</span></div>
 
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">11. Что такое метаклассы (metaclass) и когда их используют?</h5>
@@ -245,7 +242,7 @@
                     </div>
 
                     <!-- Сложные вопросы (16-20) -->
-                    <div class="mb-3 mt-4"><span class="badge bg-danger">🔥 Сложные вопросы</span></div>
+                    <div class="mb-3 mt-4"><span class="badge bg-danger"><span class="tally" style="--n:4"></span>Сложные вопросы</span></div>
 
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">16. Что такое тестовая пирамида и как она применяется в
@@ -320,7 +317,7 @@
                     </div>
 
                     <!-- Очень сложные вопросы (21-25) -->
-                    <div class="mb-3 mt-4"><span class="badge bg-dark">💀 Очень сложные вопросы</span></div>
+                    <div class="mb-3 mt-4"><span class="badge bg-dark"><span class="tally" style="--n:5"></span>Очень сложные вопросы</span></div>
 
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">21. Как работает C3-линеаризация при множественном наследовании?</h5>
@@ -392,7 +389,7 @@
                     <!-- Кнопка -->
                     <div class="text-center mt-4">
                         <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill">
-                            <i class="bi bi-check-lg"></i> Проверить ответы
+                            Проверить ответы <span class="arrow">→</span>
                         </button>
                     </div>
 
@@ -448,36 +445,40 @@
         const total = veryEasy + easy + medium + hard + expert;
         const percent = Math.round((total / 25) * 100);
 
-        let grade = '', emoji = '';
+        let grade = '', mark = '';
 
-        if (total >= 22) { grade = 'Сильный Middle, готов к Senior!'; emoji = '🏆🔥👑'; }
-        else if (total >= 18) { grade = 'Middle+, есть потенциал!'; emoji = '🚀💪✨'; }
-        else if (total >= 15) { grade = 'Middle, но есть пробелы в знаниях'; emoji = '📚👍🌿'; }
-        else if (total >= 10) { grade = 'Middle-, нужна подготовка'; emoji = '📖💡🔄'; }
-        else { grade = 'Уровень Junior. Рекомендуем пройти тест на Junior'; emoji = '🐣📘🌱'; }
+        if (total >= 22) { grade = 'Сильный Middle, готов к Senior!'; mark = '5'; }
+        else if (total >= 18) { grade = 'Middle+, есть потенциал!'; mark = '4'; }
+        else if (total >= 15) { grade = 'Middle, но есть пробелы в знаниях'; mark = '3'; }
+        else if (total >= 10) { grade = 'Middle-, нужна подготовка'; mark = '3'; }
+        else { grade = 'Уровень Junior. Рекомендуем пройти тест на Junior'; mark = '2'; }
 
         const resultBlock = document.getElementById('resultBlock');
         resultBlock.innerHTML = `
-            <div class="border rounded-4 p-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-                <div class="display-3 mb-2">${emoji}</div>
-                <h3 class="fw-bold" style="color: #0d6efd;">${total}/25 правильных ответов</h3>
+            <div class="result-sheet">
+                <div class="grade">
+                    <svg viewBox="0 0 124 124" aria-hidden="true"><path pathLength="1" d="M66 6 C 98 8, 118 32, 116 62 C 114 94, 90 118, 60 117 C 28 116, 7 92, 8 60 C 9 30, 32 8, 60 7 C 70 7, 80 10, 88 15"/></svg>
+                    <span>${mark}</span>
+                </div>
+                <div class="grade-caption mb-3">${grade}</div>
+                <h3 class="fw-bold">${total}/25 правильных ответов</h3>
 
                 <div class="row mt-4 justify-content-center">
-                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-success mb-1">🌱 Оч. лёгкие</span><h5>${veryEasy}/5</h5></div></div>
-                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-info text-white mb-1">🍀 Лёгкие</span><h5>${easy}/5</h5></div></div>
-                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-warning text-dark mb-1">⚡ Средние</span><h5>${medium}/5</h5></div></div>
-                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-danger mb-1">🔥 Сложные</span><h5>${hard}/5</h5></div></div>
-                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-dark mb-1">💀 Оч. сложные</span><h5>${expert}/5</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-success mb-1"><span class="tally" style="--n:1"></span>Оч. лёгкие</span><h5>${veryEasy}/5</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-info text-white mb-1"><span class="tally" style="--n:2"></span>Лёгкие</span><h5>${easy}/5</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-warning text-dark mb-1"><span class="tally" style="--n:3"></span>Средние</span><h5>${medium}/5</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-danger mb-1"><span class="tally" style="--n:4"></span>Сложные</span><h5>${hard}/5</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-dark mb-1"><span class="tally" style="--n:5"></span>Оч. сложные</span><h5>${expert}/5</h5></div></div>
                 </div>
 
-                <p class="mt-3 fs-5">${grade}</p>
+                
                 <p class="text-muted">Процент правильных ответов: ${percent}%</p>
                 <div class="mt-3">
                     <button onclick="resetTest()" class="btn btn-outline-primary rounded-pill px-4 me-2">
-                        <i class="bi bi-arrow-repeat"></i> Пройти заново
+                        Пройти заново
                     </button>
                     <a href="/test" class="btn btn-primary rounded-pill px-4">
-                        <i class="bi bi-arrow-left"></i> К выбору теста
+                        <span class="arrow back">←</span> К выбору теста
                     </a>
                 </div>
             </div>

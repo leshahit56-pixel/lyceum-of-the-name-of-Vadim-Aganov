@@ -11,11 +11,8 @@
 
                 <!-- Заголовок -->
                 <div class="text-center mb-4">
-                    <div class="display-6 mb-2">🍀</div>
-                    <h2 class="fw-bold mb-2"
-                        style="background: linear-gradient(135deg, #0d6efd, #6f42c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                        Тест №3: «Уверенный пользователь»
-                    </h2>
+                    <div class="sheet-kicker">Тест · 03</div>
+                    <h2 class="fw-bold mb-2"><span class="title">Тест №3: «Уверенный пользователь»</span></h2>
                     <p class="text-muted">Средний уровень • 4-8 месяцев • 15 вопросов</p>
                     <div class="mt-2">
                         <span class="badge bg-success px-3 py-2 me-2">3 оч. лёгких</span>
@@ -29,7 +26,7 @@
                 <form id="testForm" onsubmit="checkAnswers(event)">
 
                     <!-- Очень лёгкие вопросы (1-3) -->
-                    <div class="mb-3 mt-4"><span class="badge bg-success">🌱 Очень лёгкие вопросы</span></div>
+                    <div class="mb-3 mt-4"><span class="badge bg-success"><span class="tally" style="--n:1"></span>Очень лёгкие вопросы</span></div>
 
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">1. Какой блок выполняется всегда, даже если произошла ошибка?</h5>
@@ -68,7 +65,7 @@
                     </div>
 
                     <!-- Лёгкие вопросы (4-7) -->
-                    <div class="mb-3 mt-4"><span class="badge bg-info text-white">🍀 Лёгкие вопросы</span></div>
+                    <div class="mb-3 mt-4"><span class="badge bg-info text-white"><span class="tally" style="--n:2"></span>Лёгкие вопросы</span></div>
 
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">4. Что выведет код?</h5>
@@ -123,7 +120,7 @@ except ValueError:
                     </div>
 
                     <!-- Средние вопросы (8-11) -->
-                    <div class="mb-3 mt-4"><span class="badge bg-warning text-dark">⚡ Средние вопросы</span></div>
+                    <div class="mb-3 mt-4"><span class="badge bg-warning text-dark"><span class="tally" style="--n:3"></span>Средние вопросы</span></div>
 
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">8. Что выведет код?</h5>
@@ -189,7 +186,7 @@ except Exception:
                     </div>
 
                     <!-- Сложные вопросы (12-14) -->
-                    <div class="mb-3 mt-4"><span class="badge bg-danger">🔥 Сложные вопросы</span></div>
+                    <div class="mb-3 mt-4"><span class="badge bg-danger"><span class="tally" style="--n:4"></span>Сложные вопросы</span></div>
 
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">12. Что выведет код?</h5>
@@ -258,7 +255,7 @@ print(obj.get_value())</code></pre>
                     </div>
 
                     <!-- Очень сложный вопрос (15) -->
-                    <div class="mb-3 mt-4"><span class="badge bg-dark">💀 Очень сложный вопрос</span></div>
+                    <div class="mb-3 mt-4"><span class="badge bg-dark"><span class="tally" style="--n:5"></span>Очень сложный вопрос</span></div>
 
                     <div class="mb-4 p-3 rounded-4 border">
                         <h5 class="fw-bold mb-3">15. Что произойдёт при выполнении этого кода?</h5>
@@ -286,7 +283,7 @@ print(b.value)</code></pre>
                     <!-- Кнопка -->
                     <div class="text-center mt-4">
                         <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill">
-                            <i class="bi bi-check-lg"></i> Проверить ответы
+                            Проверить ответы <span class="arrow">→</span>
                         </button>
                     </div>
 
@@ -338,35 +335,39 @@ print(b.value)</code></pre>
         const total = veryEasy + easy + medium + hard + expert;
         const percent = Math.round((total / 15) * 100);
 
-        let grade = '', emoji = '';
+        let grade = '', mark = '';
 
-        if (total >= 13) { grade = 'Отлично! Ты уверенный пользователь Python!'; emoji = '🎉🏆👑'; }
-        else if (total >= 10) { grade = 'Хорошо! Ещё немного и будет уровень Junior'; emoji = '👍🍀✨'; }
-        else if (total >= 7) { grade = 'Средне! Повтори ООП и исключения'; emoji = '📚💪🌿'; }
-        else { grade = 'Вернись к тестам №1-2 и повтори основы'; emoji = '🐣📖🔄'; }
+        if (total >= 13) { grade = 'Отлично! Ты уверенный пользователь Python!'; mark = '5'; }
+        else if (total >= 10) { grade = 'Хорошо! Ещё немного и будет уровень Junior'; mark = '4'; }
+        else if (total >= 7) { grade = 'Средне! Повтори ООП и исключения'; mark = '3'; }
+        else { grade = 'Вернись к тестам №1-2 и повтори основы'; mark = '2'; }
 
         const resultBlock = document.getElementById('resultBlock');
         resultBlock.innerHTML = `
-            <div class="border rounded-4 p-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-                <div class="display-3 mb-2">${emoji}</div>
-                <h3 class="fw-bold" style="color: #0d6efd;">${total}/15 правильных ответов</h3>
+            <div class="result-sheet">
+                <div class="grade">
+                    <svg viewBox="0 0 124 124" aria-hidden="true"><path pathLength="1" d="M66 6 C 98 8, 118 32, 116 62 C 114 94, 90 118, 60 117 C 28 116, 7 92, 8 60 C 9 30, 32 8, 60 7 C 70 7, 80 10, 88 15"/></svg>
+                    <span>${mark}</span>
+                </div>
+                <div class="grade-caption mb-3">${grade}</div>
+                <h3 class="fw-bold">${total}/15 правильных ответов</h3>
 
                 <div class="row mt-4 justify-content-center">
-                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-success mb-1">🌱 Оч. лёгкие</span><h5>${veryEasy}/3</h5></div></div>
-                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-info text-white mb-1">🍀 Лёгкие</span><h5>${easy}/4</h5></div></div>
-                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-warning text-dark mb-1">⚡ Средние</span><h5>${medium}/4</h5></div></div>
-                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-danger mb-1">🔥 Сложные</span><h5>${hard}/3</h5></div></div>
-                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-dark mb-1">💀 Оч. сложные</span><h5>${expert}/1</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-success mb-1"><span class="tally" style="--n:1"></span>Оч. лёгкие</span><h5>${veryEasy}/3</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-info text-white mb-1"><span class="tally" style="--n:2"></span>Лёгкие</span><h5>${easy}/4</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-warning text-dark mb-1"><span class="tally" style="--n:3"></span>Средние</span><h5>${medium}/4</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-danger mb-1"><span class="tally" style="--n:4"></span>Сложные</span><h5>${hard}/3</h5></div></div>
+                    <div class="col-6 col-md-2 mb-2"><div class="border rounded-3 p-2"><span class="badge bg-dark mb-1"><span class="tally" style="--n:5"></span>Оч. сложные</span><h5>${expert}/1</h5></div></div>
                 </div>
 
-                <p class="mt-3 fs-5">${grade}</p>
+                
                 <p class="text-muted">Процент правильных ответов: ${percent}%</p>
                 <div class="mt-3">
                     <button onclick="resetTest()" class="btn btn-outline-primary rounded-pill px-4 me-2">
-                        <i class="bi bi-arrow-repeat"></i> Пройти заново
+                        Пройти заново
                     </button>
                     <a href="/test" class="btn btn-primary rounded-pill px-4">
-                        <i class="bi bi-arrow-left"></i> К выбору теста
+                        <span class="arrow back">←</span> К выбору теста
                     </a>
                 </div>
             </div>

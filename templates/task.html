@@ -4,121 +4,98 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/hint/show-hint.min.css">
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid px-4 py-3">
+{% set levels = [('easy', 1, range(1, 4)), ('medium', 3, range(4, 7)), ('hard', 5, range(7, 10))] %}
+<div class="container-fluid px-lg-4 pb-5">
 
     <div class="mb-4">
-        <a href="{{ back_url }}" class="back-lesson-btn">
-            <i class="bi bi-arrow-left"></i> Вернуться к уроку
-        </a>
+        <a href="{{ back_url }}" class="back-lesson-btn"><span class="arrow back">←</span> Вернуться к уроку</a>
     </div>
 
     <div class="row g-4">
 
         <div class="col-auto">
-            <div class="indicators-panel">
-
-                <div class="indicator-group">
-                    <div class="indicator-label">🌱</div>
+            <nav class="indicators-panel" aria-label="Задачи урока">
+                {% for key, n, orders in levels %}
+                <div class="indicator-group {{ key }}">
+                    <div class="indicator-label"><span class="tally" style="--n:{{ n }}"></span></div>
                     <div class="indicator-dots">
-                        {% for i in range(1, 4) %}
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link task-link" data-status="{{ 'solved' if status_dict.get(i, 0) == 2 else 'failed' if status_dict.get(i, 0) == 1 else 'unsolved' }}">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="task-icon">
+                        {% for i in orders %}
+                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}"
+                           class="indicator-link task-link"
+                           data-status="{{ 'solved' if status_dict.get(i, 0) == 2 else 'failed' if status_dict.get(i, 0) == 1 else 'unsolved' }}"
+                           aria-label="Задача {{ i }}">
+                            <span class="cell-num">{{ i }}</span>
                         </a>
                         {% endfor %}
                     </div>
                 </div>
-
-                <div class="indicator-group">
-                    <div class="indicator-label">🍀</div>
-                    <div class="indicator-dots">
-                        {% for i in range(4, 7) %}
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link task-link" data-status="{{ 'solved' if status_dict.get(i, 0) == 2 else 'failed' if status_dict.get(i, 0) == 1 else 'unsolved' }}">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="task-icon">
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="indicator-group">
-                    <div class="indicator-label">🔥</div>
-                    <div class="indicator-dots">
-                        {% for i in range(7, 10) %}
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=i) }}" class="indicator-link task-link" data-status="{{ 'solved' if status_dict.get(i, 0) == 2 else 'failed' if status_dict.get(i, 0) == 1 else 'unsolved' }}">
-                            <img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task {{ i }}" class="task-icon">
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
+                {% endfor %}
+            </nav>
         </div>
 
         <div class="col">
 
             <div class="task-header">
+                <div class="sheet-kicker">Задача</div>
                 <h2 class="task-title">{{ task.title }}</h2>
                 <div class="task-meta">
-                    <span><i class="bi bi-book"></i> Знакомство со средой</span>
+                    <span>Знакомство со средой</span>
                     <span class="difficulty-{{ task.difficulty }}">
-                        {% if task.difficulty == 'easy' %}🌱 Лёгкая
-                        {% elif task.difficulty == 'medium' %}🍀 Средняя
-                        {% elif task.difficulty == 'hard' %}🔥 Тяжёлая
+                        {% if task.difficulty == 'easy' %}<span class="tally" style="--n:1"></span> Лёгкая
+                        {% elif task.difficulty == 'medium' %}<span class="tally" style="--n:3"></span> Средняя
+                        {% elif task.difficulty == 'hard' %}<span class="tally" style="--n:5"></span> Тяжёлая
                         {% endif %}
                     </span>
-                    <span><i class="bi bi-trophy"></i> {{ task.points }} баллов</span>
+                    <span>{{ task.points }} баллов</span>
                 </div>
             </div>
 
             <div class="task-status">
                 {% if task.status == 'solved' %}
-                <span class="status-badge solved"><i class="bi bi-check-circle"></i> Зачтено {{ task.points }}/{{ task.points }}</span>
+                <span class="status-badge solved">Зачтено {{ task.points }}/{{ task.points }}</span>
                 {% elif task.status == 'failed' %}
-                <span class="status-badge failed"><i class="bi bi-x-circle"></i> Не зачтено</span>
+                <span class="status-badge failed">Не зачтено</span>
                 {% endif %}
             </div>
 
             <div class="condition-wrapper">
-                <button class="condition-btn" id="conditionToggleBtn">
-                    <i class="bi bi-card-text"></i> Условие задачи
-                </button>
+                <button class="condition-btn" id="conditionToggleBtn">Условие задачи <span class="arrow">→</span></button>
             </div>
 
             <div class="row g-3">
-                <div class="col-md-7">
+                <div class="col-lg-7">
                     <div class="editor-container">
                         <div class="editor-header">
-                            <i class="bi bi-code-slash"></i> Редактор кода
+                            <span>solution.py</span>
+                            <span>Python 3</span>
                         </div>
                         <textarea id="codeEditor"></textarea>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-lg-5">
                     <div class="chat-container">
                         <div class="chat-header">
-                            <button class="chat-submit-btn">
-                                <i class="bi bi-send"></i> Отправить
-                            </button>
-                            <button class="chat-tab active" data-tab="compilation">Компиляция</button>
+                            <button class="chat-submit-btn">Отправить</button>
+                            <button class="chat-tab active" data-tab="compilation">Проверка</button>
                             <button class="chat-tab" data-tab="ai">Нейросеть</button>
                         </div>
                         <div class="chat-body" id="chatBody"></div>
                         <div class="chat-input-wrapper">
-                            <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение...">
-                            <button class="chat-send-btn" id="chatSendBtn">
-                                <i class="bi bi-arrow-right"></i>
-                            </button>
+                            <input type="text" class="chat-input" id="chatInput" placeholder="Спросите что-нибудь по задаче…">
+                            <button class="chat-send-btn" id="chatSendBtn" aria-label="Отправить сообщение">→</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="condition-modal show" id="conditionModal">
-                <div class="condition-modal-header modal-border-light">
-                    <h5><i class="bi bi-journal-text"></i> Условие задачи</h5>
+                <div class="condition-modal-header">
+                    <div class="sheet-kicker mb-1">Условие</div>
+                    <h5>{{ task.title }}</h5>
                 </div>
                 <div class="condition-modal-body">
                     {{ task.description | safe }}
@@ -149,7 +126,7 @@
     const editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
         lineNumbers: true,
         mode: 'python',
-        theme: document.body.classList.contains('dark') ? 'dracula' : 'default',
+        theme: 'liva',
         indentUnit: 4,
         smartIndent: true,
         autoCloseBrackets: true,
@@ -190,15 +167,12 @@
         }
     });
 
-    // ---------- Переключение темы редактора ----------
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.attributeName === 'class') {
-                editor.setOption('theme', document.body.classList.contains('dark') ? 'dracula' : 'default');
-            }
-        });
+    // Тема редактора 'liva' задана в style.css через переменные — сама подстраивается под бумагу и доску.
+
+    // Текущая задача подсвечена в панели слева
+    document.querySelectorAll('.task-link').forEach(link => {
+        if (link.pathname === window.location.pathname) link.classList.add('current');
     });
-    observer.observe(document.body, { attributes: true });
 
     // ---------- Переменные для чата ----------
     const chatBody = document.getElementById('chatBody');
@@ -227,9 +201,7 @@
                 if (compilationMessages.length === 0) {
                     chatBody.innerHTML = '<p class="chat-placeholder">Здесь будет результат проверки</p>';
                 } else {
-                    chatBody.innerHTML = compilationMessages.map(msg =>
-                        `<div class="chat-message"><span class="chat-time">${msg.time}</span> <pre style="margin:0; font-family:inherit; white-space:pre-wrap;">${msg.text}</pre></div>`
-                    ).join('');
+                    renderCompilationMessages();
                 }
             } else {
                 if (aiMessages.length === 0) {
@@ -248,14 +220,19 @@
         ).join('');
     }
 
-    function addMessageToChat(text, isAi = false, role = 'user') {
+    function renderCompilationMessages() {
+        chatBody.innerHTML = compilationMessages.map(msg =>
+            `<div class="chat-message ${msg.kind ? 'v-' + msg.kind : ''}"><span class="chat-time">${msg.time}</span> <pre style="margin:0; white-space:pre-wrap;">${msg.text}</pre></div>`
+        ).join('');
+    }
+
+    // kind: 'ok' | 'bad' | 'warn' — цвет пометки на полях сообщения
+    function addMessageToChat(text, isAi = false, role = 'user', kind = '') {
         const time = new Date().toLocaleTimeString().slice(0, 5);
         if (currentTab === 'compilation' && !isAi) {
             if (compilationMessages.length === 0) chatBody.innerHTML = '';
-            compilationMessages.push({ text, time });
-            chatBody.innerHTML = compilationMessages.map(msg =>
-                `<div class="chat-message"><span class="chat-time">${msg.time}</span> <pre style="margin:0; font-family:inherit; white-space:pre-wrap;">${msg.text}</pre></div>`
-            ).join('');
+            compilationMessages.push({ text, time, kind });
+            renderCompilationMessages();
         } else if (currentTab === 'ai') {
             if (aiMessages.length === 0) chatBody.innerHTML = '';
             aiMessages.push({ text, time, role: isAi ? 'assistant' : 'user' });
@@ -268,7 +245,7 @@
     document.querySelector('.chat-submit-btn').onclick = async function() {
         const code = editor.getValue();
 
-        addMessageToChat('📤 Решение отправляется...', false);
+        addMessageToChat('Решение отправлено на проверку…', false);
 
         try {
             const response = await fetch('/api/check_solution', {
@@ -284,7 +261,7 @@
             const result = await response.json();
 
             if (result.verdict === 'ok') {
-                addMessageToChat('✅ Вердикт: OK', false);
+                addMessageToChat('ВЕРДИКТ: OK\nВсе тесты пройдены.', false, 'user', 'ok');
                 sessionStorage.setItem('reload_lesson', 'true');
                 const links = document.querySelectorAll('.task-link');
                 links.forEach(link => {
@@ -293,7 +270,7 @@
                     }
                 });
             } else if (result.verdict === 'неверный ответ') {
-                addMessageToChat('❌ Вердикт: неверный ответ\n\n📋 Тест №' + result.test_number + '\n\n📥 Ввод:\n' + (Array.isArray(result.test_input) ? result.test_input.join('\n') : result.test_input) + '\n\n📤 Вывод программы:\n' + (Array.isArray(result.output) ? result.output.join('\n') : result.output) + '\n\n✅ Ожидалось:\n' + (Array.isArray(result.expected) ? result.expected.join('\n') : result.expected), false);
+                addMessageToChat('ВЕРДИКТ: неверный ответ\n\nТест №' + result.test_number + '\n\nВВОД\n' + (Array.isArray(result.test_input) ? result.test_input.join('\n') : result.test_input) + '\n\nВЫВОД ПРОГРАММЫ\n' + (Array.isArray(result.output) ? result.output.join('\n') : result.output) + '\n\nОЖИДАЛОСЬ\n' + (Array.isArray(result.expected) ? result.expected.join('\n') : result.expected), false, 'user', 'bad');
                 const links = document.querySelectorAll('.task-link');
                 links.forEach(link => {
                     if (link.href.includes('/task/' + taskOrder)) {
@@ -301,13 +278,13 @@
                     }
                 });
             } else if (result.verdict === 'ошибка компиляции' || result.verdict === 'ошибка выполнения') {
-                addMessageToChat('❌ Вердикт: ' + result.verdict + '\n\n⚠️ Ошибка:\n' + result.error, false);
+                addMessageToChat('ВЕРДИКТ: ' + result.verdict + '\n\nОШИБКА\n' + result.error, false, 'user', 'bad');
             } else if (result.verdict === 'код не соответствует стандарту PEP8') {
-                addMessageToChat('📝 ' + result.verdict + '\n\n⚠️ Ошибки стиля:\n' + result.PEP8, false);
+                addMessageToChat('ВЕРДИКТ: ' + result.verdict + '\n\nОШИБКИ СТИЛЯ\n' + result.PEP8, false, 'user', 'warn');
             }
 
         } catch (error) {
-            addMessageToChat('⚠️ Ошибка соединения с сервером', false);
+            addMessageToChat('Нет связи с сервером. Попробуйте ещё раз.', false, 'user', 'warn');
             console.error(error);
         }
 
@@ -334,7 +311,12 @@
         } else {
             chatBody.innerHTML = `
                 <div class="ai-chat-placeholder">
-                    <i class="bi bi-robot robot-icon"></i>
+                    <svg class="robot-icon" viewBox="0 0 64 64" aria-hidden="true">
+                        <path d="M14 20 L 50 19 L 51 50 L 13 51 Z"/>
+                        <path d="M32 19 L 32 9"/><circle cx="32" cy="7" r="3"/>
+                        <circle cx="24" cy="32" r="3"/><circle cx="40" cy="32" r="3"/>
+                        <path d="M23 42 C 28 45, 36 45, 41 42"/>
+                    </svg>
                     <p class="ai-hint">Вы сможете задать вопрос по задаче</p>
                 </div>
             `;
@@ -369,13 +351,13 @@
                 if (result.answer) {
                     addMessageToChat(result.answer, true);
                 } else if (result.error) {
-                    addMessageToChat("⚠️ " + result.error, true);
+                    addMessageToChat(result.error, true);
                 } else {
-                    addMessageToChat("⚠️ Неизвестный ответ от сервера", true);
+                    addMessageToChat("Сервер ответил что-то непонятное.", true);
                 }
             } catch (error) {
                 console.error("Ошибка AI чата:", error);
-                addMessageToChat("⚠️ Не удалось получить ответ от нейросети", true);
+                addMessageToChat("Нейросеть сейчас не отвечает. Попробуйте позже.", true);
             }
         }
     }

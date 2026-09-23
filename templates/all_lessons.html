@@ -1,77 +1,59 @@
 {% extends "base.html" %}
-{% block content %}
 
+{% block title %}{{ title }} - ЛиВА{% endblock %}
+
+{% block content %}
+{% set levels = [
+    ('easy', 'Лёгкие задачи', 1, [1, 2, 3]),
+    ('medium', 'Средние задачи', 3, [4, 5, 6]),
+    ('hard', 'Тяжёлые задачи', 5, [7, 8, 9]),
+] %}
 <div class="row justify-content-center">
     <div class="col-lg-10 col-md-11 col-12">
 
-        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
-            <div class="card-body p-4 p-md-5">
-
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <a href="/course/python" class="btn btn-outline-primary rounded-pill px-4">
-                        <i class="bi bi-arrow-left"></i> К урокам
-                    </a>
-                    <a href={{book}} class="btn btn-info rounded-pill px-4">
-                        <i class="bi bi-book"></i> Учебничек
-                    </a>
-                </div>
-
-                <h2 class="fw-bold text-center mb-3 lesson-title">{{title}}</h2>
-
-                <div class="progress-block mb-4 p-3 rounded-4">
-                    <div class="row align-items-center">
-                        <div class="col-md-7">
-                            <div class="d-flex justify-content-between small mb-1">
-                                <span class="progress-label">Прогресс урока</span>
-                                <span class="progress-value"><strong>{{ solved }}</strong> из {{ total }} задач решено</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ percent }}%;"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-5 mt-3 mt-md-0">
-                            <div class="d-flex justify-content-md-end gap-4">
-                                <div class="text-center">
-                                    <div class="small progress-label">Решено задач</div>
-                                    <div class="fw-bold fs-5 progress-value">{{ solved }}/{{ total }}</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="small progress-label">Заработано баллов</div>
-                                    <div class="fw-bold fs-5 text-success progress-value">0</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="task-section mb-4">
-                    <div class="difficulty-badge easy mb-3"><span class="badge-icon">🌱</span><span class="badge-text">Лёгкие задачи</span></div>
-                    <div class="d-flex flex-column gap-2">
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=1) }}" class="indicator-link" data-status="{{ 'solved' if status_dict.get(1, 0) == 2 else 'failed' if status_dict.get(1, 0) == 1 else 'unsolved' }}"><div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border"><img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task" class="task-icon"><span class="task-name">{{description[0]}}</span></div></a>
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=2) }}" class="indicator-link" data-status="{{ 'solved' if status_dict.get(2, 0) == 2 else 'failed' if status_dict.get(2, 0) == 1 else 'unsolved' }}"><div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border"><img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task" class="task-icon"><span class="task-name">{{description[1]}}</span></div></a>
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=3) }}" class="indicator-link" data-status="{{ 'solved' if status_dict.get(3, 0) == 2 else 'failed' if status_dict.get(3, 0) == 1 else 'unsolved' }}"><div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border"><img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task" class="task-icon"><span class="task-name">{{description[2]}}</span></div></a>
-                    </div>
-                </div>
-
-                <div class="task-section mb-4">
-                    <div class="difficulty-badge medium mb-3"><span class="badge-icon">⚡</span><span class="badge-text">Средние задачи</span></div>
-                    <div class="d-flex flex-column gap-2">
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=4) }}" class="indicator-link" data-status="{{ 'solved' if status_dict.get(4, 0) == 2 else 'failed' if status_dict.get(4, 0) == 1 else 'unsolved' }}"><div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border"><img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task" class="task-icon"><span class="task-name">{{description[3]}}</span></div></a>
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=5) }}" class="indicator-link" data-status="{{ 'solved' if status_dict.get(5, 0) == 2 else 'failed' if status_dict.get(5, 0) == 1 else 'unsolved' }}"><div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border"><img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task" class="task-icon"><span class="task-name">{{description[4]}}</span></div></a>
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=6) }}" class="indicator-link" data-status="{{ 'solved' if status_dict.get(6, 0) == 2 else 'failed' if status_dict.get(6, 0) == 1 else 'unsolved' }}"><div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border"><img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task" class="task-icon"><span class="task-name">{{description[5]}}</span></div></a>
-                    </div>
-                </div>
-
-                <div class="task-section mb-3">
-                    <div class="difficulty-badge hard mb-3"><span class="badge-icon">🔥</span><span class="badge-text">Тяжёлые задачи</span></div>
-                    <div class="d-flex flex-column gap-2">
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=7) }}" class="indicator-link" data-status="{{ 'solved' if status_dict.get(7, 0) == 2 else 'failed' if status_dict.get(7, 0) == 1 else 'unsolved' }}"><div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border"><img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task" class="task-icon"><span class="task-name">{{description[6]}}</span></div></a>
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=8) }}" class="indicator-link" data-status="{{ 'solved' if status_dict.get(8, 0) == 2 else 'failed' if status_dict.get(8, 0) == 1 else 'unsolved' }}"><div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border"><img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task" class="task-icon"><span class="task-name">{{description[7]}}</span></div></a>
-                        <a href="{{ url_for('task', lesson_id=lesson_id, task_order=9) }}" class="indicator-link" data-status="{{ 'solved' if status_dict.get(9, 0) == 2 else 'failed' if status_dict.get(9, 0) == 1 else 'unsolved' }}"><div class="task-item d-flex align-items-center gap-3 p-3 rounded-3 border"><img src="{{ url_for('static', filename='img/not_solution.png') }}" alt="Task" class="task-icon"><span class="task-name">{{description[8]}}</span></div></a>
-                    </div>
-                </div>
-
+        <div class="sheet">
+            <div class="crumbs">
+                <a href="/course/python"><span class="arrow back">←</span> К оглавлению</a>
+                <a href="{{ book }}">Открыть учебник <span class="arrow">→</span></a>
             </div>
+
+            <div class="sheet-kicker">Урок {{ '%02d' % lesson_id if lesson_id is number else lesson_id }}</div>
+            <h2><span class="title">{{ title }}</span></h2>
+
+            <div class="stats">
+                <div class="stats-bar">
+                    <span class="stat-label">Прогресс урока</span>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{ percent }}%;"></div>
+                    </div>
+                </div>
+                <div>
+                    <span class="stat-label">Решено</span>
+                    <span class="stat-value">{{ solved }}/{{ total }}</span>
+                </div>
+                <div>
+                    <span class="stat-label">Баллы</span>
+                    <span class="stat-value">0</span>
+                </div>
+            </div>
+
+            {% for key, label, n, orders in levels %}
+            <section class="mb-2">
+                <div class="level-head {{ key }}"><span class="tally" style="--n:{{ n }}"></span>{{ label }}</div>
+                {% for order in orders %}
+                {% set st = status_dict.get(order, 0) %}
+                {% set status = 'solved' if st == 2 else 'failed' if st == 1 else 'unsolved' %}
+                <a href="{{ url_for('task', lesson_id=lesson_id, task_order=order) }}"
+                   class="task-row indicator-link" data-status="{{ status }}">
+                    <span class="cell-num">{{ order }}</span>
+                    <span class="task-name">{{ description[order - 1] }}</span>
+                    <span class="state">
+                        {% if status == 'solved' %}зачтено{% elif status == 'failed' %}не зачтено{% endif %}
+                    </span>
+                </a>
+                {% endfor %}
+            </section>
+            {% endfor %}
         </div>
 
     </div>

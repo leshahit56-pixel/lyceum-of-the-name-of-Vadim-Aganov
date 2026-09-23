@@ -4,74 +4,63 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-lg-6 col-md-8 col-12">
+    <div class="col-lg-7 col-md-9 col-12">
 
-        <div class="card shadow-lg border-0 rounded-4 bg-white bg-opacity-95">
-            <div class="card-body p-4 p-md-5">
+        <div class="sheet">
+            <div class="sheet-kicker">Личный кабинет</div>
 
-                <!-- Аватар и ФИО -->
-                <div class="text-center mb-4">
+            <div class="profile-head mb-4">
+                <div class="avatar-ring">
                     {% if current_user.avatar %}
-                    <img src="{{ url_for('static', filename='uploads/' + current_user.avatar) }}"
-                         alt="Аватар"
-                         style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #0d6efd; object-fit: cover;">
+                    <img src="{{ url_for('static', filename='uploads/' + current_user.avatar) }}" alt="Аватар">
                     {% else %}
-                    <img src="{{ url_for('static', filename='img/logo.png') }}"
-                         alt="Аватар"
-                         style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #0d6efd; object-fit: cover;">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Аватар">
                     {% endif %}
-                    
-                    <h2 class="fw-bold mt-3 mb-1">{{ current_user.name }} {{ current_user.surname }}</h2>
-                    <p class="text-muted mb-1">{{ current_user.email }}</p>
-
-                    <form method="POST" action="/upload_avatar" enctype="multipart/form-data" class="mt-2">
-                        <div class="d-flex gap-2 justify-content-center">
-                            <input type="file" name="avatar" accept="image/*" class="form-control form-control-sm w-auto" style="font-size: 0.8rem;" required>
-                            <button type="submit" class="btn btn-sm btn-primary">Загрузить</button>
-                        </div>
-                    </form>
-
-                    <span class="badge bg-warning text-dark px-3 py-2 mt-2">
-                        🏆 {{ rank }} место в рейтинге
-                    </span>
+                    <svg viewBox="0 0 100 100" aria-hidden="true">
+                        <path pathLength="1" d="M52 3 C 78 2, 97 22, 97 48 C 97 76, 76 97, 49 97 C 22 97, 3 76, 3 50 C 3 24, 22 4, 46 5 C 52 5, 58 7, 62 9"/>
+                    </svg>
                 </div>
 
-                <hr>
-
-                <h5 class="fw-bold mb-3">Мои курсы</h5>
-
-                {% for course in courses %}
-                <div class="mb-3 p-3 rounded-3 border">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="fw-bold">{{ course.name }}</span>
-                        <span class="badge bg-primary">{{ course.score }} баллов</span>
-                    </div>
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-success" role="progressbar"
-                             style="width: {{ course.progress }}%;">
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between small text-muted mt-1">
-                        <span>{{ course.solved }}/{{ course.total }} задач</span>
-                        <span>{{ course.progress }}%</span>
-                    </div>
-                </div>
-                {% endfor %}
-
-                <hr>
-
-                <div class="d-flex flex-column gap-2">
-                    <a href="/course/python" class="btn btn-outline-secondary rounded-pill">
-                        <i class="bi bi-arrow-left"></i> Назад к курсам
-                    </a>
-                    <a href="/test" class="btn btn-success btn-lg rounded-pill">
-                        <i class="bi bi-question-circle"></i> Пройти тест
-                    </a>
-                    <a href="/logout" class="btn btn-outline-danger rounded-pill">
-                        <i class="bi bi-box-arrow-right"></i> Выйти из аккаунта
-                    </a>
+                <div>
+                    <h2 class="mb-1">{{ current_user.name }} {{ current_user.surname }}</h2>
+                    <p class="text-muted mb-0" style="font-family: var(--f-mono); font-size: .9rem;">{{ current_user.email }}</p>
                 </div>
 
+                <div class="rank">
+                    <b>{{ rank }}</b>
+                    <small>место в рейтинге</small>
+                </div>
+            </div>
+
+            <form method="POST" action="/upload_avatar" enctype="multipart/form-data" class="upload-row">
+                <div class="flex-grow-1">
+                    <label class="field-label" for="avatar">Новый аватар</label>
+                    <input type="file" id="avatar" name="avatar" accept="image/*" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary px-3 py-2">Загрузить</button>
+            </form>
+
+            <h3 class="h5 mt-5 mb-1">Мои курсы</h3>
+            {% for course in courses %}
+            <div class="course-line">
+                <div class="top">
+                    <span class="name">{{ course.name }}</span>
+                    <span class="score">{{ course.score }} баллов</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ course.progress }}%;"></div>
+                </div>
+                <div class="foot">
+                    <span>{{ course.solved }}/{{ course.total }} задач</span>
+                    <span>{{ course.progress }}%</span>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="d-grid gap-2 mt-5">
+                <a href="/course/python" class="btn btn-primary py-2 d-flex justify-content-between">К курсам <span class="arrow">→</span></a>
+                <a href="/test" class="btn btn-outline-primary py-2">Пройти тест</a>
+                <a href="/logout" class="btn btn-outline-danger py-2">Выйти из аккаунта</a>
             </div>
         </div>
 
