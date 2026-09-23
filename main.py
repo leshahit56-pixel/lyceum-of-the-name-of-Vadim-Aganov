@@ -797,6 +797,11 @@ def load_history(lesson_id):
 
     return jsonify({'messages':history})
 
+
+@app.route('/hello')
+def hell0():
+    return render_template('hi.html')
+
 if __name__ == '__main__':
     db_session.global_init('db/blogs.db')
     app.run(port=8080, host='127.0.0.1', debug=True)

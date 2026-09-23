@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Нейро-лаборатория 2.0 | Глубокие сети + Адаптивная мутация</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+        }
+        canvas {
+            display: block;
+        }
+        #stats {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #0ff;
+            background: rgba(0,0,0,0.7);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            backdrop-filter: blur(4px);
+            z-index: 10;
+            pointer-events: none;
+            border-left: 3px solid #0ff;
+        }
+        .panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 280px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: 1px solid #0ff;
+            padding: 12px;
+            z-index: 20;
+            pointer-events: auto;
+        }
+        .panel-title {
+            color: #0ff;
+            font-size: 11px;
+            text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+        #graphCanvas {
+            width: 100%;
+            height: 80px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 4px;
+        }
+        button {
+            background: rgba(0,255,255,0.2);
+            border: 1px solid #0ff;
+            color: #0ff;
+            padding: 4px 10px;
+            font-family: monospace;
+            font-size: 11px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: rgba(0,255,255,0.4);
+            box-shadow: 0 0 8px #0ff;
+        }
+        .arch-selector {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .arch-btn {
+            flex: 1;
+            text-align: center;
+            font-size: 10px;
+            padding: 5px;
+        }
+        .arch-btn.active {
+            background: rgba(0,255,255,0.5);
+            box-shadow: 0 0 12px #0ff;
+            color: #fff;
+        }
+        hr {
+            border-color: #0ff3;
+            margin: 10px 0;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        input[type="range"] {
+            flex: 1;
+            background: #0ff2;
+            height: 2px;
+            -webkit-appearance: none;
+        }
+        input[type="range"]:focus {
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #0ff;
+            cursor: pointer;
+        }
+        .status-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: #0ff2;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div id="stats">
+    🧬 ПОКОЛЕНИЕ: <span id="gen">0</span> &nbsp;|&nbsp;
+    🏆 ФИТНЕС: <span id="bestFit">0</span> &nbsp;|&nbsp;
+    🧠 ЖИВЫХ: <span id="aliveCount">0</span><br>
+    🧬 МУТАЦИЯ: <span id="mutRate">0.12</span> &nbsp;|&nbsp;
+    📊 ПЛАТО: <span id="plateauCount">0</span>
+</div>
+
+<div class="panel">
+    <div class="panel-title">📈 КРИВАЯ ОБУЧЕНИЯ</div>
+    <canvas id="graphCanvas" width="250" height="80" style="width:100%; height:80px;"></canvas>
+    
+    <hr>
+    
+    <div class="panel-title">🧠 АРХИТЕКТУРА</div>
+    <div class="arch-selector">
+        <button id="arch3Btn" class="arch-btn">4→3→1</button>
+        <button id="arch5Btn" class="arch-btn">4→5→1</button>
+        <button id="archDeepBtn" class="arch-btn">4→3→3→1</button>
+    </div>
+    
+    <hr>
+    
+    <div class="panel-title">⚡ СКОРОСТЬ СИМУЛЯЦИИ</div>
+    <div class="slider-container">
+        <span>🐢</span>
+        <input type="range" id="speedSlider" min="1" max="10" value="5">
+        <span>🐇</span>
+    </div>
+    
+    <button id="resetWallsBtn">🗑️ Сбросить стены</button>
+    <div class="status-badge" style="margin-top: 8px; display: block; text-align: center;">
+        🔬 Адаптивная мутация: включается при плато >5 поколений
+    </div>
+</div>
+
+<canvas id="simCanvas"></canvas>
+
+<script>
+    // ---------- ГЛОБАЛЬНЫЕ ПАРАМЕТРЫ ----------
+    let archType = '3';        // '3', '5', или 'deep'
+    let population = [];
+    let generation = 0;
+    let bestFitnessEver = 0;
+    let currentBestParticle = null;
+    let fitnessHistory = [];
+    let plateauCounter = 0;
+    let lastBestFitness = 0;
+    let currentMutationRate = 0.12;
+    let simSpeed = 5;
+    let lastTimestamp = 0;
+    let frameInterval = 0;
+    
+    const POP_SIZE = 70;
+    
+    let walls = [
+        { x: 300, y: 180, w: 110, h: 22 },
+        { x: 560, y: 380, w: 35, h: 130 },
+        { x: 140, y: 470, w: 190, h: 22 },
+        { x: 700, y: 280, w: 80, h: 25 }
+    ];
+
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // ---------- НЕЙРОСЕТИ (три архитектуры) ----------
+    class TinyNetwork3 {
+        constructor() {
+            this.type = '3';
+            this.W1 = Array(3).fill().map(() => Array(4).fill().map(() => Math.random() * 2 - 1));
+            this.B1 = Array(3).fill().map(() => Math.random() * 2 - 1);
+            this.W2 = Array(1).fill().map(() => Array(3).fill().map(() => Math.random() * 2 - 1));
+            this.B2 = [Math.random() * 2 - 1];
+            this.lastHidden = null;
+            this.lastOutput = null;
+        }
+        forward(inputs) {
+            this.lastHidden = this.W1.map((row, i) => {
+                let sum = this.B1[i];
+                for (let j = 0; j < row.length; j++) sum += row[j] * inputs[j];
+                return Math.max(0, sum);
+            });
+            let outputSum = this.B2[0];
+            for (let j = 0; j < this.W2[0].length; j++) outputSum += this.W2[0][j] * this.lastHidden[j];
+            this.lastOutput = Math.tanh(outputSum);
+            return this.lastOutput;
+        }
+        getActivations() { return { hidden: this.lastHidden || [0,0,0], output: this.lastOutput || 0 }; }
+        clone(rate) {
+            const clone = new TinyNetwork3();
+            for (let i = 0; i < 3; i++)
+                for (let j = 0; j < 4; j++) clone.W1[i][j] = this.W1[i][j] + (Math.random() - 0.5) * rate;
+            for (let i = 0; i < 3; i++) clone.B1[i] = this.B1[i] + (Math.random() - 0.5) * rate;
+            for (let j = 0; j < 3; j++) clone.W2[0][j] = this.W2[0][j] + (Math.random() - 0.5) * rate;
+            clone.B2[0] = this.B2[0] + (Math.random() - 0.5) * rate;
+            return clone;
+        }
+    }
+    
+    class TinyNetwork5 {
+        constructor() {
+            this.type = '5';
+            this.W1 = Array(5).fill().map(() => Array(4).fill().map(() => Math.random() * 2 - 1));
+            this.B1 = Array(5).fill().map(() => Math.random() * 2 - 1);
+            this.W2 = Array(1).fill().map(() => Array(5).fill().map(() => Math.random() * 2 - 1));
+            this.B2 = [Math.random() * 2 - 1];
+            this.lastHidden = null;
+            this.lastOutput = null;
+        }
+        forward(inputs) {
+            this.lastHidden = this.W1.map((row, i) => {
+                let sum = this.B1[i];
+                for (let j = 0; j < row.length; j++) sum += row[j] * inputs[j];
+                return Math.max(0, sum);
+            });
+            let outputSum = this.B2[0];
+            for (let j = 0; j < this.W2[0].length; j++) outputSum += this.W2[0][j] * this.lastHidden[j];
+            this.lastOutput = Math.tanh(outputSum);
+            return this.lastOutput;
+        }
+        getActivations() { return { hidden: this.lastHidden || [0,0,0,0,0], output: this.lastOutput || 0 }; }
+        clone(rate) {
+            const clone = new TinyNetwork5();
+            for (let i = 0; i < 5; i++)
+                for (let j = 0; j < 4; j++) clone.W1[i][j] = this.W1[i][j] + (Math.random() - 0.5) * rate;
+            for (let i = 0; i < 5; i++) clone.B1[i] = this.B1[i] + (Math.random() - 0.5) * rate;
+            for (let j = 0; j < 5; j++) clone.W2[0][j] = this.W2[0][j] + (Math.random() - 0.5) * rate;
+            clone.B2[0] = this.B2[0] + (Math.random() - 0.5) * rate;
+            return clone;
+        }
+    }
+    
+    class TinyNetworkDeep {
+        constructor() {
+            this.type = 'deep';
+            // 4 → 3 → 3 → 1
+            this.W1 = Array(3).fill().map(() => Array(4).fill().map(() => Math.random() * 2 - 1));
+            this.B1 = Array(3).fill().map(() => Math.random() * 2 - 1);
+            this.W2 = Array(3).fill().map(() => Array(3).fill().map(() => Math.random() * 2 - 1));
+            this.B2 = Array(3).fill().map(() => Math.random() * 2 - 1);
+            this.W3 = Array(1).fill().map(() => Array(3).fill().map(() => Math.random() * 2 - 1));
+            this.B3 = [Math.random() * 2 - 1];
+            this.lastHidden1 = null;
+            this.lastHidden2 = null;
+            this.lastOutput = null;
+        }
+        forward(inputs) {
+            this.lastHidden1 = this.W1.map((row, i) => {
+                let sum = this.B1[i];
+                for (let j = 0; j < row.length; j++) sum += row[j] * inputs[j];
+                return Math.max(0, sum);
+            });
+            this.lastHidden2 = this.W2.map((row, i) => {
+                let sum = this.B2[i];
+                for (let j = 0; j < row.length; j++) sum += row[j] * this.lastHidden1[j];
+                return Math.max(0, sum);
+            });
+            let outputSum = this.B3[0];
+            for (let j = 0; j < this.W3[0].length; j++) outputSum += this.W3[0][j] * this.lastHidden2[j];
+            this.lastOutput = Math.tanh(outputSum);
+            return this.lastOutput;
+        }
+        getActivations() { return { hidden: this.lastHidden2 || [0,0,0], hidden2: this.lastHidden2, output: this.lastOutput || 0 }; }
+        clone(rate) {
+            const clone = new TinyNetworkDeep();
+            for (let i = 0; i < 3; i++)
+                for (let j = 0; j < 4; j++) clone.W1[i][j] = this.W1[i][j] + (Math.random() - 0.5) * rate;
+            for (let i = 0; i < 3; i++) clone.B1[i] = this.B1[i] + (Math.random() - 0.5) * rate;
+            for (let i = 0; i < 3; i++)
+                for (let j = 0; j < 3; j++) clone.W2[i][j] = this.W2[i][j] + (Math.random() - 0.5) * rate;
+            for (let i = 0; i < 3; i++) clone.B2[i] = this.B2[i] + (Math.random() - 0.5) * rate;
+            for (let j = 0; j < 3; j++) clone.W3[0][j] = this.W3[0][j] + (Math.random() - 0.5) * rate;
+            clone.B3[0] = this.B3[0] + (Math.random() - 0.5) * rate;
+            return clone;
+        }
+    }
+
+    function createNetwork() {
+        if (archType === '3') return new TinyNetwork3();
+        if (archType === '5') return new TinyNetwork5();
+        return new TinyNetworkDeep();
+    }
+
+    // ---------- ЧАСТИЦА ----------
+    class Particle {
+        constructor(x, y, brain = null) {
+            this.x = x;
+            this.y = y;
+            this.angle = Math.PI / 2;
+            this.health = 1.0;
+            this.fitness = 0;
+            this.alive = true;
+            this.brain = brain || createNetwork();
+            this.color = `hsl(${Math.random() * 60 + 180}, 80%, 65%)`;
+        }
+
+        sense(walls, canvasW, canvasH) {
+            const step = 10;
+            let front = 1;
+            for (let d = 10; d < 200; d += step) {
+                let fx = this.x + Math.cos(this.angle) * d;
+                let fy = this.y + Math.sin(this.angle) * d;
+                if (fx < 20 || fx > canvasW - 20 || fy < 20 || fy > canvasH - 20 || this.collisionWithWalls(fx, fy, walls)) {
+                    front = d / 200;
+                    break;
+                }
+            }
+            let left = 1;
+            let leftAngle = this.angle - Math.PI / 4;
+            for (let d = 10; d < 200; d += step) {
+                let lx = this.x + Math.cos(leftAngle) * d;
+                let ly = this.y + Math.sin(leftAngle) * d;
+                if (lx < 20 || lx > canvasW - 20 || ly < 20 || ly > canvasH - 20 || this.collisionWithWalls(lx, ly, walls)) {
+                    left = d / 200;
+                    break;
+                }
+            }
+            let right = 1;
+            let rightAngle = this.angle + Math.PI / 4;
+            for (let d = 10; d < 200; d += step) {
+                let rx = this.x + Math.cos(rightAngle) * d;
+                let ry = this.y + Math.sin(rightAngle) * d;
+                if (rx < 20 || rx > canvasW - 20 || ry < 20 || ry > canvasH - 20 || this.collisionWithWalls(rx, ry, walls)) {
+                    right = d / 200;
+                    break;
+                }
+            }
+            return [front, left, right, this.y / canvasH];
+        }
+
+        collisionWithWalls(px, py, walls) {
+            for (let w of walls) {
+                if (px > w.x && px < w.x + w.w && py > w.y && py < w.y + w.h) return true;
+            }
+            return false;
+        }
+
+        update(walls, canvasW, canvasH) {
+            if (!this.alive) return;
+            const sensors = this.sense(walls, canvasW, canvasH);
+            const turn = this.brain.forward(sensors);
+            this.angle += turn * 0.18;
+            let newX = this.x + Math.cos(this.angle) * 2.8;
+            let newY = this.y + Math.sin(this.angle) * 2.8;
+            let hit = false;
+            if (newX < 15 || newX > canvasW - 15 || newY < 15 || newY > canvasH - 15) hit = true;
+            if (!hit && this.collisionWithWalls(newX, newY, walls)) hit = true;
+            if (hit) {
+                this.health -= 0.12;
+                this.angle += Math.PI / 2 + (Math.random() - 0.5) * 0.5;
+            } else {
+                this.x = newX;
+                this.y = newY;
+            }
+            this.health -= 0.0025;
+            if (this.health <= 0) this.alive = false;
+            this.fitness += 1;
+        }
+
+        draw(ctx) {
+            if (!this.alive) return;
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle);
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = this.color;
+            ctx.beginPath();
+            ctx.moveTo(9, 0);
+            ctx.lineTo(-5, -4);
+            ctx.lineTo(-2, 0);
+            ctx.lineTo(-5, 4);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.restore();
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 6, 0, Math.PI * 2);
+            ctx.fillStyle = `${this.color}60`;
+            ctx.fill();
+        }
+    }
+
+    // ---------- ВИЗУАЛИЗАЦИЯ МОЗГА ----------
+    function drawBrain(ctx, network, inputs, x, y, width, height) {
+        let hiddenSize = 3;
+        let isDeep = false;
+        if (network.type === '3') hiddenSize = 3;
+        else if (network.type === '5') hiddenSize = 5;
+        else { hiddenSize = 3; isDeep = true; }
+        
+        const nodeRadius = Math.min(8, 100 / hiddenSize);
+        const layers = isDeep ? [4, 3, 3, 1] : [4, hiddenSize, 1];
+        const layerSpacing = width / (layers.length - 1);
+        
+        let nodes = layers.map((count, i) => {
+            return Array(count).fill().map((_, j) => ({
+                x: x + i * layerSpacing,
+                y: y + (j + 0.5) * (height / count)
+            }));
+        });
+        
+        const activations = network.getActivations();
+        const hiddenActs = activations.hidden || [0,0,0];
+        
+        // Рисуем связи
+        if (!isDeep) {
+            for (let toIdx = 0; toIdx < hiddenSize; toIdx++)
+                for (let fromIdx = 0; fromIdx < 4; fromIdx++) {
+                    const weight = network.W1[toIdx][fromIdx];
+                    ctx.beginPath();
+                    ctx.moveTo(nodes[0][fromIdx].x, nodes[0][fromIdx].y);
+                    ctx.lineTo(nodes[1][toIdx].x, nodes[1][toIdx].y);
+                    ctx.lineWidth = Math.abs(weight) * 3;
+                    ctx.strokeStyle = weight > 0 ? `rgba(0, 255, 150, ${Math.min(1, Math.abs(weight) + 0.2)})` : `rgba(255, 70, 70, ${Math.min(1, Math.abs(weight) + 0.2)})`;
+                    ctx.stroke();
+                }
+            for (let fromIdx = 0; fromIdx < hiddenSize; fromIdx++) {
+                const weight = network.W2[0][fromIdx];
+                ctx.beginPath();
+                ctx.moveTo(nodes[1][fromIdx].x, nodes[1][fromIdx].y);
+                ctx.lineTo(nodes[2][0].x, nodes[2][0].y);
+                ctx.lineWidth = Math.abs(weight) * 3.5;
+                ctx.strokeStyle = weight > 0 ? `rgba(0, 255, 150, ${Math.min(1, Math.abs(weight) + 0.2)})` : `rgba(255, 70, 70, ${Math.min(1, Math.abs(weight) + 0.2)})`;
+                ctx.stroke();
+            }
+        } else {
+            // Глубокая сеть: рисуем W1, W2, W3
+            for (let toIdx = 0; toIdx < 3; toIdx++)
+                for (let fromIdx = 0; fromIdx < 4; fromIdx++) {
+                    const weight = network.W1[toIdx][fromIdx];
+                    ctx.beginPath();
+                    ctx.moveTo(nodes[0][fromIdx].x, nodes[0][fromIdx].y);
+                    ctx.lineTo(nodes[1][toIdx].x, nodes[1][toIdx].y);
+                    ctx.lineWidth = Math.abs(weight) * 2.5;
+                    ctx.strokeStyle = weight > 0 ? `rgba(0, 255, 150, ${Math.min(1, Math.abs(weight) + 0.2)})` : `rgba(255, 70, 70, ${Math.min(1, Math.abs(weight) + 0.2)})`;
+                    ctx.stroke();
+                }
+            for (let toIdx = 0; toIdx < 3; toIdx++)
+                for (let fromIdx = 0; fromIdx < 3; fromIdx++) {
+                    const weight = network.W2[toIdx][fromIdx];
+                    ctx.beginPath();
+                    ctx.moveTo(nodes[1][fromIdx].x, nodes[1][fromIdx].y);
+                    ctx.lineTo(nodes[2][toIdx].x, nodes[2][toIdx].y);
+                    ctx.lineWidth = Math.abs(weight) * 2.5;
+                    ctx.strokeStyle = weight > 0 ? `rgba(0, 200, 120, ${Math.min(1, Math.abs(weight) + 0.2)})` : `rgba(255, 70, 70, ${Math.min(1, Math.abs(weight) + 0.2)})`;
+                    ctx.stroke();
+                }
+            for (let fromIdx = 0; fromIdx < 3; fromIdx++) {
+                const weight = network.W3[0][fromIdx];
+                ctx.beginPath();
+                ctx.moveTo(nodes[2][fromIdx].x, nodes[2][fromIdx].y);
+                ctx.lineTo(nodes[3][0].x, nodes[3][0].y);
+                ctx.lineWidth = Math.abs(weight) * 3;
+                ctx.strokeStyle = weight > 0 ? `rgba(0, 255, 150, ${Math.min(1, Math.abs(weight) + 0.2)})` : `rgba(255, 70, 70, ${Math.min(1, Math.abs(weight) + 0.2)})`;
+                ctx.stroke();
+            }
+        }
+        
+        // Узлы
+        for (let i = 0; i < 4; i++) {
+            ctx.beginPath();
+            ctx.arc(nodes[0][i].x, nodes[0][i].y, nodeRadius, 0, Math.PI*2);
+            ctx.fillStyle = `rgba(50, 150, 255, ${0.3 + (inputs[i] || 0) * 0.7})`;
+            ctx.fill();
+            ctx.strokeStyle = "#0ff";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+        for (let i = 0; i < (isDeep ? 3 : hiddenSize); i++) {
+            ctx.beginPath();
+            ctx.arc(nodes[1][i].x, nodes[1][i].y, nodeRadius, 0, Math.PI*2);
+            ctx.fillStyle = `rgba(0, 200, 100, ${0.2 + (hiddenActs[i] || 0) * 0.8})`;
+            ctx.fill();
+            ctx.strokeStyle = "#0f0";
+            ctx.stroke();
+        }
+        if (isDeep) {
+            for (let i = 0; i < 3; i++) {
+                ctx.beginPath();
+                ctx.arc(nodes[2][i].x, nodes[2][i].y, nodeRadius-1, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(100, 200, 50, ${0.2 + (hiddenActs[i] || 0) * 0.6})`;
+                ctx.fill();
+                ctx.strokeStyle = "#afa";
+                ctx.stroke();
+            }
+            ctx.beginPath();
+            ctx.arc(nodes[3][0].x, nodes[3][0].y, nodeRadius+2, 0, Math.PI*2);
+            ctx.fillStyle = `rgba(255, 80, 40, 0.6)`;
+            ctx.fill();
+            ctx.strokeStyle = "#ff6600";
+            ctx.stroke();
+        } else {
+            ctx.beginPath();
+            ctx.arc(nodes[2][0].x, nodes[2][0].y, nodeRadius+2, 0, Math.PI*2);
+            ctx.fillStyle = `rgba(255, 80, 40, 0.6)`;
+            ctx.fill();
+            ctx.strokeStyle = "#ff6600";
+            ctx.stroke();
+        }
+        
+        ctx.font = "bold 8px monospace";
+        ctx.fillStyle = "#0ff";
+        ctx.fillText("Вход", x-5, y-5);
+        if (isDeep) ctx.fillText("Слой1", nodes[1][0].x-15, y-5);
+        if (isDeep) ctx.fillText("Слой2", nodes[2][0].x-15, y-5);
+    }
+
+    // ---------- ЭВОЛЮЦИЯ С АДАПТИВНОЙ МУТАЦИЕЙ ----------
+    function evolve() {
+        population.sort((a,b) => b.fitness - a.fitness);
+        const bestFitness = population[0].fitness;
+        
+        // Детекция плато
+        if (bestFitness <= lastBestFitness + 5) {
+            plateauCounter++;
+        } else {
+            plateauCounter = 0;
+        }
+        
+        if (bestFitness > bestFitnessEver) {
+            bestFitnessEver = bestFitness;
+            currentBestParticle = population[0];
+        }
+        
+        // Адаптивная мутация: если плато > 5 поколений, повышаем мутацию
+        if (plateauCounter > 5) {
+            currentMutationRate = Math.min(0.35, currentMutationRate + 0.01);
+        } else {
+            currentMutationRate = Math.max(0.08, currentMutationRate - 0.002);
+        }
+        
+        lastBestFitness = bestFitness;
+        
+        if (generation % 2 === 0) {
+            fitnessHistory.push(bestFitnessEver);
+            if (fitnessHistory.length > 50) fitnessHistory.shift();
+            drawGraph();
+        }
+        
+        document.getElementById('bestFit').innerText = Math.floor(bestFitnessEver);
+        document.getElementById('gen').innerText = generation;
+        document.getElementById('mutRate').innerText = currentMutationRate.toFixed(3);
+        document.getElementById('plateauCount').innerText = plateauCounter;
+        
+        const topCount = Math.floor(POP_SIZE * 0.22);
+        const parents = population.slice(0, topCount);
+        const newPop = [];
+        while (newPop.length < POP_SIZE) {
+            const parent = parents[Math.floor(Math.random() * parents.length)];
+            const childBrain = parent.brain.clone(currentMutationRate);
+            newPop.push(new Particle(canvas.width/2, canvas.height - 50, childBrain));
+        }
+        population = newPop;
+        generation++;
+    }
+
+    // ---------- ГРАФИК ----------
+    const gCanvas = document.getElementById('graphCanvas');
+    const gCtx = gCanvas.getContext('2d');
+    
+    function drawGraph() {
+        gCanvas.width = 250;
+        gCanvas.height = 80;
+        gCtx.clearRect(0, 0, 250, 80);
+        gCtx.strokeStyle = '#0ff';
+        gCtx.lineWidth = 2;
+        gCtx.beginPath();
+        const maxFit = Math.max(1, ...fitnessHistory, bestFitnessEver);
+        const step = 250 / Math.max(2, fitnessHistory.length);
+        for (let i = 0; i < fitnessHistory.length; i++) {
+            const x = i * step;
+            const y = 80 - (fitnessHistory[i] / maxFit) * 70;
+            if (i === 0) gCtx.moveTo(x, y);
+            else gCtx.lineTo(x, y);
+        }
+        gCtx.stroke();
+        if (fitnessHistory.length > 0) {
+            const lastX = (fitnessHistory.length-1) * step;
+            const lastY = 80 - (fitnessHistory[fitnessHistory.length-1] / maxFit) * 70;
+            gCtx.fillStyle = '#0ff';
+            gCtx.beginPath();
+            gCtx.arc(lastX, lastY, 3, 0, Math.PI*2);
+            gCtx.fill();
+        }
+    }
+
+    // ---------- ОТРИСОВКА ----------
+    function drawBackground() {
+        const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        grad.addColorStop(0, '#030614');
+        grad.addColorStop(1, '#0a1030');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#0ff1';
+        for (let i = 0; i < 60; i++) {
+            ctx.fillRect(i * 28, (Date.now() * 0.0015 + i * 12) % canvas.height, 2, 8);
+        }
+        for (let w of walls) {
+            ctx.fillStyle = '#3a86ff33';
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = '#0cf';
+            ctx.fillRect(w.x, w.y, w.w, w.h);
+            ctx.strokeStyle = '#0cf';
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(w.x, w.y, w.w, w.h);
+        }
+        ctx.shadowBlur = 0;
+    }
+
+    let frameCount = 0;
+    function animate() {
+        drawBackground();
+        let aliveCount = 0;
+        const inputsForBest = currentBestParticle && currentBestParticle.alive 
+            ? currentBestParticle.sense(walls, canvas.width, canvas.height) 
+            : [0,0,0,0];
+        
+        for (let p of population) {
+            if (p.alive) {
+                aliveCount++;
+                p.update(walls, canvas.width, canvas.height);
+                p.draw(ctx);
+            }
+        }
+        document.getElementById('aliveCount').innerText = aliveCount;
+        
+        // Рисуем мозг лучшей частицы
+        if (currentBestParticle && currentBestParticle.brain) {
+            ctx.save();
+            ctx.shadowBlur = 0;
+            let boxHeight = 170;
+            if (currentBestParticle.brain.type === 'deep') boxHeight = 220;
+            else if (currentBestParticle.brain.type === '5') boxHeight = 200;
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            ctx.fillRect(canvas.width - 290, 100, 270, boxHeight);
+            ctx.strokeStyle = '#0ff';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(canvas.width - 290, 100, 270, boxHeight);
+            drawBrain(ctx, currentBestParticle.brain, inputsForBest, canvas.width - 275, 115, 240, boxHeight - 30);
+            ctx.restore();
+        }
+        
+        if (aliveCount === 0 && population.length > 0) {
+            evolve();
+        }
+        
+        frameCount++;
+        setTimeout(() => requestAnimationFrame(animate), 1000 / (10 + simSpeed * 5));
+    }
+
+    // ---------- УПРАВЛЕНИЕ ----------
+    function init() {
+        population = [];
+        for (let i = 0; i < POP_SIZE; i++) {
+            population.push(new Particle(canvas.width/2, canvas.height - 50));
+        }
+        generation = 0;
+        bestFitnessEver = 0;
+        lastBestFitness = 0;
+        plateauCounter = 0;
+        currentMutationRate = 0.12;
+        fitnessHistory = [];
+        currentBestParticle = population[0];
+        drawGraph();
+        
+        let archDisplay = archType === '3' ? '3' : (archType === '5' ? '5' : 'deep');
+        document.getElementById('hiddenSize')?.parentElement?.remove();
+        const titleMap = {'3': '4→3→1', '5': '4→5→1', 'deep': '4→3→3→1'};
+        document.querySelector('.panel-title:first-child').innerHTML = `📈 ${titleMap[archType]}`;
+    }
+    
+    function switchArchitecture(type) {
+        if (type === archType) return;
+        archType = type;
+        document.getElementById('arch3Btn').classList.remove('active');
+        document.getElementById('arch5Btn').classList.remove('active');
+        document.getElementById('archDeepBtn').classList.remove('active');
+        if (type === '3') document.getElementById('arch3Btn').classList.add('active');
+        else if (type === '5') document.getElementById('arch5Btn').classList.add('active');
+        else document.getElementById('archDeepBtn').classList.add('active');
+        init();
+    }
+    
+    window.addEventListener('mousedown', (e) => {
+        if (e.target.tagName === 'BUTTON' || e.target.closest('.panel')) return;
+        walls.push({ x: e.clientX - 25, y: e.clientY - 25, w: 50, h: 50 });
+        if (walls.length > 14) walls.shift();
+    });
+    
+    document.getElementById('resetWallsBtn').addEventListener('click', () => {
+        walls = [
+            { x: 300, y: 180, w: 110, h: 22 },
+            { x: 560, y: 380, w: 35, h: 130 },
+            { x: 140, y: 470, w: 190, h: 22 },
+            { x: 700, y: 280, w: 80, h: 25 }
+        ];
+    });
+    
+    document.getElementById('arch3Btn').addEventListener('click', () => switchArchitecture('3'));
+    document.getElementById('arch5Btn').addEventListener('click', () => switchArchitecture('5'));
+    document.getElementById('archDeepBtn').addEventListener('click', () => switchArchitecture('deep'));
+    document.getElementById('speedSlider').addEventListener('input', (e) => {
+        simSpeed = parseInt(e.target.value);
+    });
+    
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        init();
+    });
+    
+    init();
+    animate();
+</script>
+</body>
+</html>
